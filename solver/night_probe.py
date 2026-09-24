@@ -110,6 +110,47 @@ def arm_P(shelf, n, c0, r0, cont, rng, t_end):
         if time.time() > t_end: break
     return best, {"axis": "xy"[ax], "lattice": round(score, 2), "lines": len(L), "tries": len(log), "trace": log[:40]}
 
+def span(cont, ax, v, r):
+    """Allowed interval for centres of a line running along coordinate `ax` at cross coordinate v (09-24 wall-row flip)."""
+    if cont[0] == "rect": return (-0.5 + r, 0.5 - r) if ax == 0 else (-cont[1] / 2 + r, cont[1] / 2 - r)
+    arc = float(np.sqrt(max(0.0, (1 - r) ** 2 - v * v)))
+    if cont[0] == "semi": return (-arc, arc) if ax == 0 else (r, arc)
+    if cont[0] == "quad": return (r, arc)
+    return (r, 1 - v - np.sqrt(2.0) * r)                                              # tri: legs x = 0, y = 0, hypotenuse
+
+def arm_W(shelf, n, c0, r0, cont, rng, t_end):
+    """Wall-row flip (Claude, sealed V15 #4): Grok's row flip generalised to containers with a curved wall or a slanted side.
+    Lines = lattice lines parallel to a straight wall (clustered as in lines()); each line's allowed extent comes from the
+    container at the line's height (arc / hypotenuse); moves as in arm_P; a circle pushed out re-enters at the free end."""
+    import slp_circ
+    if cont[0] == "rect": return (r0, None), {"skip": "rectangle (arm P)"}
+    score, ax, L = lines(c0, r0)
+    if score < 0.5: return (r0, None), {"skip": f"no lattice lines ({score:.2f})"}
+    info = []
+    for i in range(len(L) - 1):
+        A, B = c0[L[i], ax], c0[L[i + 1], ax]; d = B[:, None] - A[None, :]; s = d[np.arange(len(B)), np.abs(d).argmin(1)]
+        info.append((float(np.std(s) / r0 + abs(abs(s.mean()) - r0) / r0), i, float(s.mean())))
+    info.sort(reverse=True); best = (r0, None); log = []
+    for defect, i, sm in info:
+        one, above = np.array(L[i + 1]), np.concatenate(L[i + 1:])
+        for idx, delta in ((one, r0), (one, -r0), (above, -2 * sm), (above, r0), (above, -r0)):
+            if time.time() > t_end: break
+            if abs(delta) < 0.05 * r0: continue
+            q = c0.copy(); q[idx, ax] += delta
+            for line in (L[j] for j in range(len(L)) if set(L[j]) <= set(idx.tolist())):
+                ln = np.array(line); lo, hi = span(cont, ax, float(q[ln, 1 - ax].mean()), r0)
+                if hi <= lo: continue
+                out = ln[(q[ln, ax] < lo) | (q[ln, ax] > hi)]
+                for k in out:
+                    rest = ln[(q[ln, ax] >= lo) & (q[ln, ax] <= hi)]
+                    if len(rest) == 0: break
+                    q[k, ax] = (q[rest, ax].min() - 2 * r0) if q[k, ax] > hi else (q[rest, ax].max() + 2 * r0)
+                q[ln, ax] = np.clip(q[ln, ax], lo, hi)
+            c, r = slp_circ.polish(slp_circ.repair(q, cont), cont, t_cap=60.0); log.append((i, round(r / r0 - 1, 9)))
+            if r > best[0]: best = (r, c)
+        if time.time() > t_end: break
+    return best, {"axis": "xy"[ax], "lattice": round(score, 2), "lines": len(L), "tries": len(log), "trace": log[:40]}
+
 def job(a):
     shelf, n = a
     if STOP and datetime.datetime.now() >= STOP: return {"shelf": shelf, "N": n, "skipped": "stop"}
@@ -121,7 +162,7 @@ def job(a):
     for arm in ARMS:
         t_end = time.time() + BUDGET; t0 = time.time()
         (rb, cb), info = (arm_R(shelf, n, c0, r0, cont, rng, t_end) if arm == "R" else arm_T(shelf, n, r0, cont, rng, t_end)
-                          if arm == "T" else arm_P(shelf, n, c0, r0, cont, rng, t_end))
+                          if arm == "T" else arm_W(shelf, n, c0, r0, cont, rng, t_end) if arm == "W" else arm_P(shelf, n, c0, r0, cont, rng, t_end))
         res = {"rel_float": float(rb / r0 - 1), "secs": round(time.time() - t0, 1), **info}
         if cb is not None and rb > r0 * (1 + 1e-10):
             npy = os.path.join(HERE, "out", "transplant", f"night_{shelf}_{n}_{arm}.npy"); np.save(npy, cb)
