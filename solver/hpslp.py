@@ -18,12 +18,13 @@ class Box:
         self.kind = "rect" if cont_s.startswith("rect:") else cont_s
         self.h = mp.mpf(cont_s.split(":")[1]) if self.kind == "rect" else None
         self.hf = float(self.h) if self.h is not None else None
-        self.nw = {"tri": 3, "rect": 4, "quad": 3}[self.kind]
+        self.nw = {"tri": 3, "rect": 4, "quad": 3, "semi": 3}[self.kind]
 
     def walls_f(self, cf):
         x, y = cf[:, 0], cf[:, 1]
         if self.kind == "tri": return np.stack([x, y, (1 - x - y) / np.sqrt(2)], 1)
         if self.kind == "rect": return np.stack([x + 0.5, 0.5 - x, y + self.hf / 2, self.hf / 2 - y], 1)
+        if self.kind == "semi": return np.stack([np.full(len(x), 10.0), y, 1 - np.hypot(x, y)], 1)   # slot 0 inert
         return np.stack([x, y, 1 - np.hypot(x, y)], 1)
 
     def wall_mp(self, x, y, k):
@@ -33,7 +34,7 @@ class Box:
         if self.kind == "rect":
             h = self.h
             return [(x + mp.mpf(1) / 2, (1.0, 0.0)), (mp.mpf(1) / 2 - x, (-1.0, 0.0)), (y + h / 2, (0.0, 1.0)), (h / 2 - y, (0.0, -1.0))][k]
-        if k == 0: return x, (1.0, 0.0)
+        if k == 0: return (mp.mpf(10), (0.0, 0.0)) if self.kind == "semi" else (x, (1.0, 0.0))
         if k == 1: return y, (0.0, 1.0)
         rr = mp.sqrt(x * x + y * y); return 1 - rr, (-float(x / rr), -float(y / rr))
 

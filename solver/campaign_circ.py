@@ -14,6 +14,8 @@ def shelf_info(shelf):
     """(container tuple for the solver, container string for the exact checker, coords filename pattern, radius.txt path)."""
     if shelf == "ccq":
         return ("quad",), "quad", os.path.join(SH, "ccq", "coords", "ccq{}.txt"), os.path.join(SH, "ccq", "radius.txt")
+    if shelf == "csc":
+        return ("semi",), "semi", os.path.join(SH, "csc", "coords", "csc{}.txt"), os.path.join(SH, "csc", "radius.txt")
     k = int(shelf.split("_")[1])                     # crc_300 -> k = 300 -> height 0.3
     h_str = "0." + f"{k:03d}".rstrip("0")            # "0.3" (exact decimal for the checker)
     pat = os.path.join(SH, shelf, "coords", "crc{}_0." + f"{k:03d}" + "000000000.txt")
@@ -58,6 +60,8 @@ def write_cert(cont_s, c, path):
         h = mp.mpf(cont_s.split(":")[1]); w = min(min(x + mp.mpf(1) / 2, mp.mpf(1) / 2 - x, y + h / 2, h / 2 - y) for x, y in C)
     elif cont_s == "quad":
         w = min(min(x, y, 1 - mp.sqrt(x * x + y * y)) for x, y in C)
+    elif cont_s == "semi":
+        w = min(min(y, 1 - mp.sqrt(x * x + y * y)) for x, y in C)
     else:
         w = min(min(x, y, (1 - x - y) / mp.sqrt(2)) for x, y in C)
     near = np.nonzero(df <= df.min() * (1 + 1e-6))[0]

@@ -14,6 +14,7 @@ def slacks_float(c, r, cont):
     if cont[0] == 'rect':
         h = cont[1]; return np.stack([x + 0.5 - r, 0.5 - x - r, y + h / 2 - r, h / 2 - y - r], 1)
     if cont[0] == 'quad': return np.stack([x - r, y - r, 1 - np.sqrt(x * x + y * y) - r], 1)
+    if cont[0] == 'semi': return np.stack([np.full(len(x), 10.0), y - r, 1 - np.sqrt(x * x + y * y) - r], 1)   # slot 0 inert
 
 def refine(c, cont, cont_s, tol=1e-9, iters=8):
     c = np.asarray(c, dtype=np.float64); n = len(c); iu = np.triu_indices(n, 1)
@@ -53,6 +54,7 @@ def admissible_r(C, cont_s):
     if cont_s.startswith("rect:"):
         h = mp.mpf(cont_s.split(":")[1]); w = min(min(x + mp.mpf(1)/2, mp.mpf(1)/2 - x, y + h/2, h/2 - y) for x, y in C)
     elif cont_s == "quad": w = min(min(x, y, 1 - mp.sqrt(x*x + y*y)) for x, y in C)
+    elif cont_s == "semi": w = min(min(y, 1 - mp.sqrt(x*x + y*y)) for x, y in C)
     else: w = min(min(x, y, (1 - x - y) / mp.sqrt(2)) for x, y in C)
     pr = min(mp.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2) for i, a in enumerate(C) for b in C[i+1:]) / 2
     return min(w, pr)

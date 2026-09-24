@@ -3,6 +3,7 @@ Containers:
   ('tri',)      Packomania crt: x >= r, y >= r, (1 - x - y)/sqrt2 >= r                (legs 1, right angle at the origin)
   ('rect', h)   Packomania crc: width 1, height h, centred at the origin: 1/2 -+ x >= r, h/2 -+ y >= r
   ('quad',)     Packomania ccq: x >= r, y >= r, 1 - |c| >= r                            (unit quarter disc)
+  ('semi',)     Packomania csc: y >= r, 1 - |c| >= r            (unit semicircle, y >= 0; wall slot 0 is an inert dummy)
 Sequential LP with a trust region (HiGHS); a step is accepted only if the TRUE r(c) grows. Same scheme as slp.py (point form).
 """
 import time, numpy as np
@@ -24,6 +25,10 @@ def walls(c, cont):
         rr = np.sqrt(x * x + y * y) + 1e-300
         g = np.stack([x, y, 1 - rr], 1)
         G = np.zeros((n, 3, 2)); G[:, 0, 0] = 1; G[:, 1, 1] = 1; G[:, 2, 0] = -x / rr; G[:, 2, 1] = -y / rr
+    elif cont[0] == 'semi':                 # slot 0 = inert dummy (slack 10, never active) so the arc keeps index 2 as in quad
+        rr = np.sqrt(x * x + y * y) + 1e-300
+        g = np.stack([np.full(n, 10.0), y, 1 - rr], 1)
+        G = np.zeros((n, 3, 2)); G[:, 1, 1] = 1; G[:, 2, 0] = -x / rr; G[:, 2, 1] = -y / rr
     return g, G
 
 def rmin(c, cont):
@@ -40,12 +45,14 @@ def repair(c, cont):
         c[:, 0] = np.clip(c[:, 0], -0.5, 0.5); c[:, 1] = np.clip(c[:, 1], -cont[1] / 2, cont[1] / 2)
     elif cont[0] == 'quad':
         c = np.clip(c, 0, None); rr = np.sqrt((c ** 2).sum(1)); m = rr > 1; c[m] /= rr[m, None]
+    elif cont[0] == 'semi':
+        c[:, 1] = np.clip(c[:, 1], 0, None); rr = np.sqrt((c ** 2).sum(1)); m = rr > 1; c[m] /= rr[m, None]
     return c
 
 def unstick(c, cont, seed=0):
     """Separate exactly-coincident centres (repair() can clip several onto the same corner) and pull everything a hair inward,
     so the starting r(c) > 0 and no pair distance is 0."""
-    anchor = np.asarray({'tri': (1 / 3, 1 / 3), 'rect': (0.0, 0.0), 'quad': (0.4, 0.4)}[cont[0]])
+    anchor = np.asarray({'tri': (1 / 3, 1 / 3), 'rect': (0.0, 0.0), 'quad': (0.4, 0.4), 'semi': (0.0, 0.4)}[cont[0]])
     c = np.array(c, dtype=np.float64); n = len(c); iu = np.triu_indices(n, 1)
     d = np.sqrt(((c[:, None] - c[None]) ** 2).sum(-1))[iu]
     bad = np.unique(iu[1][d < 1e-12])

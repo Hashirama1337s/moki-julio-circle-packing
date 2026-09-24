@@ -15,7 +15,7 @@ SHELVES = ["crt", "ccq"] + [f"crc_{k}" for k in range(100, 900, 100)]
 ESCAPE_ROUNDS = int(os.environ.get("ESCAPE_ROUNDS", "0"))
 
 def grok_verdict(shelf, cs, path, n, rec):
-    g = os.path.join(HERE, "grok", "verify_exact.py" if shelf == "crt" else "verify_exact2.py")
+    g = os.path.join(HERE, "grok", "verify_exact.py" if shelf == "crt" else "verify_exact3.py" if shelf == "csc" else "verify_exact2.py")
     argv = [sys.executable, g, path, str(n), rec] if shelf == "crt" else [sys.executable, g, cs, path, str(n), rec]
     out = subprocess.run(argv, capture_output=True, text=True).stdout
     vl = [l for l in out.splitlines() if l.startswith("VERDICT")]

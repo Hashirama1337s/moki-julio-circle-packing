@@ -24,6 +24,7 @@ def packing(shelf, n):
     pat = finalize_circ.info(shelf)[2]
     if not os.path.exists(pat.format(n)): return None
     c = np.array([[float(l.split()[1]), float(l.split()[2])] for l in open(pat.format(n)) if l.strip()])
+    if len(c) != n: return None          # 09-24: csc sizes whose coordinates Packomania has not published (empty files)
     return c, None, "packomania"
 
 def targets(shelves=SHELVES, offset=False, exclude=()):
