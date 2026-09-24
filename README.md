@@ -1,28 +1,50 @@
-# Moki&Julio — 1,986 new best-known packings of equal circles
+# Moki&Julio — 2,105 new best-known packings of equal circles
 
-**1,986 packings of equal circles that beat the best-known records** listed on
-[Packomania](https://www.packomania.com/) (E. Specht's record tables), in ten containers whose tables had not changed since
-2010–2013. Every packing is supplied with an exact certificate and is verified by **two independently written exact checkers**
+**2,105 packings of equal circles that beat the best-known records** listed on
+[Packomania](https://www.packomania.com/) (E. Specht's record tables), in eleven containers: ten whose tables had not changed since 2010–2013, and the semicircle, untouched from April 2011
+until September 2026. Every packing is supplied with an exact certificate and is verified by **two independently written exact checkers**
 (pure rational arithmetic, no floating point in any decision).
 
 | Packomania table | container | new records | largest gain in radius |
 |---|---|---|---|
 | `crt` | isosceles right triangle, legs 1 | 143 | +0.055 % (N = 79) |
-| `ccq` | circular quadrant, radius 1 | 436 | +0.098 % (N = 500) |
+| `ccq` | circular quadrant, radius 1 | 438 | +0.098 % (N = 500) |
 | `crc_100` | rectangle 1 × 0.1 | 10 | +0.030 % (N = 169) |
-| `crc_200` | rectangle 1 × 0.2 | 140 | +0.163 % (N = 332) |
-| `crc_300` | rectangle 1 × 0.3 | 139 | +0.224 % (N = 287) |
-| `crc_400` | rectangle 1 × 0.4 | 168 | +0.182 % (N = 186) |
-| `crc_500` | rectangle 1 × 0.5 | 162 | +0.155 % (N = 92) |
-| `crc_600` | rectangle 1 × 0.6 | 179 | +0.685 % (N = 219) |
-| `crc_700` | rectangle 1 × 0.7 | 316 | +0.752 % (N = 286) |
-| `crc_800` | rectangle 1 × 0.8 | 293 | +0.371 % (N = 10) |
-| **total** | | **1,986** | |
+| `crc_200` | rectangle 1 × 0.2 | 143 | +0.166 % (N = 338) |
+| `crc_300` | rectangle 1 × 0.3 | 141 | +0.224 % (N = 287) |
+| `crc_400` | rectangle 1 × 0.4 | 175 | +0.292 % (N = 276) |
+| `crc_500` | rectangle 1 × 0.5 | 168 | +0.190 % (N = 69) |
+| `crc_600` | rectangle 1 × 0.6 | 187 | +0.685 % (N = 219) |
+| `crc_700` | rectangle 1 × 0.7 | 321 | +0.752 % (N = 286) |
+| `crc_800` | rectangle 1 × 0.8 | 298 | +0.414 % (N = 241) |
+| `csc` | semicircle, radius 1 | 81 | +0.078 % (N = 222) |
+| **total** | | **2,105** | |
 
 Per-N radii (30 digits, old and new) are in [`RESULTS_TABLE.md`](RESULTS_TABLE.md); one row per record in
 [`MANIFEST.csv`](MANIFEST.csv) (published radius, new radius, relative gain, kind, precision).
 
 ![before and after, rectangle 1 x 0.8, N = 10](figures/ba_crc_800_10.png)
+
+## What's new in version 1.3 (2026-09-24)
+
+- **A new table: the semicircle** (`csc`, unit semicircle, N up to 250). Packomania's table was untouched from April 2011 until ten
+  sizes were updated on 9 September 2026 (we do not claim those ten: their coordinates are not published, so the printed radius
+  cannot be re-derived). **81 new records**, largest gains N = 222 +0.078 %, N = 233 +0.069 %, N = 227 +0.064 %;
+  72 of them certified locally optimal. Checked by Claude's checker and by a new independent checker written by Grok
+  (`checkers/verify_exact_semi.py`). For N = 151–200 we compare against Lai, Hao, Yue & Zhou (2025, Table 8) instead of Packomania:
+  35 semicircle packings that beat the website but not that paper (or cannot be checked) are listed as not claimed.
+- **2,105 records in total** (v1.2: 1,986). In the ten earlier tables: **38 more
+  sizes** and **368 records improved further** over v1.2 (largest: `crc_700` N = 209 +0.443 %, `crc_700` N = 403 +0.390 %, `crc_700` N = 417 +0.368 %, `crc_400` N = 276 +0.291 %).
+  Largest gain over Packomania: `crc_700` N = 286, +0.752 % in radius.
+- **How:** two new moves, each chosen by a sealed probe before any full run (`solver/night_probe.py`): *iterated relocation* (basin
+  hopping whose kick moves one to three of the least-loaded circles into the largest holes) and *row-phase flips* (proposed by
+  Grok: shift a whole lattice row, or everything above a badly stacked row, by one radius, then re-optimise — a collective move
+  that single-circle moves cannot make). Plus *exact row lattices* found by our proofs scout: alternating, shifted and square rows
+  in closed form, trimmed to N and re-optimised (`solver/fam_sweep.py`); e.g. `crc_700` N = 209, +0.45 % over the published
+  radius. The semicircle's first pass (`solver/csc_pass.py`) started from Packomania's own packings and their neighbours. Every
+  result passed both exact checkers, the prior-art gate and the table-radius gate from scratch.
+- **Tables re-checked:** on 2026-09-24 every radius on Packomania's eleven live pages (3,759 rows) still equals the
+  values these records are compared against.
 
 ## What's new in version 1.2 (2026-09-24)
 
@@ -43,23 +65,23 @@ Per-N radii (30 digits, old and new) are in [`RESULTS_TABLE.md`](RESULTS_TABLE.m
   report better values than the best known for 25 of 51 fixed-rectangle instances. The paper is closed access and the instances
   are not listed in its abstract. Where it overlaps these tables, their values, not Packomania's, are the ones to beat.
 
-## Cumulative since version 1.0 (as of version 1.2)
+## Cumulative since version 1.0 (as of version 1.3)
 
-- **1,986 records** (v1.0: 1,933). **53 sizes where we had no record before**; **748 of the v1.0 records improved
-  further** (gain over our own v1.0 radius; largest `crc_700` N = 286 +0.752 %, `crc_600` N = 219 +0.665 %, `crc_700` N = 190 +0.590 %, `crc_700` N = 189 +0.585 %, `crc_700` N = 188 +0.558 %). Every file is re-verified from scratch by both
-  exact checkers (1986 / 1986), and Packomania's printed radius for every claimed size was re-derived from its own coordinate file in the
+- **2,105 records** (v1.0: 1,933). **172 sizes where we had no record before**; **871 of the v1.0 records improved
+  further** (gain over our own v1.0 radius; largest `crc_700` N = 286 +0.752 %, `crc_600` N = 219 +0.665 %, `crc_700` N = 190 +0.591 %, `crc_700` N = 189 +0.585 %, `crc_700` N = 188 +0.559 %). Every file is re-verified from scratch by both
+  exact checkers (2105 / 2105), and Packomania's printed radius for every claimed size was re-derived from its own coordinate file in the
   same frame and in mirrored frames (0 mismatches).
 - **How:** (1) every certificate driven to its exact local peak in 80-digit arithmetic (a mixed-precision sequential-LP step, then
   Newton on the identified contacts); (2) **neighbour transplants** — seed size N from our packing at N−1 (one circle into the
   largest hole) or N+1 (remove the circle with fewest contacts), then polish; this jumped over weak basins, e.g. `crc_700` N = 187
-  from +0.003 % to +0.516 % over the published radius (picture below); (3) a flex walk along load-bearing flexes found by the certificate below.
+  from +0.003 % to +0.532 % over the published radius (picture below); (3) a flex walk along load-bearing flexes found by the certificate below.
 - **Local optimality certificates** (`local_optimality/<table>.zip`, one JSON per packing: kept constraints and contact forces).
-  For **1,089** of the 1,986 packings, two independently written checkers (`checkers/lopt.py`, float-rigorous;
+  For **1,180** of the 2,105 packings, two independently written checkers (`checkers/lopt.py`, float-rigorous;
   `checkers/verify_lopt.py`, exact rational in ℚ(√2)) prove: every feasible packing whose load-bearing circles and radius lie
-  within an explicit distance ρ of ours (median ρ = 7.8e-09 r) has radius at most ours + Δ (Δ ≤ 6e-26 r in every case,
-  median 4e-44 r), and a true local maximum lies within t₀ of ours. In plain words: no small nudge beats these packings.
-  Of the other 897: 883 carry a first-order flex (a sliding or buckling motion the first-order theorem cannot
-  exclude) and 14 could not be certified by this method; none of them is claimed locally optimal. Verdict, ρ
+  within an explicit distance ρ of ours (median ρ = 9.2e-09 r) has radius at most ours + Δ (Δ ≤ 6e-26 r in every case,
+  median 3e-44 r), and a true local maximum lies within t₀ of ours. In plain words: no small nudge beats these packings.
+  Of the other 925: 910 carry a first-order flex (a sliding or buckling motion the first-order theorem cannot
+  exclude) and 15 could not be certified by this method; none of them is claimed locally optimal. Verdict, ρ
   and Δ for every packing: [`LOCAL_OPTIMALITY.csv`](LOCAL_OPTIMALITY.csv). Theorem and proof: docstring of `checkers/lopt.py`.
 
 ![before and after, rectangle 1 x 0.7, N = 187](figures/ba_crc_700_187.png)
@@ -70,7 +92,7 @@ Per-N radii (30 digits, old and new) are in [`RESULTS_TABLE.md`](RESULTS_TABLE.m
 python verify.py
 ```
 Standard library only. It unzips `certificates/`, and for every record runs both checkers against the published radius in
-`MANIFEST.csv`. A record counts only if **both** say `IMPROVES`. Expected output: `TOTAL: 1986 / 1986 verified by both checkers`.
+`MANIFEST.csv`. A record counts only if **both** say `IMPROVES`. Expected output: `TOTAL: 2105 / 2105 verified by both checkers`.
 
 - **Certificate format** (`certificates/<table>.zip`, one file per N): first line `r <radius>`, then N lines `x y` (circle centres,
   decimal). Same coordinate frame as Packomania's own files: `crt` has its right angle at the origin and legs along the axes;
@@ -79,7 +101,9 @@ Standard library only. It unzips `certificates/`, and for every record runs both
   fractions (the only irrational terms, √2 on the triangle's hypotenuse and the quadrant's arc, are handled by a sign check and
   squaring). Claim floor: IMPROVES only if the radius exceeds the published one by more than one part in 10¹⁰ — published values can
   be low by ~10⁻²⁴ from last-digit rounding, which is a tie, not a record.
-- **Checker B** (`checkers/verify_exact_crt.py`, `checkers/verify_exact_rect_quad.py`): written independently, blind to checker A.
+- **Checker B** (`checkers/verify_exact_crt.py`, `checkers/verify_exact_rect_quad.py`, and for the semicircle
+  `checkers/verify_exact_semi.py`, whose expression parser carries two labelled one-line fixes by Claude): written
+  independently, blind to checker A.
 - `packomania/<table>.zip` holds the same packings in Packomania's submission format (`.pck`: radius, name, coordinates).
 
 ## How they were found
@@ -96,8 +120,8 @@ Search over the positions of N centres maximising the smallest clearance (circle
    search re-found 14 of 14 known small records; both checkers reject planted overlaps, points outside, and inflated radii.
 
 **Kinds of improvement** (our circles matched one-to-one to the published ones; loose "rattler" circles ignored):
-1,615 new arrangements (a held circle moved ≥ 5 % of a radius and the gain is ≥ 10⁻⁶), 155 refinements of the published
-arrangement, 216 small gains we do not claim as new structures.
+1,763 new arrangements (a held circle moved ≥ 5 % of a radius and the gain is ≥ 10⁻⁶), 141 refinements of the published
+arrangement, 201 small gains we do not claim as new structures.
 
 ## Prior art we checked — and what we therefore do NOT claim
 
@@ -108,7 +132,7 @@ Packomania is not the only record: two papers improved some of these tables with
   excluded.
 - **López & Beasley**, *EJOR* 214 (2011) 512–525 (and López's thesis, Table 4.5) — improvements on the 5 × 1 and 10 × 1
   rectangles (= `crc_200`, `crc_100`) at 15 values of N whose radii were never published; those N are excluded.
-92 packings that beat the website were excluded this way; they are listed at the end of `RESULTS_TABLE.md`.
+127 packings that beat the website were excluded this way; they are listed at the end of `RESULTS_TABLE.md`.
 
 ## Credit, citation, licence
 

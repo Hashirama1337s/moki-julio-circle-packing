@@ -14,6 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, os.path.jo
 def container(shelf):
     if shelf == "crt": return "tri"
     if shelf == "ccq": return "quad"
+    if shelf == "csc": return "semi"
     return "rect:0." + f"{int(shelf.split('_')[1]):03d}".rstrip("0")          # crc_300 -> rect:0.3
 
 def check(args):
@@ -21,6 +22,7 @@ def check(args):
     import certify_circ
     a = certify_circ.check(container(shelf), path, rec, verbose=False)[0]
     if shelf == "crt": argv = [sys.executable, os.path.join(HERE, "checkers", "verify_exact_crt.py"), path, str(n), rec]
+    elif shelf == "csc": argv = [sys.executable, os.path.join(HERE, "checkers", "verify_exact_semi.py"), "semi", path, str(n), rec]
     else: argv = [sys.executable, os.path.join(HERE, "checkers", "verify_exact_rect_quad.py"), container(shelf), path, str(n), rec]
     out = subprocess.run(argv, capture_output=True, text=True).stdout
     b = [l for l in out.splitlines() if l.startswith("VERDICT")]; b = b[0].split(":")[1].strip() if b else "ERROR"
