@@ -16,6 +16,8 @@ def shelf_info(shelf):
         return ("quad",), "quad", os.path.join(SH, "ccq", "coords", "ccq{}.txt"), os.path.join(SH, "ccq", "radius.txt")
     if shelf == "csc":
         return ("semi",), "semi", os.path.join(SH, "csc", "coords", "csc{}.txt"), os.path.join(SH, "csc", "radius.txt")
+    if shelf == "csq":                               # 09-24 (four hats): Packomania's unit square, centred = rect with h = 1
+        return ("rect", 1.0), "rect:1", os.path.join(SH, "csq", "coords", "csq{}.txt"), os.path.join(SH, "csq", "radius.txt")
     k = int(shelf.split("_")[1])                     # crc_300 -> k = 300 -> height 0.3
     h_str = "0." + f"{k:03d}".rstrip("0")            # "0.3" (exact decimal for the checker)
     pat = os.path.join(SH, shelf, "coords", "crc{}_0." + f"{k:03d}" + "000000000.txt")
