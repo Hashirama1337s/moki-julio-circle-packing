@@ -18,8 +18,12 @@ increases with r, so r ≤ r_zz(N).
 distance √(s² + (h − 2r)²) = 2r; circles two apart are 2s ≥ 2r apart exactly when s ≥ r, i.e. r ≥ h(2 − √3); the last centre sits
 at 1/2 − r by the definition of r_zz; r ≤ h/2 keeps every circle inside. ∎
 
-This is an elementary argument (Füredi, Discrete Comput. Geom. 6 (1991) 95–106, calls the analogous infinite-strip case trivial).
-We found no statement of it for general fixed rectangles, and Packomania marks none of the zig-zag entries below as proven (only
+**The bound is Füredi's, not ours.** Füredi (Discrete Comput. Geom. 6 (1991) 95–106, pp. 96–97) calls the case w ≤ √3/2 trivial
+and states it for a closed w × x rectangle R_{w,x}: points at mutual distance ≥ 1 have |x_i − x_j| ≥ √(1 − w²), so R_{w,x} holds
+at most 1 + x/√(1 − w²) of them. Scaled to centres in the (1 − 2r) × (h − 2r) box at distance 2r, that is exactly the upper bound
+above. (Correction in v1.5: versions 1.0–1.4 said we had found no statement of it for fixed rectangles. That was wrong.)
+What is ours is the translation to Packomania's fixed-aspect containers, the window in which the
+zig-zag attains the bound, and the table entries it settles. Packomania marks none of the zig-zag entries below as proven (only
 single-row entries are bold). Known special cases we do not claim: two circles in any rectangle (classical), and the 2 × 1
 rectangle (= crc_500) for N = 3–6, described in the literature as proved by zig-zag arguments. (Ruda 1970, sometimes cited for
 n ≤ 8, concerns minimum area with the aspect ratio left FREE — a different problem.)

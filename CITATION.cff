@@ -1,10 +1,10 @@
 cff-version: 1.2.0
 message: "If you use these packings or tools, please cite them as below."
-title: "Moki&Julio: 2,107 new best-known packings of equal circles in a triangle, a quadrant and rectangles"
+title: "Moki&Julio: 2,115 new best-known packings of equal circles in a triangle, a quadrant and rectangles"
 authors:
   - name: "Moki&Julio"
 date-released: 2026-09-24
-version: "1.4"
+version: "1.5"
 license: CC-BY-4.0
 keywords:
   - circle packing
@@ -13,7 +13,7 @@ keywords:
   - best-known packings
   - exact certificates
 abstract: >-
-  2,107 packings of equal circles that improve the best-known records of Packomania's tables for the isosceles right triangle
+  2,115 packings of equal circles that improve the best-known records of Packomania's tables for the isosceles right triangle
   (crt), the circular quadrant (ccq) and eight fixed rectangles (crc_100 to crc_800), each with an exact certificate verified by
   two independently written exact-rational checkers. Results already surpassed in the literature (Lai et al. 2025;
   López & Beasley 2011) are excluded.
