@@ -99,10 +99,16 @@ def constraints(cont, C, r):
                  (1 - math.hypot(xf, yf) - rf, ((1 - r) ** 2 - x * x - y * y, Z),
                   {2 * i: (-2 * x, Z), 2 * i + 1: (-2 * y, Z), R: (-2 * (1 - r), Z)})]
             kap = [0, 0, 2]
+        elif cont == "semi":                # slot 0 inert (never within PRE), so the arc keeps index 2 as in quad
+            W = [(10.0, (F(10), Z), {}),
+                 (yf - rf, (y - r, Z), {2 * i + 1: (F(1), Z), R: (F(-1), Z)}),
+                 (1 - math.hypot(xf, yf) - rf, ((1 - r) ** 2 - x * x - y * y, Z),
+                  {2 * i: (-2 * x, Z), 2 * i + 1: (-2 * y, Z), R: (-2 * (1 - r), Z)})]
+            kap = [0, 0, 2]
         else: raise ValueError(cont)
         for k, ((sf, g, grad), kp) in enumerate(zip(W, kap)):
             if sf <= PRE * rf:
-                norm = hi(g) / (r if not (cont == "quad" and k == 2) else 2 * r)   # arc slack ~ 2 r * distance slack
+                norm = hi(g) / (r if not (cont in ("quad", "semi") and k == 2) else 2 * r)   # arc slack ~ 2 r * distance slack
                 out.append((("w", i, k), g, norm, grad, kp))
     return out
 

@@ -213,17 +213,21 @@ def parse_container(s: str):
         return "tri", None
     if s == "quad":
         return "quad", None
+    if s == "semi":                     # PATCH (Claude 2026-09-24, Grok's spec grok/reply-semi.md): unit semicircle, y >= 0
+        return "semi", None
     if s.startswith("rect:"):
         h = parse_number(s[5:])
         if h <= 0:
             raise ValueError("rectangle height must be positive")
         return "rect", h
-    raise ValueError("container must be tri, rect:<h>, or quad")
+    raise ValueError("container must be tri, rect:<h>, quad or semi")
 
 
 def wall_ks(kind: str):
     if kind == "rect":
         return (0, 1, 2, 3)
+    if kind == "semi":                  # PATCH (Grok's spec): k=1 y - r, k=2 arc (same polynomials as quad); k=0 is not a wall
+        return (1, 2)
     return (0, 1, 2)
 
 
@@ -232,7 +236,7 @@ def kappa_of(kind: str, con) -> int:
     if tag == "p":
         return 8
     k = con[2]
-    if kind == "quad" and k == 2:
+    if kind in ("quad", "semi") and k == 2:   # PATCH (Grok's spec): the semicircle arc has the quadrant arc's kappa
         return 2
     return 0
 

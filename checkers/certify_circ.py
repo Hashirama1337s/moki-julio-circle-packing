@@ -3,6 +3,7 @@ File: line 1 "r <decimal>", then N lines "x y" (decimal strings). Record radius:
 Fit rules (exact rationals; the only irrational terms are handled by sign checks + squaring):
   rect:h  -1/2 + r <= x <= 1/2 - r,  -h/2 + r <= y <= h/2 - r
   quad    x >= r, y >= r, 1 - r >= 0 and x^2 + y^2 <= (1 - r)^2
+  semi    y >= r, 1 - r >= 0 and x^2 + y^2 <= (1 - r)^2          (unit semicircle, Packomania csc)
   tri     x >= r, y >= r, 1 - x - y >= 0 and (1 - x - y)^2 >= 2 r^2
 Pairs: dx^2 + dy^2 >= 4 r^2. CLAIM RULE: IMPROVES requires r > r_rec (1 + 1e-10). Smaller gains are TIES (published values can be low by ~1e-24).
 usage: py -3.11 certify_circ.py <container> <file> <record_radius_decimal>
@@ -16,6 +17,8 @@ def fits(cont, x, y, r):
         return -F(1, 2) + r <= x <= F(1, 2) - r and -h / 2 + r <= y <= h / 2 - r
     if cont == "quad":
         return x >= r and y >= r and 1 - r >= 0 and x * x + y * y <= (1 - r) ** 2
+    if cont == "semi":
+        return y >= r and 1 - r >= 0 and x * x + y * y <= (1 - r) ** 2
     if cont == "tri":
         s = 1 - x - y
         return x >= r and y >= r and s >= 0 and s * s >= 2 * r * r
