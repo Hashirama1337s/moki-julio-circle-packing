@@ -78,14 +78,16 @@ def step_lp(C, box, r, D, eps=1e-6):
         u = r1.x[:2 * n]; v = v1
     return u, v, list(zip(I.tolist(), J.tolist()))
 
-def converge(C, cont_s, D0=1e-7, max_iter=600, log=None, floor_rel=1e-22):
+def converge(C, cont_s, D0=1e-7, max_iter=600, log=None, floor_rel=1e-22, t_cap=None):
     """SLP phase: C list of (mpf, mpf) -> centres within ~1e-17 of the local optimum, where the contact set is identified.
     (Below that, the float LP cannot resolve the scaled slacks; refine_circ's Newton step on the identified contacts finishes.)
     Returns (C, r, info)."""
     box = Box(cont_s); C = [(mp.mpf(x), mp.mpf(y)) for x, y in C]
     mp.mp.dps = 80
     r = rmin_mp(C, box, near_pairs(C, box)); D = mp.mpf(D0); it = acc = 0; r0 = r; floor = mp.mpf(floor_rel) * r
+    import time as _t; _t0 = _t.time()
     while it < max_iter and D > floor:
+        if t_cap and _t.time() - _t0 > t_cap: break                  # 23:50: one ccq 551 job ran 30+ min (best-so-far kept)
         it += 1
         u, v, pairs = step_lp(C, box, r, D)
         if u is None or v <= 1e-9 or v * D < floor * mp.mpf(10) ** -4: D /= 16; continue   # nothing resolvable at this scale

@@ -21,18 +21,33 @@ def job(a):
     if cur is None or up is None or dn is None: return {"shelf": shelf, "N": n, "skipped": "no neighbours"}
     r_best = cur[1] or slp_circ.rmin(cur[0], cont)
     best = (r_best, None, None)
+    # ping-pong guard (Grok stage 2): if our N+1 packing was itself made by INSERTING a circle (appended last), deleting that circle
+    # just restores the old N — skip it.
+    jup = os.path.join(HERE, "cand_hp", shelf, f"{shelf}_{n + 1}.json")
+    no_del = {n} if os.path.exists(jup) and "_ins" in json.load(open(jup)).get("tag", "") else set()
     c_up = up[0]; nc = tp.near_counts(c_up, up[1] or slp_circ.rmin(c_up, cont), cont)
-    for i in [int(i) for i in np.argsort(nc, kind="stable")][:4]:
+    for i in [int(i) for i in np.argsort(nc, kind="stable") if int(i) not in no_del][:4]:
         c, r = slp_circ.polish(np.delete(c_up, i, 0), cont, t_cap=60.0)
         if r > best[0]: best = (r, c, f"del{i}")
     for j, h in enumerate(tp.holes(dn[0], cont)):
         c, r = slp_circ.polish(np.vstack([dn[0], h]), cont, t_cap=60.0)
         if r > best[0]: best = (r, c, f"ins{j}")
+    # SECOND SEED (Grok stage 2): Packomania's own N-1 / N+1 packings are a different basin family from ours — one insertion and
+    # one deletion from them as well, when ours differ from theirs.
+    pat = finalize_circ.info(shelf)[2]
+    for m, kind in ((n - 1, "ins"), (n + 1, "del")):
+        mine = up if m == n + 1 else dn
+        if mine[2] != "ours" or not os.path.exists(pat.format(m)): continue
+        cp = np.array([[float(l.split()[1]), float(l.split()[2])] for l in open(pat.format(m)) if l.strip()])
+        if kind == "ins": q = np.vstack([cp, tp.holes(cp, cont, k=1)[0]])
+        else: q = np.delete(cp, int(np.argsort(tp.near_counts(cp, slp_circ.rmin(cp, cont), cont), kind="stable")[0]), 0)
+        c, r = slp_circ.polish(q, cont, t_cap=60.0)
+        if r > best[0]: best = (r, c, f"pk{kind}")
     row = {"shelf": shelf, "N": n, "rel_float": best[0] / r_best - 1, "seed": best[2], "base": cur[2]}
     if best[1] is None or best[0] <= r_best * (1 + 1e-10): return row
     npy = os.path.join(HERE, "out", "transplant", f"sweep_{shelf}_{n}_{best[2]}.npy"); np.save(npy, best[1])
     try:
-        with contextlib.redirect_stdout(io.StringIO()): cr = cert_candidate.run(shelf, n, npy, tag="sweep")
+        with contextlib.redirect_stdout(io.StringIO()): cr = cert_candidate.run(shelf, n, npy, tag="sweep_" + best[2])
         row.update({k: cr.get(k) for k in ("gain_vs_ours", "gain_vs_packomania", "claude", "grok", "lopt", "kept")})
     except Exception as e: row["error"] = repr(e)
     return row
@@ -40,13 +55,34 @@ def job(a):
 if __name__ == "__main__":
     W = int(next((a.split("=")[1] for a in sys.argv if a.startswith("--workers=")), 3))
     hh, mm = map(int, next(a.split("=")[1] for a in sys.argv if a.startswith("--stop=")).split(":"))
-    stop = datetime.datetime.now().replace(hour=hh, minute=mm, second=0, microsecond=0).timestamp()
+    _now = datetime.datetime.now(); _s = _now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+    if _s <= _now: _s += datetime.timedelta(days=1)          # 21:36 bug: "--stop=06:00" meant this morning -> ended at once
+    stop = _s.timestamp(); print(f"hard stop {_s.isoformat(timespec='minutes')}", flush=True)
     shelves = [a for a in sys.argv[1:] if not a.startswith("--")]
     import finalize_circ
     queue = []
     for s in shelves:
         rp = finalize_circ.info(s)[3]; ns = sorted(int(l.split()[0]) for l in open(rp) if l.strip())
         queue += [(s, n) for n in ns if n >= 3]
+    # --skip-done=a.jsonl,b.jsonl : drop sizes already swept (pass 0) in earlier runs
+    # --seed-cascade=a.jsonl,...  : put the neighbours (N-1, N+1) of every KEPT hit in those runs back at the FRONT of the queue
+    def _rows(spec):
+        out = []
+        for f in (spec.split(",") if spec else []):
+            p = os.path.join(HERE, "out", f)
+            if os.path.exists(p): out += [json.loads(l) for l in open(p) if l.strip()]
+        return out
+    skip = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--skip-done=")), "")
+    seed = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--seed-cascade=")), "")
+    done = {(r["shelf"], r["N"]) for r in _rows(skip) if "rel_float" in r or r.get("skipped") == "no neighbours"}
+    tables = {s: {int(l.split()[0]) for l in open(finalize_circ.info(s)[3]) if l.strip()} for s in shelves}
+    front = []
+    for r in _rows(seed):
+        if r.get("kept") and r.get("claude") == "IMPROVES" and r.get("grok") == "IMPROVES" and r["shelf"] in tables:
+            front += [(r["shelf"], m) for m in (r["N"] - 1, r["N"] + 1) if m >= 3 and m in tables[r["shelf"]]]
+    front = list(dict.fromkeys(front))
+    queue = front + [q for q in queue if q not in done and q not in set(front)]
+    print(f"queue: {len(front)} cascade seeds first, then {len(queue) - len(front)} unswept sizes (skipped {len(done)} done)", flush=True)
     t0 = time.time()
     for p in range(3):
         if not queue or time.time() > stop: break

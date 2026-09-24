@@ -20,7 +20,7 @@ def run(shelf, n, npy, tag="cand"):
     rec = {int(l.split()[0]): l.split()[1] for l in open(rp) if l.strip()}[n]
     c = np.load(npy); assert c.shape == (n, 2), c.shape
     mp.mp.dps = 80
-    C1, r1, info = hpslp.converge([(mp.mpf(repr(float(x))), mp.mpf(repr(float(y)))) for x, y in c], cs, floor_rel=1e-47)
+    C1, r1, info = hpslp.converge([(mp.mpf(repr(float(x))), mp.mpf(repr(float(y)))) for x, y in c], cs, floor_rel=1e-47, t_cap=600)
     mp.mp.dps = 60
     Cr, rr, res, shape = refine_circ.refine(np.array([[float(x), float(y)] for x, y in C1]), cont, cs)
     d = os.path.join(HERE, "cand_hp", shelf); os.makedirs(d, exist_ok=True)
