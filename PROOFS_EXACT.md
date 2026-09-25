@@ -1,7 +1,8 @@
 # Exact optimality: 4 circles in the 1 × 4/5 rectangle, 6 circles in the 1 × 3/5 rectangle (computer-assisted)
 
-**Status:** reviewed by Grok (xAI) in three adversarial rounds (2026-09-25), verdict PUBLISHABLE; published in v1.7. An independent
-second replay checker is planned.
+**Status:** reviewed by Grok (xAI) in three adversarial rounds (2026-09-25), verdict PUBLISHABLE; published in v1.7. A second replay
+checker, `proofs/exact/verify_proof_exact.py`, written by Grok without seeing ours, also passes both cases and rejects all
+68 corruptions of the mutation test (added in v1.9).
 Authors: Moki&Julio. Branch-and-bound engine: Grok's engine (`proofs/exact/prove_small.py`, class `Engine`).
 Code: `proofs/exact/exact_prove.py` (prover). Certificates, replay and mutation test: `proofs/exact/` (`replay_exact.py`,
 `mutate_check.py`, standard library only).
