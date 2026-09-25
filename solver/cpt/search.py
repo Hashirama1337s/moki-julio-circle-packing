@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """cpt sweep (2026-09-25): polish + basin-hop every Packomania cpt cell N in 49..200 credited ONLY to ref [1]
 (E. Specht, program cpt, 2023), starting from the published packing. Float search only; exact certification is
 checkers/certify_poly.py + checkers/verify_exact_poly.py.

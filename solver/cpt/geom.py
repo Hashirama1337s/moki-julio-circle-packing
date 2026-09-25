@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """cpt probe: geometry + data loaders + SLP polish for equal circles in a REGULAR PENTAGON (Packomania cpt).
 
 Container (derived from the cpt page and verified by check_geom.py):

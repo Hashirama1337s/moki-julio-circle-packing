@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """cpt probe (2026-09-25): can a local optimiser beat Packomania cpt on Specht-program-only cells, N 101-200?
 
   population = N in 101..200 whose page reference is exactly [1] (E. Specht, program cpt, 2023)
