@@ -1,4 +1,4 @@
-table,N,verdict_claude,verdict_grok,locally_optimal_certified,rho_rel,Delta_rel
+table,N,verdict_checker_a,verdict_checker_b,locally_optimal_certified,rho_rel,Delta_rel
 ccq,57,CERTIFIED,CERTIFIED,yes,6.685e-08,2.370e-44
 ccq,59,CERTIFIED,CERTIFIED,yes,9.192e-08,1.662e-44
 ccq,63,CERTIFIED,CERTIFIED,yes,2.000e-06,1.422e-44

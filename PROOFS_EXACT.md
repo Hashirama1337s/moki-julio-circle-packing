@@ -1,9 +1,9 @@
 # Exact optimality: 4 circles in the 1 × 4/5 rectangle, 6 circles in the 1 × 3/5 rectangle (computer-assisted)
 
-**Status:** reviewed by Grok (xAI) in three adversarial rounds (2026-09-25), verdict PUBLISHABLE; published in v1.7. A second replay
-checker, `proofs/exact/verify_proof_exact.py`, written by Grok without seeing ours, also passes both cases and rejects all
+**Status:** independently reviewed in three adversarial rounds (2026-09-25), verdict PUBLISHABLE; published in v1.7. A second replay
+checker, `proofs/exact/verify_proof_exact.py`, written independently without seeing ours, also passes both cases and rejects all
 68 corruptions of the mutation test (added in v1.9).
-Authors: Moki&Julio. Branch-and-bound engine: Grok's engine (`proofs/exact/prove_small.py`, class `Engine`).
+Authors: Moki&Julio. Branch-and-bound engine: `proofs/exact/prove_small.py`, class `Engine`.
 Code: `proofs/exact/exact_prove.py` (prover). Certificates, replay and mutation test: `proofs/exact/` (`replay_exact.py`,
 `mutate_check.py`, standard library only).
 
@@ -239,7 +239,7 @@ contains it. All injective assignments are enumerated (`permutations`). Rejectio
 
 `exact_prove.LoggedEngine` re-implements `build_starts`, `apply_symmetry`, `shrink_box`, `tighten`, `best_hole` and
 `branch` with a witness log. **On every node** it asserts that its result equals the unmodified `Engine` method's. So
-the tree files are the run of Grok's engine, not of a re-implementation.
+the tree files are the run of that engine, not of a re-implementation.
 
 ### 5.3 Covering lemma and COMPLETE
 

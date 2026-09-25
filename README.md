@@ -41,7 +41,7 @@ Version 2.0 (below) was built and verified, and is published together with this 
 - **How (pentagon):** start from Packomania's published packing, polish it with the sequential-LP solver, then basin hopping
   (move the least-held circles into the largest holes, or shake a region) with a polish after every move
   (`solver/cpt/search.py`, float arithmetic). Then exact certification by two checkers:
-  `checkers/certify_poly.py` (checker A) and `checkers/verify_exact_poly.py` (checker B, written by Grok without seeing checker A).
+  `checkers/certify_poly.py` (checker A) and `checkers/verify_exact_poly.py` (checker B, written independently without seeing checker A).
   The pentagon's walls have irrational normals and distance, so both decide every wall test exactly in ℚ(√5, √(10 ± 2√5))
   (a sign test, then one squaring): no inner polygon, no radius given away. Frame: circumradius 1, centred at the origin, one
   vertex at (0, 1), bottom side horizontal — the frame of Packomania's own `cpt` files.
@@ -81,7 +81,7 @@ Version 2.0 (below) was built and verified, and is published together with this 
   (2 × 10⁻⁵ relative), which makes one size take seconds; the sweep over these sizes continues. The GPU searches from
   Packomania's own packings continued.
   Every result passed both exact checkers, the prior-art gate and the table-radius gate again from scratch.
-- **Exact proofs, second checker:** `proofs/exact/verify_proof_exact.py`, written by Grok (xAI) without seeing our checker, replays
+- **Exact proofs, second checker:** `proofs/exact/verify_proof_exact.py`, written independently without seeing our checker, replays
   both exact optimality proofs from the published files and passes them; it also rejects all 68 corrupted copies made by
   `proofs/exact/mutate_check.py`.
 - **Tables re-checked:** on 2026-09-25 every radius on Packomania's twelve live pages (6,906 rows) still equals the
@@ -113,9 +113,9 @@ Version 2.0 (below) was built and verified, and is published together with this 
   r = 7/20 − √2/10) and 6 circles in the 1 × 0.6 rectangle (`crc_600` N = 6, r = 1/5 − √2/30). Both are optimal, and the optimal
   packing is unique up to mirror images. Packomania lists both radii but does not mark them proven, and we found no earlier proof.
   Method: an exact stress certificate in Q(√2) gives a ball around the known packing that holds no other packing; an exact
-  branch-and-bound (Grok's engine) shows that every packing with a slightly smaller radius lies in that ball.
+  branch-and-bound (engine `proofs/exact/prove_small.py`) shows that every packing with a slightly smaller radius lies in that ball.
   [`PROOFS_EXACT.md`](PROOFS_EXACT.md); replay every step with `python proofs/exact/replay_exact.py` (standard library only,
-  shares no code with the prover). Reviewed by Grok (xAI) in three adversarial rounds.
+  shares no code with the prover). Independently reviewed in three adversarial rounds.
 - **Tables re-checked:** on 2026-09-25 every radius on Packomania's twelve live pages (6,906 rows) still equals the
   values these records are compared against.
 
@@ -134,9 +134,9 @@ Version 2.0 (below) was built and verified, and is published together with this 
   and is not claimed; N = 3000 is theirs). Sources of the 630: 319 are standard hexagonal row lattices
   (alternating or shifted rows fitted to the square, minus the least-used circles; 54 distinct lattices; row
   lattices of this kind are classical, the table entries are new), 87 are deletion seeds polished above the envelope,
-  94 are Grok's own constructions ("stretched" and "mixed" row lattices, `solver/csq_constructions.py`, written by Grok),
+  94 are independent constructions ("stretched" and "mixed" row lattices, `solver/csq_constructions.py`),
   and 130 come from relocation moves and the GPU search on Specht-program entries (N ≤ 1000).
-- **Checkers for up to 10,000 circles:** `checkers/certify_big.py` (Claude) and `checkers/verify_exact_big.py` (Grok, written from
+- **Checkers for up to 10,000 circles:** `checkers/certify_big.py` (checker A) and `checkers/verify_exact_big.py` (checker B, written from
   a one-page spec without seeing the other) — both exact integer arithmetic, pairs pruned by a grid of 2r cells whose completeness is
   argued in each file. Local optimality on the square: attempted for N ≤ 1000 only (42 certified locally optimal,
   81 not rigid, 14 undecided; 493 larger ones not attempted).
@@ -183,15 +183,15 @@ Version 2.0 (below) was built and verified, and is published together with this 
 - **A new table: the semicircle** (`csc`, unit semicircle, N up to 250). Packomania's table was untouched from April 2011 until ten
   sizes were updated on 9 September 2026 (we do not claim those ten: their coordinates are not published, so the printed radius
   cannot be re-derived). **81 new records**, largest gains N = 222 +0.078 %, N = 233 +0.069 %, N = 227 +0.064 %;
-  72 of them certified locally optimal. Checked by Claude's checker and by a new independent checker written by Grok
+  72 of them certified locally optimal. Checked by checker A and by a new, independently written checker B
   (`checkers/verify_exact_semi.py`). For N = 151–200 we compare against Lai, Hao, Yue & Zhou (2025, Table 8) instead of Packomania:
   35 semicircle packings that beat the website but not that paper (or cannot be checked) are listed as not claimed.
 - **2,105 records in total** (v1.2: 1,986). In the ten earlier tables: **38 more
   sizes** and **368 records improved further** over v1.2 (largest: `crc_700` N = 209 +0.443 %, `crc_700` N = 403 +0.390 %, `crc_700` N = 417 +0.368 %, `crc_400` N = 276 +0.291 %).
   Largest gain over Packomania: `crc_700` N = 286, +0.752 % in radius.
 - **How:** two new moves, each chosen by a sealed probe before any full run (`solver/night_probe.py`): *iterated relocation* (basin
-  hopping whose kick moves one to three of the least-loaded circles into the largest holes) and *row-phase flips* (proposed by
-  Grok: shift a whole lattice row, or everything above a badly stacked row, by one radius, then re-optimise — a collective move
+  hopping whose kick moves one to three of the least-loaded circles into the largest holes) and *row-phase flips*
+  (shift a whole lattice row, or everything above a badly stacked row, by one radius, then re-optimise — a collective move
   that single-circle moves cannot make). Plus *exact row lattices* found by our proofs scout: alternating, shifted and square rows
   in closed form, trimmed to N and re-optimised (`solver/fam_sweep.py`); e.g. `crc_700` N = 209, +0.45 % over the published
   radius. The semicircle's first pass (`solver/csc_pass.py`) started from Packomania's own packings and their neighbours. Every
@@ -210,7 +210,7 @@ Version 2.0 (below) was built and verified, and is published together with this 
   Every result passed both exact checkers, the prior-art gate and the table-radius gate again from scratch.
 - **A proof:** [`PROOFS.md`](PROOFS.md) — for thin rectangles, Füredi's bound (1991; credited from v1.5) shows the zig-zag
   packing is optimal whenever it fits; applied to the tables it proves **58 entries of Packomania's rectangle tables optimal** that were not marked proven (the published values
-  there are exactly right). Checked independently by Grok (xAI); verify with `python proofs/proof_zigzag_check.py`.
+  there are exactly right). Checked independently; verify with `python proofs/proof_zigzag_check.py`.
 - **Tables re-checked:** on 2026-09-24 every radius on Packomania's ten live pages (3,509 rows) still equals the values these records
   are compared against.
 - **Possible prior art we could not check:** Lin, Lai & Wang, *Probability-based monotonic basin-hopping algorithm for packing
@@ -258,7 +258,7 @@ Standard library only. It unzips `certificates/`, and for every record runs both
   For the pentagon, `checkers/certify_poly.py` decides every wall exactly in ℚ(√5, √(10 ± 2√5)) and says IMPROVES for any gain;
   the same 10⁻¹⁰ floor (and the Amore gate) is applied when the pentagon records are selected (v2.1).
 - **Checker B** (`checkers/verify_exact_crt.py`, `checkers/verify_exact_rect_quad.py`, for the semicircle
-  `checkers/verify_exact_semi.py` (two labelled one-line parser fixes by Claude), for the square `checkers/verify_exact_big.py`,
+  `checkers/verify_exact_semi.py` (two labelled one-line parser fixes), for the square `checkers/verify_exact_big.py`,
   for the pentagon `checkers/verify_exact_poly.py`): written independently, blind to checker A.
 - `packomania/<table>.zip` holds the same packings in Packomania's submission format (`.pck`: radius, name, coordinates).
 
@@ -292,7 +292,6 @@ Packomania is not the only record: two papers improved some of these tables with
 
 ## Credit, citation, licence
 
-Finders: **Moki&Julio**. Search, certification and both checkers were built with AI assistance (Anthropic's Claude and xAI's
-Grok). Record tables and published coordinates: E. Specht, packomania.com.
+Finders: **Moki&Julio**. Search, certification and both checkers were built with AI assistance. Record tables and published coordinates: E. Specht, packomania.com.
 Data (certificates, `.pck` files, tables): **CC BY 4.0** — reuse freely, credit "Moki&Julio". Code: MIT (see `LICENSE`).
 Please cite via [`CITATION.cff`](CITATION.cff).

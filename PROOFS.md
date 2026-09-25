@@ -28,9 +28,9 @@ single-row entries are bold). Known special cases we do not claim: two circles i
 rectangle (= crc_500) for N = 3–6, described in the literature as proved by zig-zag arguments. (Ruda 1970, sometimes cited for
 n ≤ 8, concerns minimum area with the aspect ratio left FREE — a different problem.)
 
-**Independent check (Grok, xAI):** re-derived the root and every edge case (r ≤ h/4; pairs two or more apart; N = 2), fetched
+**Independent check:** re-derived the root and every edge case (r ≤ h/4; pairs two or more apart; N = 2), fetched
 Packomania's crc_100 / crc_200 pages and matched five published radii to r_zz to ≥ 16 digits (for crc_100 N = 11 the root is
-exactly 1/(11 + √119)); verdict CONFIRMED. His fingerprint check: every entry in the range has 2N + 1 contacts, all circles on the
+exactly 1/(11 + √119)); verdict CONFIRMED. The independent fingerprint check: every entry in the range has 2N + 1 contacts, all circles on the
 boundary, no rattler; the pattern breaks exactly where r_zz drops below h(2 − √3) (crc_100 N = 37, crc_200 N = 18).
 
 ## What it proves in Packomania's tables (check it yourself: `python proofs/proof_zigzag_check.py`, standard library only;
