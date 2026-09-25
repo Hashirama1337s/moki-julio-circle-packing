@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """recon4 (Moki&Julio, 2026-09-24): Molnar 'teeth' = Furedi 1991 (DCG 6:95-106) Example 1.1.
 (1) C2 as a universal statement is false: explicit teeth packings beat two straight rows for large N.
 (2) Teeth as a finite family for 1 x h rectangles: ties and wins vs best known (table + our RECORDS).

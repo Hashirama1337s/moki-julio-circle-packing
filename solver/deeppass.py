@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """DEEP pass (copy of quickpass.py + --seed-best): seeds each N with OUR best certified packing if one exists, else the record.
 Quick pass over a whole shelf: ONE MBH chain per N (seeded with the published record), 12 N in parallel (no per-N pool
 start-up). Catches records that are merely unpolished or one move away. Writes improvements as exact circle-form certificates

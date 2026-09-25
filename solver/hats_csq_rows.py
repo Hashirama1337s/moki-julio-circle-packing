@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Independent csq constructions (csq_constructions.py: 'stretched' and 'mixed' row lattices, 09-24) on
 EVERY listed csq N > 1000: keep a construction only if it beats our current best for N (cand_big_hp) AND passes the csq gate
 (Packomania's monotone envelope + Amore). Certificate as in hats_csq_polish (radius = clearance * (1 - 1e-12), rounded down) and

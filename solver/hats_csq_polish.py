@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """csq cells N <= 2000 whose best packing so far is only a DELETION from a larger published N (not ours to claim): polish it with
 the KD-tree SLP (slp_big) and keep it only if it rises ABOVE Packomania's monotone envelope and Amore (lai_compare.csq_gate) — then
 the packing is our work. Certificate: float centres as exact decimals, radius = computed clearance * (1 - 1e-12), rounded down;

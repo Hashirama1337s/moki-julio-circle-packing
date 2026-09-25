@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """FLEX WALK (attack #3 of plan A = attack #1 of plan B, converged 09-23): a NOT_RIGID certificate has a load-bearing first-order flex
 v (G_S v = 0, dr = 0). Along v the stressed contacts open at second order, so r can grow once the structure re-relaxes.
 For each kernel direction and sign: s_max = the distance along v at which the first OTHER constraint (any pair or wall, linearised)

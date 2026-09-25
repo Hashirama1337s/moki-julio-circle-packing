@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """High-precision refinement, circle form (tri / rect:h / quad), mixed-precision Gauss-Newton on the contact graph.
 Unknowns: centres + r. Equations: active pairs |ci-cj|^2 = 4 r^2; active walls:
   tri   x = r, y = r, 1 - x - y = sqrt2 r            rect  x + 1/2 = r, 1/2 - x = r, y + h/2 = r, h/2 - y = r

@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """High-precision refinement of a locally optimal packing (point form) to ~40+ digits.
 1. Active set from the float64 solution: pairs with d_ij < d (1 + tol), wall contacts (x=0, y=0, x+y=1) within tol*d.
 2. Unknowns: coordinates of every point + d. Equations: |pi-pj|^2 = d^2 (active pairs); x_i = 0 / y_i = 0 / x_i + y_i = 1 (walls).

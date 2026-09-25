@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Packomania 'circles in an isosceles right triangle' (crt) records: legs of length 1, right angle at the origin.
 Circle form: N circles of radius r, centres (x, y) with x >= r, y >= r, x + y <= 1 - sqrt(2) r, pairwise distance >= 2r.
 Point form: N points in the unit triangle T = {x >= 0, y >= 0, x + y <= 1}, maximise the minimum pairwise distance d.

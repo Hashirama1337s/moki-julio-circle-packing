@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Second-generation transplants (stage-2 plan A #3 + plan B #3, force-ranked relocation). For sizes where the one-step sweep found
 NOTHING (rel_float <= 0 in the stage-2 logs), try:
   A 'two-step': N-2 + two circles into the two largest holes;  N+2 minus the two fewest-contact circles.

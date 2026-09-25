@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Four hats, zero-cost check results turned into certified candidates (vision/SEALED-HATS.md, out/hats_zero.json):
  - TAO monotone: crc_700 N in {373, 367, 401, 249, 214} are beaten by our own N+1 packing minus one circle -> transplant_sweep.job
    (delete / insert seeds from ours and Packomania's neighbours, float polish, full exact chain if it beats ours).

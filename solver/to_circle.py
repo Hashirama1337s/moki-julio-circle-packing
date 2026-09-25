@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Point-form candidate (rational points in the unit triangle) -> circle-form file for the independent circle-form checker.
 Circles: r = d/(2+(2+sqrt2)d), centre = r + L*p with L = 1-(2+sqrt2)r (computed at 80 digits), centres rounded to 50 digits,
 then r_c = the largest radius the ROUNDED centres admit (walls, hypotenuse, half pair distances) rounded DOWN at 45 digits.

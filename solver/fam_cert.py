@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Certify the closed-form lattice-family and monotone-deletion candidates found by the proofs scout (vision/families_now.out,
 re-scanned against our CURRENT records). Per candidate: rebuild the exact family packing (scout's build(), frame [0,1]x[0,h] ->
 shifted to our centred frame), or take our packing at the larger N (monotone); delete the surplus circles with the fewest

@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Four hats, zero-cost checks (vision/SEALED-HATS.md): pure arithmetic on best-known radii, no search.
 best(s, N) = max(Packomania snapshot, our certified records, cand_hp). Float screen; anything within 1e-12 is a tie, and any
 real violation is re-checked exactly before it counts.

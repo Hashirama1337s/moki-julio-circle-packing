@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """'Breathing radii' SLP (recon 09-23): radii are free in a band, then the band is annealed to zero.
 Variables: centres c (2n), radii rho (n), t.  Constraints: |ci - cj| >= rho_i + rho_j (linearised: conservative, the distance is
 convex), wall slack >= rho_i (straight walls exact; the quadrant arc is checked exactly after each step), t <= rho_i <= (1+beta) t.

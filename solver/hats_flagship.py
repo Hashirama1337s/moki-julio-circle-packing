@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """H1 (vision/MERGED-HATS.md): FLAGSHIP monotone harvest on Packomania's csq (unit square) and cci (unit disc).
 For every listed N whose radius is beaten by some larger listed M's radius: take Packomania's own M packing (data/big/, downloaded
 2026-09-24), delete M - N circles (fewest near contacts first), write a certificate (radius = the exact min clearance of what

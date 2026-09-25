@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """FULL transplant sweep (sealed plan: vision/SEALED-TRANSPLANT2.md PASSED 10/64). For every size N of each shelf's
 Packomania table: seed from our current best at N+1 (delete one of the 4 circles with fewest near contacts) and N-1 (insert into
 the 3 largest holes), float polish; if a seed beats our current best at N by > 1e-10, run the FULL chain in the same worker

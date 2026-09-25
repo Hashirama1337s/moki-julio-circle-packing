@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """SLP local solver (numpy/scipy only, no torch) - see search.py for the GPU stages."""
 import numpy as np
 

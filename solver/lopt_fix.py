@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Converge every record to its EXACT local optimum, re-certify it, and run the local-optimality certificate (lopt.py).
 Per packing:  submission cert -> hpslp.converge (mixed-precision SLP, ~1e-17) -> refine_circ.refine (Newton on the identified
 contacts, residual < 1e-50) -> write_hp (45 digits, admissible r rounded DOWN) -> keep ONLY if r_new >= r_old ->

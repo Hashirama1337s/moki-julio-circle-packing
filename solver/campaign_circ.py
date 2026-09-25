@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Record campaign, circle form, any container (crc rect:h, ccq quad, crt tri). Same MBH scheme as campaign.py, seeded with the
 published record; perturbation scales in units of the circle diameter 2r. Candidates d > record are written as exact circle-form
 certificates (r_c = largest radius the rounded centres admit, rounded DOWN at 45 digits, computed at 80 digits) and checked with

@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Mixed-precision SLP: drive a packing to its EXACT local optimum (80-digit centres), then write a 45-digit certificate.
 Why (09-23): lopt.py showed that many 'hp' certificates were Gauss-Newton solutions of a PARTIAL contact graph -- the float
 search had stopped ~1e-9 short, and refine_circ tightened only the contacts it had found. Feasible and record-beating, but not

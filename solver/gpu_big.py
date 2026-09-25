@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """v1.7: GPU basin search for BIG N (square csq up to 10,000 circles). Same idea as gpu_mbh.py (B perturbed copies relaxed together at
 a target radius that shrinks, then regrows past our record), but pair forces come from a Verlet neighbour list (KD-tree on the CPU,
 rebuilt every 40 steps; cut-off 2.6 r) instead of an N x N matrix, so memory is O(B N). The best copy is polished on the CPU

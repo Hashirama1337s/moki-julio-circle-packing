@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Sealed probe (vision/SEALED-TRANSPLANT.md): seed N from our N+1 (delete a circle) and N-1 (insert into a hole).
 -> out/transplant_probe.jsonl (one line per seed), candidate packings out/transplant/<shelf>_<N>_<tag>.npy
 usage: py -3.11 transplant_probe.py [--workers=3]

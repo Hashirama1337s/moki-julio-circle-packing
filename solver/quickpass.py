@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Quick pass over a whole shelf: ONE MBH chain per N (seeded with the published record), 12 N in parallel (no per-N pool
 start-up). Catches records that are merely unpolished or one move away. Writes improvements as exact circle-form certificates
 (cert_<shelf>/circ_N.txt, checked by certify_circ.py) and appends every result to out/quick_<shelf>.jsonl.

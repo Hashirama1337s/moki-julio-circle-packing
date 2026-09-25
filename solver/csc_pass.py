@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """First pass on a NEW table: Packomania csc (equal circles in the unit semicircle, y >= 0), N = 1..250.
 Per size, one worker: polish Packomania's own packing; Packomania's N-1 packing + one circle in each of its 3 largest holes;
 Packomania's N+1 packing minus each of its 3 fewest-contact circles; then monotonic basin hopping (campaign_circ.perturb kicks,

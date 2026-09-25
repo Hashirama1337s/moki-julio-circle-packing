@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 # recon2_families.py -- closed-form row families + monotone envelope vs Packomania crc tables (and our certified records).
 # Standard float check only (margins found are >= 1e-6 relative); run the two exact checkers before any claim.
 # py -3.11 vision/recon2_families.py

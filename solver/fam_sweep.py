@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Lattice-family seed sweep over every rectangle size (the proofs scout's closed-form row families: alt / shift / sq, rows or
 columns; recon2_families.py). Per size N: the best families with N <= M <= N+6 circles (surplus deleted, fewest contacts first)
 and M = N-1, N-2 (circles added in the largest holes), keeping only families within 5e-3 of our current radius; SLP polish

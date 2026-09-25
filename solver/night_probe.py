@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Night attack #2 (vision/SEALED-NIGHT.md): deeper graph-edit moves, two arms, the same wall-clock budget per size.
   R 'rmbh'  : iterated relocation = basin hopping whose kick is a graph edit: remove k in {1,2,3} circles drawn from the 6 weakest
               (least contact force from the v1.1 certificate when it belongs to this exact packing, else fewest near contacts),

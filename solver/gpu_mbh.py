@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """GPU basin search (2026-09-24). For each target (shelf, N): B perturbed copies of OUR best packing relax
 together on the GPU (float64) under an overlap energy at a target radius that first SHRINKS (room to rearrange) and then GROWS a
 little PAST our record; the true radius of every copy is measured at the end. The best few distinct copies are polished on the CPU

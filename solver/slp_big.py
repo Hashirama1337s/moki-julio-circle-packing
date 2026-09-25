@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """slp_circ.polish for BIG N (thousands of circles): the same trust-region SLP (HiGHS, a step is kept only if the TRUE radius
 grows), but candidate pairs come from a KD-tree instead of an N x N matrix. Containers: ('rect', h) centred at the origin
 (csq = ('rect', 1.0)) and ('circ',) = the unit disc centred at the origin (Packomania cci).

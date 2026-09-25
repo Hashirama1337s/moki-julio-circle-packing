@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Equal circles in the unit square [-1/2, 1/2]^2. Two families.
 
 stretched: affine triangular rows; in-row pitch and row gap scale separately

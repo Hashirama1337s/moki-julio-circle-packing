@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Record campaign for Packomania crt (points in the unit isosceles right triangle, maximise min distance).
 For each N: 12 CPU workers run monotonic basin hopping (SLP local solver) SEEDED with the published record (and, for small N,
 random starts too). Perturbations: global U(+-s d) with small s, or regional (points within rho of a random spot, U(+-s d)).

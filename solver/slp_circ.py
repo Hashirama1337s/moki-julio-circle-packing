@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Circle-form SLP for equal circles in a container: maximise r(c) = min( wall slacks of every centre, half of every pair distance ).
 Containers:
   ('tri',)      Packomania crt: x >= r, y >= r, (1 - x - y)/sqrt2 >= r                (legs 1, right angle at the origin)

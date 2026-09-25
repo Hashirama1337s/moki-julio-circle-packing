@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Certify a candidate packing (float centres .npy) through the full chain: hpslp.converge -> refine_circ Newton -> 45-digit
 certificate (admissible r rounded DOWN) -> checker A + checker B (both exact) vs the PACKOMANIA radius -> lopt.
 Keeps it only if it beats our current best (v1.1 converged file, else v1.0 submission).  -> cand_hp/<shelf>/<shelf>_<N>.txt + .json

@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Flagship csq, stage 2: hex row-lattice families (vision/recon2_families.py: alt / shift / sq in the unit square) for a count
 N' >= N, minus N' - N least-contacted circles -> certificate -> certify_big.py. Replaces cand_big/csq/csq_<N>.txt only if the
 certified radius is larger than the file there. Targets: out/hats_csq_families.json (N, gain_vs_best_so_far, gain_vs_table, src).
