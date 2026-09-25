@@ -9,6 +9,8 @@ For each row of MANIFEST.csv: unzip the certificate from certificates/<shelf>.zi
 The square: checkers/certify_big.py (A) + checkers/verify_exact_big.py (B). The regular pentagon (cpt): checkers/certify_poly.py (A)
 + checkers/verify_exact_poly.py (B), both exact in Q(sqrt5, sqrt(10 +- 2 sqrt5)); they say IMPROVES for any gain over the listed
 radius (every pentagon record was selected only if it beats that radius by more than 1e-10 relative).
+The regular 16-gon (cxd) and 15-gon (cpd): checkers/certify_kgon.py (A) + checkers/verify_exact_kgon.py (B), both exact (the
+irrational walls through rigorous rational enclosures); they too say IMPROVES for any gain (every record beats its radius by > 1e-10).
 A record passes only if BOTH say IMPROVES against the published Packomania radius listed in MANIFEST.csv.
 """
 import csv, os, sys, zipfile, tempfile, subprocess
@@ -21,10 +23,19 @@ def container(shelf):
     if shelf == "csc": return "semi"
     if shelf == "csq": return "square"
     if shelf == "cpt": return "poly:5"
+    if shelf in ("cxd", "cpd"): return "poly:16" if shelf == "cxd" else "poly:15"
     return "rect:0." + f"{int(shelf.split('_')[1]):03d}".rstrip("0")          # crc_300 -> rect:0.3
 
 def check(args):
     shelf, n, rec, path = args
+    if shelf in ("cxd", "cpd"):   # the regular 16-gon / 15-gon (circumradius 1, bottom side horizontal): rigorous exact wall enclosures
+        import certify_kgon
+        k = 16 if shelf == "cxd" else 15
+        a = certify_kgon.check_file(k, path, n, rec)
+        argv = [sys.executable, os.path.join(HERE, "checkers", "verify_exact_kgon.py"), str(k), path, str(n), rec]
+        out = subprocess.run(argv, capture_output=True, text=True).stdout
+        b = [l for l in out.splitlines() if l.startswith("VERDICT")]; b = b[0].split(":", 1)[1].strip() if b else "ERROR"
+        return shelf, n, a, b
     if shelf == "cpt":   # the regular pentagon (circumradius 1, vertex (0, 1)): both checkers decide the irrational walls exactly
         import certify_poly
         a = certify_poly.check_file(5, path, n, rec)
