@@ -26,7 +26,7 @@ def repair(c, cont):
     else: rr = np.sqrt((c ** 2).sum(1)); m = rr > 1; c[m] /= rr[m, None]
     return c
 
-def polish(c, cont, max_iter=300, t_cap=300.0, log=None):
+def polish(c, cont, max_iter=300, t_cap=300.0, log=None, stop_at=None):   # 09-25: stop_at = stop once r >= it (claim bar + margin)
     c = np.asarray(c, dtype=np.float64); n = len(c); cur = rmin(c, cont); delta = 0.1 * cur; t0 = time.time()
     for it in range(max_iter):
         if time.time() - t0 > t_cap: break
@@ -43,7 +43,7 @@ def polish(c, cont, max_iter=300, t_cap=300.0, log=None):
         v2 = np.stack([-G[wi, wk, 0], -G[wi, wk, 1], np.ones(mw)], 1).ravel()
         A2 = coo_matrix((v2, (r2, c2)), shape=(mw, 2 * n + 1)); b2 = g[wi, wk]
         res = linprog(np.r_[np.zeros(2 * n), -1.0], A_ub=vstack([A1, A2]).tocsr(), b_ub=np.r_[b1, b2],
-                      bounds=[(-delta, delta)] * (2 * n) + [(None, None)], method='highs', options={'time_limit': 60.0})
+                      bounds=[(-delta, delta)] * (2 * n) + [(None, None)], method=('highs-ipm' if n >= 1500 else 'highs'), options={'time_limit': 120.0})   # 09-25: dual simplex took 166 s at N = 6336 (> the 60 s cap -> zero progress); IPM 18 s, same optimum
         if res.status != 0 or res.x is None or not np.all(np.isfinite(res.x)):
             delta /= 2
             if delta < 1e-16: break
@@ -53,6 +53,7 @@ def polish(c, cont, max_iter=300, t_cap=300.0, log=None):
             gain = new - cur; c, cur = q, new
             if log: log(it, cur, delta, time.time() - t0)
             if gain < 1e-15 and delta < 1e-12: break
+            if stop_at is not None and cur >= stop_at: break
             delta = min(delta * 1.5, 0.2 * cur)
         else:
             delta /= 4

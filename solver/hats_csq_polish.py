@@ -17,7 +17,9 @@ def job(n):
     getcontext().prec = 60; t0 = time.time()
     L = [l.split() for l in open(os.path.join(HERE, "cand_big", "csq", f"csq_{n}.txt")) if l.strip()]
     c = np.array([[float(a), float(b)] for a, b in L[1:]]); r_seed = float(L[0][1])
-    c2, r2 = slp_big.polish(c, ("rect", 1.0), t_cap=float(ARG("cap", 150)))
+    lai_compare.csq_gate(n, mp.mpf(0)); bar = max(lai_compare._CSQ["E"][n][0], lai_compare._CSQ["A"].get(n, mp.mpf(0)))
+    stop = float(bar) * (1 + float(ARG("margin", 2e-5))) if ARG("margin", "2e-5") != "0" else None   # 09-25: early stop above the bar
+    c2, r2 = slp_big.polish(c, ("rect", 1.0), t_cap=float(ARG("cap", 150)), stop_at=stop)
     row = {"N": n, "r_seed": r_seed, "r_polish": r2, "rel": r2 / r_seed - 1, "secs": round(time.time() - t0, 1)}
     r_claim = (Decimal(repr(float(slp_big.rmin(c2, ("rect", 1.0))))) * (1 - Decimal(10) ** -12)).quantize(Decimal(10) ** -25, rounding=ROUND_FLOOR)
     ok, why = lai_compare.csq_gate(n, mp.mpf(str(r_claim))); row["gate"] = why or "claimable"
@@ -45,7 +47,9 @@ if __name__ == "__main__":
     T = sorted(n for n in (int(os.path.basename(p)[4:-4]) for p in glob.glob(os.path.join(HERE, "cand_big", "csq", "csq_*.txt")))
                if lo <= n <= hi and n not in fam)
     first = [int(x) for x in ARG("first", "").split(",") if x]           # a sealed probe sample goes first, then the rest ascending
-    T = [n for n in first if n in T] + [n for n in T if n not in first]
+    sk = ARG("skipfile", "")                                              # 09-25: sizes already in that jsonl are skipped (unless in --first)
+    done = {json.loads(l)["N"] for l in open(os.path.join(HERE, "out", sk))} if sk and os.path.exists(os.path.join(HERE, "out", sk)) else set()
+    T = [n for n in first if n in T] + [n for n in T if n not in first and n not in done]
     print(len(T), f"csq deletion cells {lo} <= N <= {hi} to polish ({len(first)} probe cells first)", flush=True)
     with Pool(int(ARG("workers", 2))) as p, open(os.path.join(HERE, "out", ARG("out", "hats_csq_polish.jsonl")), "a") as f:
         for row in p.imap_unordered(job, T):

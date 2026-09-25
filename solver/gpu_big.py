@@ -30,7 +30,11 @@ def certify(n, c, tag):
     import mpmath as mp, slp_big, certify_big, lai_compare, hats_flagship as HF
     from decimal import Decimal, ROUND_FLOOR, getcontext
     getcontext().prec = 60
-    c2, r2 = slp_big.polish(c, ("rect", 1.0), t_cap=float(ARG("cap", 150)))
+    lai_compare.csq_gate(n, mp.mpf(0)); bar = max(lai_compare._CSQ["E"][n][0], lai_compare._CSQ["A"].get(n, mp.mpf(0)))
+    f0 = os.path.join(HERE, "cand_big_hp", "csq", f"csq_{n}.txt")          # also above our own file there (else nothing to keep)
+    if os.path.exists(f0): bar = max(bar, mp.mpf(open(f0).readline().split()[1]))
+    stop = float(bar) * (1 + float(ARG("margin", 2e-5))) if ARG("margin", "2e-5") != "0" else None   # 09-25: early stop above the bar
+    c2, r2 = slp_big.polish(c, ("rect", 1.0), t_cap=float(ARG("cap", 150)), stop_at=stop)
     r_claim = (Decimal(repr(float(slp_big.rmin(c2, ("rect", 1.0))))) * (1 - Decimal(10) ** -12)).quantize(Decimal(10) ** -25, rounding=ROUND_FLOOR)
     ok, why = lai_compare.csq_gate(n, mp.mpf(str(r_claim)))
     row = {"N": n, "r_claim": str(r_claim), "gate": why or "claimable"}
