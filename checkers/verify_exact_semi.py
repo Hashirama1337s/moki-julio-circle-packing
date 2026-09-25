@@ -1,7 +1,7 @@
-# Saved verbatim from Grok's reply (grok/reply-semi.md, 2026-09-24). USED ONLY FOR THE SEMICIRCLE (csc).
-# NOTE: Grok wrote this without seeing verify_exact2.py; its rect:<h> branch assumes a [0,1] x [0,h] frame, NOT the centred
+# Checker B (independent implementation), saved verbatim 2026-09-24. USED ONLY FOR THE SEMICIRCLE (csc).
+# NOTE: written without seeing verify_exact2.py; its rect:<h> branch assumes a [0,1] x [0,h] frame, NOT the centred
 # frame of our certificates -> rectangles and the quadrant stay on verify_exact2.py.
-# PATCH (Claude, 2026-09-24, labelled below): Parser.expr/term looped past the end ('' in '+-' is True) -> every call raised
+# PATCH (2026-09-24, labelled below): Parser.expr/term looped past the end ('' in '+-' is True) -> every call raised
 # IndexError (fail-safe: no verdict at all). Two guards added; nothing else changed. Original: verify_exact3_orig.py.
 # verify_exact3.py
 # py -3.11 verify_exact3.py <container> <file> <N> <record>
@@ -174,7 +174,7 @@ class Parser:
 
     def expr(self):
         value = self.term()
-        while self.peek() != "" and self.peek() in "+-":   # PATCH (Claude 2026-09-24): "" in "+-" is True in Python
+        while self.peek() != "" and self.peek() in "+-":   # PATCH (2026-09-24): "" in "+-" is True in Python
             op = self.s[self.i]
             self.i += 1
             rhs = self.term()
@@ -183,7 +183,7 @@ class Parser:
 
     def term(self):
         value = self.factor()
-        while self.peek() != "" and self.peek() in "*/":   # PATCH (Claude 2026-09-24): same end-of-string bug
+        while self.peek() != "" and self.peek() in "*/":   # PATCH (2026-09-24): same end-of-string bug
             op = self.s[self.i]
             self.i += 1
             rhs = self.factor()

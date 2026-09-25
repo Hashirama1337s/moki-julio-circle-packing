@@ -213,7 +213,7 @@ def parse_container(s: str):
         return "tri", None
     if s == "quad":
         return "quad", None
-    if s == "semi":                     # PATCH (Claude 2026-09-24, Grok's spec grok/reply-semi.md): unit semicircle, y >= 0
+    if s == "semi":                     # PATCH (2026-09-24, checker B's spec): unit semicircle, y >= 0
         return "semi", None
     if s.startswith("rect:"):
         h = parse_number(s[5:])
@@ -226,7 +226,7 @@ def parse_container(s: str):
 def wall_ks(kind: str):
     if kind == "rect":
         return (0, 1, 2, 3)
-    if kind == "semi":                  # PATCH (Grok's spec): k=1 y - r, k=2 arc (same polynomials as quad); k=0 is not a wall
+    if kind == "semi":                  # PATCH (checker B's spec): k=1 y - r, k=2 arc (same polynomials as quad); k=0 is not a wall
         return (1, 2)
     return (0, 1, 2)
 
@@ -236,7 +236,7 @@ def kappa_of(kind: str, con) -> int:
     if tag == "p":
         return 8
     k = con[2]
-    if kind in ("quad", "semi") and k == 2:   # PATCH (Grok's spec): the semicircle arc has the quadrant arc's kappa
+    if kind in ("quad", "semi") and k == 2:   # PATCH (checker B's spec): the semicircle arc has the quadrant arc's kappa
         return 2
     return 0
 
@@ -458,7 +458,7 @@ def infinity_norm_I_minus_YG(Y: np.ndarray, rows) -> Fraction:
     Denom = (1 << E) * DG
     # 40 correct decimals of sqrt(2) make the enclosure gap ~1e-40.
     lo, hi = sqrt2_bounds(40)
-    # PATCH (Claude, 2026-09-23, reported to Grok): Fraction() reduces, so lo.denominator != 10**40 (s is even) and
+    # PATCH (2026-09-23, reported to checker B's author): Fraction() reduces, so lo.denominator != 10**40 (s is even) and
     # lo.numerator was on a different scale -> every row with M < 0 was bounded with sqrt2 ~ lo/2^k (always an OVER-estimate,
     # never a false pass; crt 101: 1.25 instead of 1.27e-14). Use both bounds on the common denominator 10**40.
     N = 10**40

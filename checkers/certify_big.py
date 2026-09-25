@@ -1,4 +1,4 @@
-"""Claude's exact checker for BIG packings (Packomania csq / cci frames), O(N): every number is read as an exact decimal and
+"""Checker A: exact checker for BIG packings (Packomania csq / cci frames), O(N): every number is read as an exact decimal and
 scaled to a common integer grid (x = X / S), so every decision is integer arithmetic.
   square: the unit square centred at the origin (-1/2 <= x, y <= 1/2)   circle: the unit disc centred at the origin
 Pairs: cells of side G = 2R (integers, floor division). If two centres lie in cells whose index differs by >= 2 in x (or y), then
