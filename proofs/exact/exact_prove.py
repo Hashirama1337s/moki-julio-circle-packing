@@ -1,5 +1,5 @@
 """EXACT optimality of two small rectangle entries (Moki&Julio).
-Status: reviewed (three adversarial rounds, 2026-09-25): PUBLISHABLE; published in v1.7. Independent second checker: planned.
+Status: reviewed (three adversarial rounds, 2026-09-25): PUBLISHABLE; published in v1.7. Second checker: proofs/exact/verify_proof_exact.py (Grok), v1.9.
 
 Claim. N equal circles in the rectangle [-1/2, 1/2] x [-h/2, h/2] (THE frame: centred) cannot have radius > r* = p - q sqrt2,
 and the exhibited configuration c* attains r*.
