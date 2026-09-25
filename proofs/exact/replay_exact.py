@@ -4,7 +4,7 @@ Status: reviewed (three adversarial rounds, 2026-09-25): PUBLISHABLE; published 
 
 Reads <case>_cert.json and <case>_tree.json.gz from this directory and re-verifies every step with exact arithmetic only:
 fractions.Fraction, and pairs (a, b) meaning a + b*sqrt2 with a, b Fractions (exact field operations and an exact sign test).
-Standard library only. It does NOT import exact_prove.py or grok/prove_small.py, and it takes no number in the files on
+Standard library only. It does NOT import exact_prove.py or prove_small.py, and it takes no number in the files on
 trust: every inequality that the proof uses is recomputed here.
 
 Lemma 1 data (certificate): sqrt2 enclosure; c* feasible at r*; tight set T = the exact zero set; 0 < slack_lo <= slack for

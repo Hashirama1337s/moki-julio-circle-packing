@@ -824,7 +824,7 @@ def abut(intervals, g_grid, name):
         if not lo < hi:
             raise Fail(f"{name} cell has no width")
     for (_, hi), (lo, _) in zip(intervals, intervals[1:]):
-        # Closed cover: touch or overlap. A gap is next_lo > prev_hi.  (Grok's fix, 2026-09-25 reply-proofchecker2-fix.md)
+        # Closed cover: touch or overlap. A gap is next_lo > prev_hi.  (author's fix, 2026-09-25)
         if lo > hi:
             raise Fail(f"{name} cell cover has a gap")
 

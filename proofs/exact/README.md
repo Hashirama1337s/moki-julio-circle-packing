@@ -1,9 +1,9 @@
 # Exact optimality certificates: replay
 
-**Status:** reviewed by Grok (xAI) in three adversarial rounds (2026-09-25), verdict PUBLISHABLE; published in v1.7. A second replay
-checker, `verify_proof_exact.py`, written by Grok without seeing ours, also passes both cases and rejects all 68
-corruptions (added in v1.9). Authors: Moki&Julio. Branch-and-bound engine: Grok's engine
-(`prove_small.py`, class `Engine`), run through a logging subclass in `exact_prove.py`.
+**Status:** independently reviewed in three adversarial rounds (2026-09-25), verdict PUBLISHABLE; published in v1.7. A second replay
+checker, `verify_proof_exact.py`, written independently without seeing ours, also passes both cases and rejects all 68
+corruptions (added in v1.9). Authors: Moki&Julio. Branch-and-bound engine:
+`prove_small.py`, class `Engine`, run through a logging subclass in `exact_prove.py`.
 
 Two entries, both in the centred frame (rectangle [-1/2, 1/2] x [-h/2, h/2]):
 
@@ -21,13 +21,13 @@ It prints what it verified and `PASS <case>` or `FAIL <case>: <reason>`. Exit co
 `replay_exact.py` does not import `exact_prove.py` or `prove_small.py`. It uses `fractions.Fraction` and its own exact
 arithmetic in Q(sqrt2) (pairs a + b sqrt2 with an exact sign test). It trusts no number in the files.
 
-Second, independent checker (Grok, standard library only, written from this README and PROOFS_EXACT.md without seeing
+Second, independent checker (standard library only, written from this README and PROOFS_EXACT.md without seeing
 `replay_exact.py`):
 
     py -3.11 verify_proof_exact.py crc_800_4_cert.json crc_800_4_tree.json.gz
     py -3.11 verify_proof_exact.py crc_600_6_cert.json crc_600_6_tree.json.gz
 
-One labelled line in it was changed after its first run, at Grok's instruction: the root cell cover may OVERLAP (closed cells;
+One labelled line in it was changed after its first run, at the independent reviewer's instruction: the root cell cover may OVERLAP (closed cells;
 only a gap breaks covering); its first version demanded an exact partition and so rejected crc_600_6, whose cells overlap by
 one grid unit because G = 32768 is not divisible by 3.
 

@@ -1,5 +1,5 @@
 """EXACT optimality of two small rectangle entries (Moki&Julio).
-Status: reviewed (three adversarial rounds, 2026-09-25): PUBLISHABLE; published in v1.7. Second checker: proofs/exact/verify_proof_exact.py (Grok), v1.9.
+Status: reviewed (three adversarial rounds, 2026-09-25): PUBLISHABLE; published in v1.7. Second checker: proofs/exact/verify_proof_exact.py (independent), v1.9.
 
 Claim. N equal circles in the rectangle [-1/2, 1/2] x [-h/2, h/2] (THE frame: centred) cannot have radius > r* = p - q sqrt2,
 and the exhibited configuration c* attains r*.
@@ -8,7 +8,7 @@ and the exhibited configuration c* attains r*.
 
 Lemma 1 (local, Q(sqrt2) stress certificate) gives a rational rho: the only configuration of radius >= r* within inf-norm rho of c*
 (or of any mirror image / relabelling of c*) is that image itself.
-Lemma 2 (global) runs Grok's engine (grok/prove_small.py, class Engine; exact integer arithmetic on a 2^k grid) at a rational
+Lemma 2 (global) runs the branch-and-bound engine (prove_small.py, class Engine; exact integer arithmetic on a 2^k grid) at a rational
 r_t < r* through LoggedEngine below. LoggedEngine re-implements tighten / apply_symmetry / shrink_box / best_hole / bisect / the
 start enumeration WITH A WITNESS LOG and CROSS-CHECKS every node against the unmodified Engine methods (identical output required).
 Every node ends DISCARDED (exact witness) or ACCEPTED (all point boxes inside closed rho'-squares around the snapped points of one
@@ -34,8 +34,8 @@ from math import gcd, isqrt
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PUBLISHED = os.path.basename(HERE) == "exact"              # published repo layout: proofs/exact/{exact_prove,prove_small}.py
-sys.path.insert(0, HERE if PUBLISHED else os.path.join(HERE, "grok"))
-import prove_small as PS                                   # Grok's engine (read-only; subclassed below, never edited)
+sys.path.insert(0, HERE if PUBLISHED else os.path.join(HERE, "engine"))
+import prove_small as PS                                   # the engine (read-only; subclassed below, never edited)
 
 OUT = HERE if PUBLISHED else os.path.join(HERE, "proofs", "exact")
 K50 = 10 ** 50
@@ -316,7 +316,7 @@ def snapped_images(c, h, r_t):
 
 # ------------------------------------------------------------------------------------------------ Lemma 2: logged engine
 class LoggedEngine(PS.Engine):
-    """Grok's Engine with the grid G chosen by the caller, and witness-logging copies of the search steps.
+    """The Engine with the grid G chosen by the caller, and witness-logging copies of the search steps.
     Nothing here changes a decision: every logged step is compared with the unmodified Engine method (CROSSCHECK)."""
 
     def __init__(self, W, H, d, n, G):
@@ -668,7 +668,7 @@ def main(case, off=None):
     with open(cpath, "wb") as f:
         f.write(blob)
     tree = {
-        "format": "exact-bnb-tree v1", "case": case, "authors": "Moki&Julio", "engine": "Grok's engine (grok/prove_small.py Engine), logged",
+        "format": "exact-bnb-tree v1", "case": case, "authors": "Moki&Julio", "engine": "prove_small.py Engine (exact integer branch and bound), logged",
         "cert_sha256": hashlib.sha256(blob).hexdigest(),
         "N": n, "h": str(h), "r_t": str(r_t), "G": G, "W": str(W), "H": str(H), "d": str(d),
         "chart": "point frame p = c + (1/2 - r_t, h/2 - r_t) in [0,W]x[0,H]; grid X = G p_x / W, Y = G p_y / H; "
