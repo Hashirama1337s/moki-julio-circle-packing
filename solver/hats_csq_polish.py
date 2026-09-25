@@ -41,10 +41,13 @@ def job(n):
 if __name__ == "__main__":
     import glob
     fam = {int(os.path.basename(p)[4:-4]) for p in glob.glob(os.path.join(HERE, "cand_big_hp", "csq", "csq_*.txt"))}
+    lo, hi = int(ARG("lo", 0)), int(ARG("hi", 2000))                 # 09-25: --lo/--hi/--out/--first (N > 2000 extension)
     T = sorted(n for n in (int(os.path.basename(p)[4:-4]) for p in glob.glob(os.path.join(HERE, "cand_big", "csq", "csq_*.txt")))
-               if n <= 2000 and n not in fam)
-    print(len(T), "csq deletion cells N <= 2000 to polish", flush=True)
-    with Pool(int(ARG("workers", 2))) as p, open(os.path.join(HERE, "out", "hats_csq_polish.jsonl"), "a") as f:
+               if lo <= n <= hi and n not in fam)
+    first = [int(x) for x in ARG("first", "").split(",") if x]           # a sealed probe sample goes first, then the rest ascending
+    T = [n for n in first if n in T] + [n for n in T if n not in first]
+    print(len(T), f"csq deletion cells {lo} <= N <= {hi} to polish ({len(first)} probe cells first)", flush=True)
+    with Pool(int(ARG("workers", 2))) as p, open(os.path.join(HERE, "out", ARG("out", "hats_csq_polish.jsonl")), "a") as f:
         for row in p.imap_unordered(job, T):
             f.write(json.dumps(row) + "\n"); f.flush()
             print(f"N={row['N']} rel {row['rel']:+.2e} {row['gate'][:60]} {'KEPT' if row.get('kept') else ''} {row['secs']}s", flush=True)

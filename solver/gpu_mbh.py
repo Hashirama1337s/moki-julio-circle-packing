@@ -135,11 +135,11 @@ def gpu_main():
         for f in done:
             futs.remove(f); r = f.result(); out.write(json.dumps({"cpu": r}) + "\n"); out.flush()
             ok = r.get("kept") and r.get("claude") == "IMPROVES" and r.get("grok") == "IMPROVES"
-            print(f"    CPU {r['shelf']} N={r['N']} polish {r['rel_polish']:+.2e}" + (f" HIT {r['gain_vs_ours']:+.2e} vs ours, {r['gain_vs_packomania']:+.2e} vs Packomania" if ok else ""), flush=True)
+            print(f"    CPU {r['shelf']} N={r['N']} polish {r['rel_polish']:+.2e}" + (f" HIT {r['gain_vs_ours'] if r['gain_vs_ours'] is None else format(r['gain_vs_ours'], '+.2e')} vs ours (None = new size), {r['gain_vs_packomania']:+.2e} vs Packomania" if ok else ""), flush=True)
     for f in futs:
         r = f.result(); out.write(json.dumps({"cpu": r}) + "\n"); out.flush()
         ok = r.get("kept") and r.get("claude") == "IMPROVES" and r.get("grok") == "IMPROVES"
-        print(f"    CPU {r['shelf']} N={r['N']} polish {r['rel_polish']:+.2e}" + (f" HIT {r['gain_vs_ours']:+.2e} vs ours" if ok else ""), flush=True)
+        print(f"    CPU {r['shelf']} N={r['N']} polish {r['rel_polish']:+.2e}" + (f" HIT {r['gain_vs_ours']} vs ours" if ok else ""), flush=True)
     rows = [json.loads(l) for l in open(os.path.join(HERE, "out", f"gpu_mbh{tag}.jsonl"))]
     hits = sum(1 for r in rows if "cpu" in r and r["cpu"].get("kept") and r["cpu"].get("claude") == "IMPROVES" and r["cpu"].get("grok") == "IMPROVES")
     print(f"DONE {nt} targets, {hits} certified kept hits, {time.time() - t_start:.0f}s", flush=True)
