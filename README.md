@@ -1,6 +1,14 @@
-# Moki&Julio — 4,666 new best-known packings of equal circles
+# Moki&Julio — 4,528 new best-known packings of equal circles
 
-**4,666 packings of equal circles that beat the best-known records** listed on
+> **Correction (2026-09-25).** 138 of the square (`csq`) entries in version 2.2, all at N = 405–999, are **not records**:
+> Basurto, Gurin, Varga & Odriozola, *Computer Physics Communications* 320, 109990 (2026), published better packings for these
+> sizes (their supplementary materials 3 and 4; the values are not listed on Packomania), and our literature gate missed that
+> paper. The correct totals are **4,528 records** and **1,355 certified locally optimal**. The next version removes these
+> entries and re-checks every square record against that paper; until then the files for these sizes are still in the
+> repository but must not be counted. The 138 sizes: 405, 416, 420, 423, 428–429, 432–434, 442, 446–447, 452, 454–455, 457, 465–467, 470–471, 475, 488, 494–496, 498–499, 501, 503, 507–511, 518, 520, 524, 526–527, 529–530, 532–537, 540–544, 547, 550, 553–557, 559, 563–565, 568–571, 573, 575–577, 579–581, 589–592, 594, 600, 604, 610, 615, 619, 622–625, 628, 630–631, 634, 637, 641–642, 644, 647–650, 675–678, 680, 731–733, 783–785, 840, 842, 844, 883, 888–890, 902, 909, 912, 930, 943–947, 953–956, 958, 990–992, 998–999.
+
+
+**4,528 packings of equal circles that beat the best-known records** (version 2.2 listed 4,666; see the correction above) listed on
 [Packomania](https://www.packomania.com/) (E. Specht's record tables), in fifteen containers: ten whose tables had not changed since 2010–2013, the semicircle (untouched from April 2011 until
 September 2026), the square (from v1.6), whose large-N entries are Specht's own lattice packings, the regular pentagon
 (from v2.1; its table was last updated in March 2023) and — from v2.2 — the regular 16-gon and 15-gon (tables last updated in
