@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Standalone check of PROOFS.md (standard library only): for every row of PROOF_ZIGZAG.csv (table, h, N, Packomania's published
 radius) compute the zig-zag optimum r_zz exactly enough (80-digit decimals), confirm it lies in the theorem's window
 h(2 - sqrt3) <= r_zz <= h/2, and confirm Packomania's radius equals it to 28 digits.   usage: python proof_zigzag_check.py
