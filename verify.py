@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Verify every record in this repository with BOTH independent exact checkers.
 
     python verify.py            (Python 3.9+, standard library only; ~5-15 minutes on 12 threads)
