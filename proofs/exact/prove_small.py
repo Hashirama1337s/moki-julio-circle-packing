@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Exact infeasibility proof: N equal circles in a rectangle of width 1 and height h.
 
 Point form. Centers lie in [0, W] x [0, H], W = 1 - 2 r_t, H = h - 2 r_t,

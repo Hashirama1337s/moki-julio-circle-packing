@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Independent exact replay checker for the two circle-packing optimality proofs.
 
 Usage:

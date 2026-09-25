@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Independent replay checker for the exact optimality certificates (Moki&Julio).
 Status: reviewed (three adversarial rounds, 2026-09-25): PUBLISHABLE; published in v1.7. Mutation test: mutate_check.py.
 

@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """EXACT optimality of two small rectangle entries (Moki&Julio).
 Status: reviewed (three adversarial rounds, 2026-09-25): PUBLISHABLE; published in v1.7. Second checker: proofs/exact/verify_proof_exact.py (independent), v1.9.
 
