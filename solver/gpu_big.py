@@ -44,13 +44,13 @@ def certify(n, c, tag):
     tmp = f + f".{tag}.tmp"; rec = HF.table("csq")[n]
     open(tmp, "w", newline="\n").write(f"r {r_claim}\n" + "".join(f"{format(Decimal(repr(float(x))), 'f')} {format(Decimal(repr(float(y))), 'f')}\n" for x, y in c2))
     a = certify_big.check("square", tmp, n, rec)
-    o = subprocess.run([sys.executable, os.path.join(HERE, "grok", "verify_exact_big.py"), "square", tmp, str(n), rec], capture_output=True, text=True).stdout
+    o = subprocess.run([sys.executable, os.path.join(HERE, "..", "checkers", "verify_exact_big.py"), "square", tmp, str(n), rec], capture_output=True, text=True).stdout
     b = [l for l in o.splitlines() if l.startswith("VERDICT")]; b = b[0].split(":")[1].strip() if b else "ERROR"
-    row.update(claude=a, grok=b)
+    row.update(checker_a=a, checker_b=b)
     if a == "IMPROVES" and b == "IMPROVES":
         os.replace(tmp, f); row["kept"] = True
         json.dump({"shelf": "csq", "N": n, "tag": "csq_gpu_big", "how": "GPU basin search (gpu_big.py) from our best packing, slp_big polish",
-                   "r_new": str(r_claim), "claude": a, "grok": b, "lopt": "NOT_ATTEMPTED"}, open(f[:-4] + ".json", "w"), indent=1)
+                   "r_new": str(r_claim), "checker_a": a, "checker_b": b, "lopt": "NOT_ATTEMPTED"}, open(f[:-4] + ".json", "w"), indent=1)
     else: os.remove(tmp); row["kept"] = False
     return row
 

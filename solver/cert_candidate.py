@@ -1,5 +1,5 @@
 """Certify a candidate packing (float centres .npy) through the full chain: hpslp.converge -> refine_circ Newton -> 45-digit
-certificate (admissible r rounded DOWN) -> Claude's exact checker + Grok's exact checker vs the PACKOMANIA radius -> lopt.
+certificate (admissible r rounded DOWN) -> checker A + checker B (both exact) vs the PACKOMANIA radius -> lopt.
 Keeps it only if it beats our current best (v1.1 converged file, else v1.0 submission).  -> cand_hp/<shelf>/<shelf>_<N>.txt + .json
 usage: py -3.11 cert_candidate.py <shelf> <N> <candidate.npy> [tag]
 """
@@ -7,7 +7,7 @@ import os, sys, json, numpy as np, mpmath as mp
 from fractions import Fraction as F
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import hpslp, refine_circ, certify_circ, lopt, finalize_circ
-from lopt_fix import grok_verdict
+from lopt_fix import checker_b_verdict
 
 def ours(shelf, n):
     for p in (os.path.join(HERE, "cand_hp", shelf, f"{shelf}_{n}.txt"), os.path.join(HERE, "lopt_hp", shelf, f"{shelf}_{n}.txt"),
@@ -34,8 +34,8 @@ def run(shelf, n, npy, tag="cand"):
     row = {"shelf": shelf, "N": n, "tag": tag, "how": how, "newton_residual": float(res), "r_new": str(r_new), "r_ours_before": str(r_ours),
            "ours_src": os.path.relpath(src, HERE) if src else None, "gain_vs_ours": float(r_new / r_ours - 1) if r_ours else None,
            "gain_vs_packomania": float(r_new / F(rec) - 1)}
-    row["claude"] = certify_circ.check(cs, tmp, rec, verbose=False)[0]
-    row["grok"] = grok_verdict(shelf, cs, tmp, n, rec)
+    row["checker_a"] = certify_circ.check(cs, tmp, rec, verbose=False)[0]
+    row["checker_b"] = checker_b_verdict(shelf, cs, tmp, n, rec)
     lo = lopt.certify(cs, tmp); row["lopt"] = lo["verdict"]
     row["lopt_detail"] = {k: v for k, v in lo.items() if k in ("rho", "Delta_rel", "backbone", "rattlers", "redundancy")}
     keep = r_ours is None or r_new > r_ours

@@ -1,4 +1,4 @@
-"""FLEX WALK (Claude attack #3 = Grok attack #1, converged 09-23): a NOT_RIGID certificate has a load-bearing first-order flex
+"""FLEX WALK (attack #3 of plan A = attack #1 of plan B, converged 09-23): a NOT_RIGID certificate has a load-bearing first-order flex
 v (G_S v = 0, dr = 0). Along v the stressed contacts open at second order, so r can grow once the structure re-relaxes.
 For each kernel direction and sign: s_max = the distance along v at which the first OTHER constraint (any pair or wall, linearised)
 becomes tight (capped at 5% of r); screen s = s_max x (0.1, 0.3, 0.6, 1.0) with the float polish; the best strict gain goes through
@@ -56,7 +56,7 @@ def walk(shelf, n, path=None, rounds=3, log=print, max_dirs=4, fracs=(0.3, 1.0))
         os.makedirs(os.path.join(HERE, "out", "flexwalk"), exist_ok=True)
         npy = os.path.join(HERE, "out", "flexwalk", f"{shelf}_{n}_r{rnd}.npy"); np.save(npy, best[1])
         row = cert_candidate.run(shelf, n, npy, tag=f"flexwalk{rnd}")
-        hist[-1].update({k: row[k] for k in ("gain_vs_ours", "gain_vs_packomania", "claude", "grok", "lopt", "kept")})
+        hist[-1].update({k: row[k] for k in ("gain_vs_ours", "gain_vs_packomania", "checker_a", "checker_b", "lopt", "kept")})
         if not row["kept"]: break
         path = os.path.join(HERE, "cand_hp", shelf, f"{shelf}_{n}.txt")
     return hist

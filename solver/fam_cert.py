@@ -42,7 +42,7 @@ def job(c):
         npy = os.path.join(HERE, "out", "transplant", f"fam_{s}_{N}_{c['src']}.npy"); np.save(npy, q)
         try:
             with contextlib.redirect_stdout(io.StringIO()): cr = cert_candidate.run(s, N, npy, tag="family_" + c["src"])
-            row.update({k: cr.get(k) for k in ("r_new", "gain_vs_ours", "gain_vs_packomania", "claude", "grok", "lopt", "kept")})
+            row.update({k: cr.get(k) for k in ("r_new", "gain_vs_ours", "gain_vs_packomania", "checker_a", "checker_b", "lopt", "kept")})
         except Exception as e: row["error"] = repr(e)
     return row
 
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     with Pool(W) as pool, open(prev, "a") as f:
         for o in pool.imap_unordered(job, run):
             f.write(json.dumps(o) + "\n"); f.flush()
-            ok = o.get("kept") and o.get("claude") == "IMPROVES" and o.get("grok") == "IMPROVES"
+            ok = o.get("kept") and o.get("checker_a") == "IMPROVES" and o.get("checker_b") == "IMPROVES"
             print(f"{o['shelf']} N={o['N']} {o['src']}: polished {o['rel_vs_ours']:+.2e} vs ours"
-                  + (f" -> RECORD {o['gain_vs_packomania']:+.2e} vs Packomania (lopt {o['lopt']})" if ok else f" {o.get('claude', '')} {o.get('grok', '')} {o.get('error', '')}"), flush=True)
+                  + (f" -> RECORD {o['gain_vs_packomania']:+.2e} vs Packomania (lopt {o['lopt']})" if ok else f" {o.get('checker_a', '')} {o.get('checker_b', '')} {o.get('error', '')}"), flush=True)
     print("DONE", flush=True)

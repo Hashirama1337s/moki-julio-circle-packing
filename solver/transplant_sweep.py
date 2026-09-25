@@ -1,4 +1,4 @@
-"""FULL transplant sweep (sealed plan: vision/CLAUDE-SEALED-TRANSPLANT2.md PASSED 10/64). For every size N of each shelf's
+"""FULL transplant sweep (sealed plan: vision/SEALED-TRANSPLANT2.md PASSED 10/64). For every size N of each shelf's
 Packomania table: seed from our current best at N+1 (delete one of the 4 circles with fewest near contacts) and N-1 (insert into
 the 3 largest holes), float polish; if a seed beats our current best at N by > 1e-10, run the FULL chain in the same worker
 (cert_candidate.run: 80-digit converge, Newton, 45-digit certificate, BOTH exact checkers, lopt) -> cand_hp/ if strictly better.
@@ -21,7 +21,7 @@ def job(a):
     if cur is None or up is None or dn is None: return {"shelf": shelf, "N": n, "skipped": "no neighbours"}
     r_best = cur[1] or slp_circ.rmin(cur[0], cont)
     best = (r_best, None, None)
-    # ping-pong guard (Grok stage 2): if our N+1 packing was itself made by INSERTING a circle (appended last), deleting that circle
+    # ping-pong guard (stage-2 review): if our N+1 packing was itself made by INSERTING a circle (appended last), deleting that circle
     # just restores the old N — skip it.
     jup = os.path.join(HERE, "cand_hp", shelf, f"{shelf}_{n + 1}.json")
     no_del = {n} if os.path.exists(jup) and "_ins" in json.load(open(jup)).get("tag", "") else set()
@@ -32,7 +32,7 @@ def job(a):
     for j, h in enumerate(tp.holes(dn[0], cont)):
         c, r = slp_circ.polish(np.vstack([dn[0], h]), cont, t_cap=60.0)
         if r > best[0]: best = (r, c, f"ins{j}")
-    # SECOND SEED (Grok stage 2): Packomania's own N-1 / N+1 packings are a different basin family from ours — one insertion and
+    # SECOND SEED (stage-2 review): Packomania's own N-1 / N+1 packings are a different basin family from ours — one insertion and
     # one deletion from them as well, when ours differ from theirs.
     pat = finalize_circ.info(shelf)[2]
     for m, kind in ((n - 1, "ins"), (n + 1, "del")):
@@ -48,7 +48,7 @@ def job(a):
     npy = os.path.join(HERE, "out", "transplant", f"sweep_{shelf}_{n}_{best[2]}.npy"); np.save(npy, best[1])
     try:
         with contextlib.redirect_stdout(io.StringIO()): cr = cert_candidate.run(shelf, n, npy, tag="sweep_" + best[2])
-        row.update({k: cr.get(k) for k in ("gain_vs_ours", "gain_vs_packomania", "claude", "grok", "lopt", "kept")})
+        row.update({k: cr.get(k) for k in ("gain_vs_ours", "gain_vs_packomania", "checker_a", "checker_b", "lopt", "kept")})
     except Exception as e: row["error"] = repr(e)
     return row
 
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     tables = {s: {int(l.split()[0]) for l in open(finalize_circ.info(s)[3]) if l.strip()} for s in shelves}
     front = []
     for r in _rows(seed):
-        if r.get("kept") and r.get("claude") == "IMPROVES" and r.get("grok") == "IMPROVES" and r["shelf"] in tables:
+        if r.get("kept") and r.get("checker_a") == "IMPROVES" and r.get("checker_b") == "IMPROVES" and r["shelf"] in tables:
             front += [(r["shelf"], m) for m in (r["N"] - 1, r["N"] + 1) if m >= 3 and m in tables[r["shelf"]]]
     front = list(dict.fromkeys(front))
     queue = front + [q for q in queue if q not in done and q not in set(front)]
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         with Pool(W) as pool, open(OUT, "a") as f:
             for row in pool.imap_unordered(job, [(s, n, stop) for s, n in queue], chunksize=1):
                 row["pass"] = p; f.write(json.dumps(row) + "\n"); f.flush()
-                if row.get("kept") and row.get("claude") == "IMPROVES" and row.get("grok") == "IMPROVES":
+                if row.get("kept") and row.get("checker_a") == "IMPROVES" and row.get("checker_b") == "IMPROVES":
                     go = row.get("gain_vs_ours")                # None = a size where we had NO record before (new record)
                     print(f"[{time.time() - t0:.0f}s] KEPT {row['shelf']} N={row['N']} {row['seed']} "
                           + (f"+{go:.3e} vs ours, " if go is not None else "NEW SIZE (no previous record of ours), ")

@@ -1,7 +1,7 @@
 """Converge every record to its EXACT local optimum, re-certify it, and run the local-optimality certificate (lopt.py).
 Per packing:  submission cert -> hpslp.converge (mixed-precision SLP, ~1e-17) -> refine_circ.refine (Newton on the identified
 contacts, residual < 1e-50) -> write_hp (45 digits, admissible r rounded DOWN) -> keep ONLY if r_new >= r_old ->
-Claude's exact checker + Grok's exact checker (both must say IMPROVES vs the Packomania record) -> lopt.certify.
+checker A + checker B (both exact) (both must say IMPROVES vs the Packomania record) -> lopt.certify.
 Nothing in submission/ is touched: results go to lopt_hp/<shelf>/<shelf>_<N>.txt + .json (atomic; existing .json = skip).
 usage: py -3.11 lopt_fix.py [--workers=12] [--only=shelf:N,shelf:N] [shelf ...]
 """
@@ -14,8 +14,8 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 SHELVES = ["crt", "ccq"] + [f"crc_{k}" for k in range(100, 900, 100)]
 ESCAPE_ROUNDS = int(os.environ.get("ESCAPE_ROUNDS", "0"))
 
-def grok_verdict(shelf, cs, path, n, rec):
-    g = os.path.join(HERE, "grok", "verify_exact.py" if shelf == "crt" else "verify_exact3.py" if shelf == "csc" else "verify_exact2.py")
+def checker_b_verdict(shelf, cs, path, n, rec):
+    g = os.path.join(HERE, "..", "checkers", "verify_exact.py" if shelf == "crt" else "verify_exact3.py" if shelf == "csc" else "verify_exact2.py")
     argv = [sys.executable, g, path, str(n), rec] if shelf == "crt" else [sys.executable, g, cs, path, str(n), rec]
     out = subprocess.run(argv, capture_output=True, text=True).stdout
     vl = [l for l in out.splitlines() if l.startswith("VERDICT")]
@@ -72,8 +72,8 @@ def job(args):
             os.replace(tmp2, tmp); how = "escape+" + how2; row.update(extra2); lo = lopt.certify(cs, tmp)
         r_new = F(open(tmp).readline().split()[1])
         row.update({"how": how, "r_old": str(r_old), "r_new": str(r_new), "gain_vs_old": float(r_new / r_old - 1)})
-        row["claude"] = certify_circ.check(cs, tmp, rec, verbose=False)[0]
-        row["grok"] = grok_verdict(shelf, cs, tmp, n, rec)
+        row["checker_a"] = certify_circ.check(cs, tmp, rec, verbose=False)[0]
+        row["checker_b"] = checker_b_verdict(shelf, cs, tmp, n, rec)
         row["lopt"] = lo["verdict"]
         row["lopt_detail"] = {k: v for k, v in lo.items() if k not in ("S", "lambda", "r", "file", "container")}
         with open(out_json + ".cert.tmp", "w") as f: json.dump({"S": lo.get("S"), "lambda": lo.get("lambda")}, f)

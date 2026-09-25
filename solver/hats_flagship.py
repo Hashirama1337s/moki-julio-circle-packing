@@ -39,7 +39,7 @@ def build(s, n, m, T):
     open(f, "w", newline="\n").write(f"r {r_claim}\n" + "".join(f"{rows[i][0]} {rows[i][1]}\n" for i in keep))
     v = certify_big.check(CONT[s], f, n, T[n])
     return {"table": s, "N": n, "from_M": m, "deleted": m - n, "r_pub": T[n], "r_claim": str(r_claim),
-            "gain_vs_packomania": float(Decimal(str(r_claim)) / Decimal(T[n]) - 1), "claude": v, "file": os.path.relpath(f, HERE)}
+            "gain_vs_packomania": float(Decimal(str(r_claim)) / Decimal(T[n]) - 1), "checker_a": v, "file": os.path.relpath(f, HERE)}
 
 def targets(s):
     T = table(s); ns = sorted(T); out = []; run = (0.0, None)

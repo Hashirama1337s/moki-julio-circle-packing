@@ -1,11 +1,11 @@
-"""Second-generation transplants (Claude stage-2 #3 + Grok #3 force-ranked relocation). For sizes where the one-step sweep found
+"""Second-generation transplants (stage-2 plan A #3 + plan B #3, force-ranked relocation). For sizes where the one-step sweep found
 NOTHING (rel_float <= 0 in the stage-2 logs), try:
   A 'two-step': N-2 + two circles into the two largest holes;  N+2 minus the two fewest-contact circles.
   B 'relocate1': move the weakest circle of OUR packing at N into the largest hole (weakest = smallest total contact force from the
     local-optimality certificate when one exists, else fewest near contacts).
   C 'relocate2': the same with the two weakest circles into the two largest holes.
 Each seed -> slp_circ.polish; the best strict gain -> full chain (cert_candidate.run).  Targets are fixed by the sealed rule
-(vision/CLAUDE-SEALED-GEN2.md) and written to out/gen2_targets.json before any polish.   -> out/gen2_probe.jsonl
+(vision/SEALED-GEN2.md) and written to out/gen2_targets.json before any polish.   -> out/gen2_probe.jsonl
 usage: py -3.11 gen2_probe.py [--workers=12] [--per-shelf=6]
 """
 import os, sys
@@ -56,7 +56,7 @@ def job(a):
     npy = os.path.join(HERE, "out", "transplant", f"gen2_{shelf}_{n}_{best[2]}.npy"); np.save(npy, best[1])
     try:
         with contextlib.redirect_stdout(io.StringIO()): cr = cert_candidate.run(shelf, n, npy, tag="gen2_" + best[2])
-        row.update({k: cr.get(k) for k in ("gain_vs_ours", "gain_vs_packomania", "claude", "grok", "lopt", "kept")})
+        row.update({k: cr.get(k) for k in ("gain_vs_ours", "gain_vs_packomania", "checker_a", "checker_b", "lopt", "kept")})
     except Exception as e: row["error"] = repr(e)
     return row
 
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     with Pool(W) as pool, open(os.path.join(HERE, "out", f"gen2_probe{tag}.jsonl"), "a") as f:
         for o in pool.imap_unordered(job, T):
             f.write(json.dumps(o) + "\n"); f.flush()
-            kept = o.get("kept") and o.get("claude") == "IMPROVES" and o.get("grok") == "IMPROVES"; hits += bool(kept)
+            kept = o.get("kept") and o.get("checker_a") == "IMPROVES" and o.get("checker_b") == "IMPROVES"; hits += bool(kept)
             if kept or o.get("error"):
                 print(f"[{time.time() - t0:.0f}s] {o['shelf']} N={o['N']} {o['seed']}: "
                       + (f"KEPT {o['gain_vs_packomania']:+.2e} vs Packomania" if kept else f"ERROR {o['error']}"), flush=True)

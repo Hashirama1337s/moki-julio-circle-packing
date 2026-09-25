@@ -1,4 +1,4 @@
-"""Night attack #2 (vision/CLAUDE-SEALED-NIGHT.md): deeper graph-edit moves, two arms, the same wall-clock budget per size.
+"""Night attack #2 (vision/SEALED-NIGHT.md): deeper graph-edit moves, two arms, the same wall-clock budget per size.
   R 'rmbh'  : iterated relocation = basin hopping whose kick is a graph edit: remove k in {1,2,3} circles drawn from the 6 weakest
               (least contact force from the v1.1 certificate when it belongs to this exact packing, else fewest near contacts),
               put them into k holes drawn from the 5 largest, polish; accept if r drops by < 1e-6 relative; up to 20 kicks.
@@ -82,7 +82,7 @@ def lines(c, r):
     return best
 
 def arm_P(shelf, n, c0, r0, cont, rng, t_end):
-    """Grok's row-phase flip (MERGED-NIGHT): collective moves of whole lattice lines, worst interfaces first."""
+    """Row-phase flip (MERGED-NIGHT): collective moves of whole lattice lines, worst interfaces first."""
     import slp_circ
     if cont[0] != "rect": return (r0, None), {"skip": "not a rectangle"}
     score, ax, L = lines(c0, r0)
@@ -119,7 +119,7 @@ def span(cont, ax, v, r):
     return (r, 1 - v - np.sqrt(2.0) * r)                                              # tri: legs x = 0, y = 0, hypotenuse
 
 def arm_W(shelf, n, c0, r0, cont, rng, t_end):
-    """Wall-row flip (Claude, sealed V15 #4): Grok's row flip generalised to containers with a curved wall or a slanted side.
+    """Wall-row flip (sealed V15 #4): the row flip generalised to containers with a curved wall or a slanted side.
     Lines = lattice lines parallel to a straight wall (clustered as in lines()); each line's allowed extent comes from the
     container at the line's height (arc / hypotenuse); moves as in arm_P; a circle pushed out re-enters at the free end."""
     import slp_circ
@@ -168,9 +168,9 @@ def job(a):
             npy = os.path.join(HERE, "out", "transplant", f"night_{shelf}_{n}_{arm}.npy"); np.save(npy, cb)
             try:
                 with contextlib.redirect_stdout(io.StringIO()): cr = cert_candidate.run(shelf, n, npy, tag="night_" + arm)
-                res.update({k: cr.get(k) for k in ("r_new", "gain_vs_ours", "gain_vs_packomania", "claude", "grok", "lopt", "kept")})
+                res.update({k: cr.get(k) for k in ("r_new", "gain_vs_ours", "gain_vs_packomania", "checker_a", "checker_b", "lopt", "kept")})
                 res["beats_start"] = r_start_exact is None or F(cr["r_new"]) / r_start_exact - 1 > F(1, 10 ** 10)
-                res["hit"] = bool(res["beats_start"] and cr["claude"] == "IMPROVES" and cr["grok"] == "IMPROVES")
+                res["hit"] = bool(res["beats_start"] and cr["checker_a"] == "IMPROVES" and cr["checker_b"] == "IMPROVES")
             except Exception as e: res["error"] = repr(e)
         row[arm] = res
     return row
@@ -180,7 +180,7 @@ def sealed_targets():
     only sizes with our packings at N-3..N+3; groups disjoint."""
     rows = lambda p: [json.loads(l) for l in open(os.path.join(HERE, "out", p))] if os.path.exists(os.path.join(HERE, "out", p)) else []
     g2 = rows("gen2_probe_B.jsonl") + rows("gen2_probe_Bfull.jsonl") + rows("gen2_probe_Afull.jsonl")
-    hit = lambda r: r.get("kept") and r.get("claude") == "IMPROVES" and r.get("grok") == "IMPROVES"
+    hit = lambda r: r.get("kept") and r.get("checker_a") == "IMPROVES" and r.get("checker_b") == "IMPROVES"
     import transplant_probe as tp
     ok = lambda s, n: all(tp.packing(s, m) is not None and tp.packing(s, m)[2] == "ours" for m in range(n - 3, n + 4))
     groups = [sorted({(r["shelf"], r["N"]) for r in g2 if hit(r)}, key=lambda t: (t[1], t[0])),
@@ -193,14 +193,14 @@ def sealed_targets():
         T += pick; used |= set(pick)
     return T
 
-def grok_targets():
-    """Grok's rule (MERGED-NIGHT): crc_600/700/800, zero loose circles (every circle >= 3 near contacts) in the packing we hold,
+def rule_b_targets():
+    """Rule B (MERGED-NIGHT): crc_600/700/800, zero loose circles (every circle >= 3 near contacts) in the packing we hold,
     N within 15 of 188 / 219 / 286; 10 per band: every unbeaten one first, then evenly spaced beaten ones (by N, table)."""
     import transplant_probe as tp, finalize_circ, slp_circ
     R = json.load(open(os.path.join(HERE, "out", "final_records.json"))); have = {(r["shelf"], r["n"]) for r in R if r["claimable"]}
     for p in glob.glob(os.path.join(HERE, "cand_hp", "*", "*.json")):
         j = json.load(open(p))
-        if j.get("claude") == "IMPROVES" and j.get("grok") == "IMPROVES": have.add((j["shelf"], j["N"]))
+        if j.get("checker_a") == "IMPROVES" and j.get("checker_b") == "IMPROVES": have.add((j["shelf"], j["N"]))
     T = []
     for b in (188, 219, 286):
         U, B = [], []                                     # only ~11 unbeaten zero-loose sizes exist in the bands, so each band
@@ -220,7 +220,7 @@ if __name__ == "__main__":
         STOP = now.replace(hour=h, minute=m, second=0, microsecond=0)
         if STOP <= now: STOP += datetime.timedelta(days=1)
         os.environ["NIGHT_STOP"] = STOP.isoformat()
-    T = [tuple(t) for t in json.load(open(tf))] if tf else sealed_targets() + [t for t in grok_targets() if t not in set(sealed_targets())]
+    T = [tuple(t) for t in json.load(open(tf))] if tf else sealed_targets() + [t for t in rule_b_targets() if t not in set(sealed_targets())]
     json.dump(T, open(os.path.join(HERE, "out", f"night_targets{tag}.json"), "w"))
     print(f"{len(T)} targets, arms {ARMS}, budget {BUDGET:.0f} s/arm, {W} workers" + (f", stop {STOP:%m-%d %H:%M}" if STOP else ""), flush=True)
     t0 = time.time(); hits = {a: 0 for a in ARMS}

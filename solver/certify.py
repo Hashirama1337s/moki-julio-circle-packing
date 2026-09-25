@@ -1,4 +1,4 @@
-"""Claude's exact certificate (point form). No floats in any decision.
+"""Checker A: exact certificate (point form). No floats in any decision.
 A candidate is a text file: line 1 "N <n>", then n lines "x y" (decimal strings) = points in the unit triangle
 T = {x >= 0, y >= 0, x + y <= 1}. The packing value is d = min pairwise distance; circles: r = d / (2 + (2 + sqrt2) d), a strictly
 increasing function of d, so "better than the record" <=> d^2 > d_rec^2 (compared exactly as rationals).

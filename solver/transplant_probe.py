@@ -1,4 +1,4 @@
-"""Sealed probe (vision/CLAUDE-SEALED-TRANSPLANT.md): seed N from our N+1 (delete a circle) and N-1 (insert into a hole).
+"""Sealed probe (vision/SEALED-TRANSPLANT.md): seed N from our N+1 (delete a circle) and N-1 (insert into a hole).
 -> out/transplant_probe.jsonl (one line per seed), candidate packings out/transplant/<shelf>_<N>_<tag>.npy
 usage: py -3.11 transplant_probe.py [--workers=3]
 """
@@ -8,7 +8,7 @@ import json, glob, time, numpy as np
 from multiprocessing import Pool
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 SHELVES = ["crt", "ccq", "crc_500", "crc_800"]
-MODE2 = "--mode=2" in sys.argv                      # sealed replication: vision/CLAUDE-SEALED-TRANSPLANT2.md
+MODE2 = "--mode=2" in sys.argv                      # sealed replication: vision/SEALED-TRANSPLANT2.md
 OUT = os.path.join(HERE, "out", "transplant2_probe.jsonl" if MODE2 else "transplant_probe.jsonl")
 
 def load_txt(p):

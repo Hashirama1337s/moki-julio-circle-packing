@@ -1,4 +1,4 @@
-"""Four hats, zero-cost check results turned into certified candidates (vision/CLAUDE-SEALED-HATS.md, out/hats_zero.json):
+"""Four hats, zero-cost check results turned into certified candidates (vision/SEALED-HATS.md, out/hats_zero.json):
  - TAO monotone: crc_700 N in {373, 367, 401, 249, 214} are beaten by our own N+1 packing minus one circle -> transplant_sweep.job
    (delete / insert seeds from ours and Packomania's neighbours, float polish, full exact chain if it beats ours).
  - EINSTEIN mirror / TAO stacking: crc_800 N=282 = our crc_400 N=141 record + its mirror image across the long side, polished,
@@ -23,7 +23,7 @@ def stack_job(_):
     npy = os.path.join(HERE, "out", "hats_crc_800_282.npy"); np.save(npy, c)
     with contextlib.redirect_stdout(io.StringIO()): row = cert_candidate.run("crc_800", 282, npy, "hats_stack")
     return {"shelf": "crc_800", "N": 282, "seed": f"crc_400(141, {src}) x2 mirror", "r_seed": r_seed, "r_float": r, **{k: row.get(k) for k in
-            ("r_new", "r_ours_before", "gain_vs_ours", "gain_vs_packomania", "claude", "grok", "lopt", "kept")}}
+            ("r_new", "r_ours_before", "gain_vs_ours", "gain_vs_packomania", "checker_a", "checker_b", "lopt", "kept")}}
 
 def mono_job(n):
     import transplant_sweep

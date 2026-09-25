@@ -52,7 +52,7 @@ def job(a):
         npy = os.path.join(HERE, "out", "transplant", f"famsw_{shelf}_{N}.npy"); np.save(npy, best[1])
         try:
             with contextlib.redirect_stdout(io.StringIO()): cr = cert_candidate.run(shelf, N, npy, tag="famsweep_" + best[2])
-            row.update({k: cr.get(k) for k in ("r_new", "gain_vs_ours", "gain_vs_packomania", "claude", "grok", "lopt", "kept")})
+            row.update({k: cr.get(k) for k in ("r_new", "gain_vs_ours", "gain_vs_packomania", "checker_a", "checker_b", "lopt", "kept")})
         except Exception as e: row["error"] = repr(e)
     return row
 
@@ -101,7 +101,7 @@ if __name__ == "__main__":
     with Pool(W) as pool, open(os.path.join(HERE, "out", OUTF), "a") as f:
         for o in pool.imap_unordered(safe_job, T, chunksize=1):
             f.write(json.dumps(o) + "\n"); f.flush()
-            ok = o.get("kept") and o.get("claude") == "IMPROVES" and o.get("grok") == "IMPROVES"; hits += bool(ok)
+            ok = o.get("kept") and o.get("checker_a") == "IMPROVES" and o.get("checker_b") == "IMPROVES"; hits += bool(ok)
             if ok or o.get("error"):
                 go = o.get("gain_vs_ours")                        # None at a size we had no record for (02:05 crash, fixed)
                 print(f"[{time.time() - t0:.0f}s] {o['shelf']} N={o['N']} {o.get('seed')}: " + (f"RECORD {o['gain_vs_packomania']:+.2e} vs Packomania, "

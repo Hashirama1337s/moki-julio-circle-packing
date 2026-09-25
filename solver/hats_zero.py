@@ -1,4 +1,4 @@
-"""Four hats, zero-cost checks (vision/CLAUDE-SEALED-HATS.md): pure arithmetic on best-known radii, no search.
+"""Four hats, zero-cost checks (vision/SEALED-HATS.md): pure arithmetic on best-known radii, no search.
 best(s, N) = max(Packomania snapshot, our certified records, cand_hp). Float screen; anything within 1e-12 is a tie, and any
 real violation is re-checked exactly before it counts.
  TAO   T0  monotone r(N) >= r(N+k); height-monotone r_crc_b(N) <= r_crc_k(N) for b < k; stacking crc_a + crc_b -> crc_(a+b);

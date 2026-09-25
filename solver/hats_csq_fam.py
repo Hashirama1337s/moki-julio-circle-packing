@@ -30,7 +30,7 @@ for n, g_best, g_tab, src in json.load(open(os.path.join(HERE, "out", "hats_csq_
     keepit = v == "IMPROVES" and r_claim > old
     if keepit: os.replace(tmp, f); ok += 1
     else: os.remove(tmp)
-    row = {"table": "csq", "N": n, "from": f"{desc} ({m}) minus {m - n}", "r_claim": str(r_claim), "r_pub": T[n], "claude": v,
+    row = {"table": "csq", "N": n, "from": f"{desc} ({m}) minus {m - n}", "r_claim": str(r_claim), "r_pub": T[n], "checker_a": v,
            "gain_vs_packomania": float(r_claim / Decimal(T[n]) - 1), "replaced": bool(keepit), "was": str(old)}
     out.write(json.dumps(row) + "\n")
 print("family certificates kept:", ok)

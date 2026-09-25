@@ -2,8 +2,8 @@
 Per size, one worker: polish Packomania's own packing; Packomania's N-1 packing + one circle in each of its 3 largest holes;
 Packomania's N+1 packing minus each of its 3 fewest-contact circles; then monotonic basin hopping (campaign_circ.perturb kicks,
 big kick after a stall) from the best of those for the rest of the time budget. A float gain > 1e-10 over the published radius
-goes through the full chain (cert_candidate.run: 80-digit SLP -> Newton -> 45-digit certificate, radius rounded down -> Claude's
-exact checker + Grok's independent verify_exact3.py -> local optimality) into cand_hp/csc/.
+goes through the full chain (cert_candidate.run: 80-digit SLP -> Newton -> 45-digit certificate, radius rounded down -> checker A
++ checker B (independent verify_exact3.py) -> local optimality) into cand_hp/csc/.
 Not attempted: the 10 sizes whose coordinates Packomania has not published (Hogan, 09-Sep-2026) — the table-radius gate cannot
 run there. Claims for N = 151..200 are additionally gated by Lai et al. 2025 (Table 8) at build time.
 usage: py -3.11 csc_pass.py [--workers=6] [--sec=0.4,20] [--stop=HH:MM] [--from=1] [--to=250] [--out=csc_pass.jsonl]
@@ -60,7 +60,7 @@ def job(n):
         npy = os.path.join(HERE, "out", "transplant", f"csc_{n}_{best[2].replace('+', '_')}.npy"); np.save(npy, best[1])
         try:
             with contextlib.redirect_stdout(io.StringIO()): cr = cert_candidate.run("csc", n, npy, tag="csc_" + best[2].replace("+", "_"))
-            row.update({k: cr.get(k) for k in ("r_new", "gain_vs_packomania", "claude", "grok", "lopt", "kept")})
+            row.update({k: cr.get(k) for k in ("r_new", "gain_vs_packomania", "checker_a", "checker_b", "lopt", "kept")})
         except Exception as e: row["error"] = repr(e)
     return row
 
@@ -75,8 +75,8 @@ if __name__ == "__main__":
     with Pool(W) as pool, open(os.path.join(HERE, "out", out), "a") as f:
         for o in pool.imap_unordered(job, T, chunksize=1):
             f.write(json.dumps(o) + "\n"); f.flush()
-            ok = o.get("kept") and o.get("claude") == "IMPROVES" and o.get("grok") == "IMPROVES"; hits += bool(ok)
+            ok = o.get("kept") and o.get("checker_a") == "IMPROVES" and o.get("checker_b") == "IMPROVES"; hits += bool(ok)
             if ok or o.get("error") or (o.get("rel_float", 0) > 1e-10):
                 print(f"[{time.time() - t0:.0f}s] csc N={o['N']} {o.get('seed')}: rel_float {o.get('rel_float', 0):+.2e} "
-                      + (f"RECORD {o['gain_vs_packomania']:+.2e} (lopt {o['lopt']})" if ok else f"claude {o.get('claude')} grok {o.get('grok')} {o.get('error', '')}"), flush=True)
+                      + (f"RECORD {o['gain_vs_packomania']:+.2e} (lopt {o['lopt']})" if ok else f"checker_a {o.get('checker_a')} checker_b {o.get('checker_b')} {o.get('error', '')}"), flush=True)
     print(f"DONE {hits} certified records / {len(T)} sizes, {time.time() - t0:.0f}s", flush=True)
