@@ -5,6 +5,9 @@
 For each row of MANIFEST.csv: unzip the certificate from certificates/<shelf>.zip, then
   1. checkers/certify_circ.py      (checker A)  - exact rational arithmetic; IMPROVES needs radius > published * (1 + 1e-10)
   2. checkers/verify_exact_*.py    (checker B, written independently) - exact rational arithmetic
+The square: checkers/certify_big.py (A) + checkers/verify_exact_big.py (B). The regular pentagon (cpt): checkers/certify_poly.py (A)
++ checkers/verify_exact_poly.py (B), both exact in Q(sqrt5, sqrt(10 +- 2 sqrt5)); they say IMPROVES for any gain over the listed
+radius (every pentagon record was selected only if it beats that radius by more than 1e-10 relative).
 A record passes only if BOTH say IMPROVES against the published Packomania radius listed in MANIFEST.csv.
 """
 import csv, os, sys, zipfile, tempfile, subprocess
@@ -16,10 +19,18 @@ def container(shelf):
     if shelf == "ccq": return "quad"
     if shelf == "csc": return "semi"
     if shelf == "csq": return "square"
+    if shelf == "cpt": return "poly:5"
     return "rect:0." + f"{int(shelf.split('_')[1]):03d}".rstrip("0")          # crc_300 -> rect:0.3
 
 def check(args):
     shelf, n, rec, path = args
+    if shelf == "cpt":   # the regular pentagon (circumradius 1, vertex (0, 1)): both checkers decide the irrational walls exactly
+        import certify_poly
+        a = certify_poly.check_file(5, path, n, rec)
+        argv = [sys.executable, os.path.join(HERE, "checkers", "verify_exact_poly.py"), "5", path, str(n), rec]
+        out = subprocess.run(argv, capture_output=True, text=True).stdout
+        b = [l for l in out.splitlines() if l.startswith("VERDICT")]; b = b[0].split(":", 1)[1].strip() if b else "ERROR"
+        return shelf, n, a, b
     if shelf == "csq":   # the square (up to 10,000 circles): the two O(N) exact checkers
         import certify_big
         a = certify_big.check("square", path, n, rec)
