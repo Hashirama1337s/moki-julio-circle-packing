@@ -15,10 +15,18 @@ def container(shelf):
     if shelf == "crt": return "tri"
     if shelf == "ccq": return "quad"
     if shelf == "csc": return "semi"
+    if shelf == "csq": return "square"
     return "rect:0." + f"{int(shelf.split('_')[1]):03d}".rstrip("0")          # crc_300 -> rect:0.3
 
 def check(args):
     shelf, n, rec, path = args
+    if shelf == "csq":   # the square (up to 10,000 circles): the two O(N) exact checkers
+        import certify_big
+        a = certify_big.check("square", path, n, rec)
+        argv = [sys.executable, os.path.join(HERE, "checkers", "verify_exact_big.py"), "square", path, str(n), rec]
+        out = subprocess.run(argv, capture_output=True, text=True).stdout
+        b = [l for l in out.splitlines() if l.startswith("VERDICT")]; b = b[0].split(":")[1].strip() if b else "ERROR"
+        return shelf, n, a, b
     import certify_circ
     a = certify_circ.check(container(shelf), path, rec, verbose=False)[0]
     if shelf == "crt": argv = [sys.executable, os.path.join(HERE, "checkers", "verify_exact_crt.py"), path, str(n), rec]
@@ -32,7 +40,7 @@ if __name__ == "__main__":
     rows = list(csv.DictReader(open(os.path.join(HERE, "MANIFEST.csv"))))
     tmp = tempfile.mkdtemp(prefix="packing_verify_")
     for z in sorted(os.listdir(os.path.join(HERE, "certificates"))):
-        zipfile.ZipFile(os.path.join(HERE, "certificates", z)).extractall(os.path.join(tmp, z[:-4]))
+        zipfile.ZipFile(os.path.join(HERE, "certificates", z)).extractall(os.path.join(tmp, z[:-4].split("_part")[0]))   # csq_part1.zip -> csq/
     jobs = [(r["shelf"], int(r["N"]), r["published_radius"], os.path.join(tmp, r["shelf"], f"{r['shelf']}_{r['N']}.txt")) for r in rows]
     with Pool() as pool: res = pool.map(check, jobs)
     ok = [r for r in res if r[2] == "IMPROVES" and r[3] == "IMPROVES"]
