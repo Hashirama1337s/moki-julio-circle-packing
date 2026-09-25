@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Exact checker for equal-circle packings. Python 3.11, standard library only.
 
 Arithmetic that decides the verdict stays in the integers. Decimal strings are

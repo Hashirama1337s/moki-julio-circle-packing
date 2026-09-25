@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 # verify_exact2.py — equal circles in rect:<h> or quad. No float in any decision.
 import sys
 from decimal import Decimal

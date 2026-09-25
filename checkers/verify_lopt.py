@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Local-optimality checker for equal-circle packings.
 
 CLI: verify_lopt.py <container> <certificate.txt> <cert.json>

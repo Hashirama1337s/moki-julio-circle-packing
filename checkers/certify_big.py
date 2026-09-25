@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Checker A: exact checker for BIG packings (Packomania csq / cci frames), O(N): every number is read as an exact decimal and
 scaled to a common integer grid (x = X / S), so every decision is integer arithmetic.
   square: the unit square centred at the origin (-1/2 <= x, y <= 1/2)   circle: the unit disc centred at the origin

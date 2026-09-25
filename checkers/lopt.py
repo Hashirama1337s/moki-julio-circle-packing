@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """LOCAL-OPTIMALITY certificate for an equal-circle packing (circle form; containers tri / rect:h / quad as in certify_circ.py).
 
 Given a certificate z* = (c_1..c_n, r*) that is exactly feasible, this proves, rigorously:

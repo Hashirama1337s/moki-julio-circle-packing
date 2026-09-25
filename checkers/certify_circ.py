@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Checker A: exact circle-form certificate for crc (rect:h), ccq (quad) and crt (tri). No floats in any decision.
 File: line 1 "r <decimal>", then N lines "x y" (decimal strings). Record radius: 30-digit decimal from the shelf's radius.txt.
 Fit rules (exact rationals; the only irrational terms are handled by sign checks + squaring):

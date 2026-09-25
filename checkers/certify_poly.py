@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Exact checker A for equal circles in a REGULAR k-GON (Packomania cpt = the pentagon, k = 5). Authors: Moki&Julio.
 Standard library only. No floating point number takes part in any decision.
 

@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 # Checker B (independent implementation), saved verbatim 2026-09-24. USED ONLY FOR THE SEMICIRCLE (csc).
 # NOTE: written without seeing verify_exact2.py; its rect:<h> branch assumes a [0,1] x [0,h] frame, NOT the centred
 # frame of our certificates -> rectangles and the quadrant stay on verify_exact2.py.

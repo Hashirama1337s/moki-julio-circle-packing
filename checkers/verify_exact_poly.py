@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 """Exact checker for equal circles in a regular pentagon (Packomania cpt).
 
 python verify_exact_poly.py 5 <file> <N> <record_radius>

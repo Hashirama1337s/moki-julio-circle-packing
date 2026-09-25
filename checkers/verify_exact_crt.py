@@ -1,3 +1,4 @@
+# Moki&Julio circle-packing records - https://github.com/Hashirama1337s/moki-julio-circle-packing
 # verify_exact.py — equal circles, unit isosceles right triangle, Packomania crt (circle form).
 # CLI: verify_exact.py file N record_radius_decimal
 # File: first line "r <decimal>", then N lines "x y". Decisions use Fraction only.
