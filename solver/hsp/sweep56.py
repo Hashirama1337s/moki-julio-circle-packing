@@ -43,7 +43,9 @@ def job_rec(args):
             if len(c) > n: c = seeds.delete(c, cs[1], len(c) - n, C.rng)
             if len(c) == n: C.polish(f"code{C.B['bar_M']}" + ('+centre' if C.B['bar_source'] == 'code+centre' else ''), c, 20.0)
     for lab, p in (('ours:sweep56', os.path.join(sweep4.BEST, f'hsp{d}_{n}.npy')), ('ours:sweep4', os.path.join(SW4_BEST, f'hsp{d}_{n}.npy')),
-                   ('ours:first', os.path.join(geomd.OUT, 'sweep56', 'best', f'hsp{d}_{n}.npy'))):     # a second pass also starts from the first
+                   ('ours:first', os.path.join(geomd.OUT, 'sweep56', 'best', f'hsp{d}_{n}.npy')),     # a second pass also starts from the first
+                   ('ours:first6', os.path.join(geomd.OUT, 'sweep6', 'best', f'hsp{d}_{n}.npy')),
+                   ('ours:second5', os.path.join(geomd.OUT, 'sweep5b', 'best', f'hsp{d}_{n}.npy'))):
         if os.path.exists(p):
             c = np.load(p)
             if c.shape == (n, d) and geomd.rmin(c) > C.best[1]: C.polish(lab, c, 20.0)
