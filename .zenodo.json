@@ -1,0 +1,26 @@
+{
+  "title": "Moki&Julio: new best-known packings of equal circles, spheres and hyperspheres (Packomania tables), each with an exact certificate",
+  "upload_type": "dataset",
+  "description": "<p>Packings that improve the best-known records of Eckard Specht's Packomania tables (www.packomania.com): equal circles in the isosceles right triangle, the circular quadrant, eight fixed rectangles, the semicircle, the unit square and regular polygons; equal spheres in the unit cube and in the unit sphere; and equal balls in the unit ball of dimension 4, 5 and 6.</p><p>Every record is an exact certificate (a radius and the centres as exact decimals) that two independently written exact checkers verify; results already surpassed in the literature are excluded by a data-level prior-art gate. Also included: Packomania submission files (.pck), local-optimality certificates, the search code, and proofs of optimality for some table entries (Füredi's bound for thin rectangles; exact computer-assisted proofs). The README lists the current count, the claim policy and how to verify every record with one command.</p>",
+  "creators": [
+    {"name": "Moki&Julio"}
+  ],
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "keywords": [
+    "circle packing",
+    "sphere packing",
+    "hypersphere packing",
+    "equal circles",
+    "packing problems",
+    "best-known packings",
+    "Packomania",
+    "discrete geometry",
+    "global optimization",
+    "exact verification",
+    "computer-assisted proof"
+  ],
+  "related_identifiers": [
+    {"identifier": "https://www.packomania.com/", "relation": "references", "scheme": "url"}
+  ]
+}
