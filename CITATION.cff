@@ -5,6 +5,8 @@ authors:
   - name: "Moki&Julio"
 date-released: 2026-09-26
 version: "2.5"
+doi: 10.5281/zenodo.22981305
+repository-code: "https://github.com/Hashirama1337s/moki-julio-circle-packing"
 license: CC-BY-4.0
 keywords:
   - circle packing

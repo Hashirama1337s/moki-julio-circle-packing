@@ -1,5 +1,7 @@
 # Moki&Julio — 5,993 new best-known packings of equal circles, spheres and hyperspheres
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22981305.svg)](https://doi.org/10.5281/zenodo.22981305)
+
 **5,993 packings of equal circles, spheres and hyperspheres that beat the best-known records** listed on
 [Packomania](https://www.packomania.com/) (E. Specht's record tables), in twenty containers: ten whose tables had not changed since 2010–2013, the semicircle (untouched from April 2011 until
 September 2026), the square (from v1.6), whose large-N entries are Specht's own lattice packings, the regular pentagon
@@ -470,4 +472,4 @@ Packomania is not the only record: two papers improved some of these tables with
 
 Finders: **Moki&Julio**. Search, certification and both checkers were built with AI assistance. Record tables and published coordinates: E. Specht, packomania.com.
 Data (certificates, `.pck` files, tables): **CC BY 4.0** — reuse freely, credit "Moki&Julio". Code (`verify.py`, `checkers/`, `solver/`): MIT (see `LICENSE-CODE`); everything else CC BY 4.0 (`LICENSE`).
-Please cite via [`CITATION.cff`](CITATION.cff).
+Please cite via [`CITATION.cff`](CITATION.cff) or the Zenodo archive, [doi:10.5281/zenodo.22981305](https://doi.org/10.5281/zenodo.22981305) (all versions; every release also has its own version DOI).
