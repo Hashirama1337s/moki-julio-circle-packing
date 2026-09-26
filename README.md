@@ -1,11 +1,12 @@
-# Moki&Julio — 5,421 new best-known packings of equal circles, spheres and hyperspheres
+# Moki&Julio — 5,993 new best-known packings of equal circles, spheres and hyperspheres
 
-**5,421 packings of equal circles, spheres and hyperspheres that beat the best-known records** listed on
-[Packomania](https://www.packomania.com/) (E. Specht's record tables), in nineteen containers: ten whose tables had not changed since 2010–2013, the semicircle (untouched from April 2011 until
+**5,993 packings of equal circles, spheres and hyperspheres that beat the best-known records** listed on
+[Packomania](https://www.packomania.com/) (E. Specht's record tables), in twenty containers: ten whose tables had not changed since 2010–2013, the semicircle (untouched from April 2011 until
 September 2026), the square (from v1.6), whose large-N entries are Specht's own lattice packings, the regular pentagon
 (from v2.1; its table was last updated in March 2023), the regular 16-gon and 15-gon (from v2.2; tables last updated in
 March 2023 and December 2020), equal spheres in a cube (from v2.3, the first three-dimensional table; last updated in June
-2013, three cells in June 2018) and — from v2.4 — equal balls in the unit ball of dimension 4, 5 and 6 (tables last updated in July 2025 (hsp4), August 2025 (hsp5), July 2025 (hsp6)). Every packing is supplied with an exact certificate and is verified by **two independently written exact checkers**
+2013, three cells in June 2018), equal balls in the unit ball of dimension 4, 5 and 6 (from v2.4; tables last updated in
+July–August 2025) and — from v2.5 — equal spheres in a sphere (table last updated in July 2026). Every packing is supplied with an exact certificate and is verified by **two independently written exact checkers**
 (pure rational arithmetic, no floating point in any decision).
 
 | Packomania table | container | new records | largest gain in radius |
@@ -26,15 +27,47 @@ March 2023 and December 2020), equal spheres in a cube (from v2.3, the first thr
 | `cxd` | regular 16-gon, circumradius 1 | 66 | +0.066 % (N = 148) |
 | `cpd` | regular 15-gon, circumradius 1 | 30 | +0.156 % (N = 112) |
 | `scu` | cube, side 1 (spheres) | 455 | +1.255 % (N = 937) |
+| `ssp` | sphere, radius 1 (spheres) | 567 | +0.009 % over the bar (N = 917) |
 | `hsp4` | ball, radius 1, 4-D (4-D balls) | 220 | +0.017 % over the bar (N = 67) |
-| `hsp5` | ball, radius 1, 5-D (5-D balls) | 176 | +0.064 % over the bar (N = 293) |
-| `hsp6` | ball, radius 1, 6-D (6-D balls) | 73 | +0.0076 % over the bar (N = 146) |
-| **total** | | **5,421** | |
+| `hsp5` | ball, radius 1, 5-D (5-D balls) | 177 | +0.064 % over the bar (N = 293) |
+| `hsp6` | ball, radius 1, 6-D (6-D balls) | 77 | +0.011 % over the bar (N = 152) |
+| **total** | | **5,993** | |
 
 Per-N radii (30 digits, old and new) are in [`RESULTS_TABLE.md`](RESULTS_TABLE.md); one row per record in
 [`MANIFEST.csv`](MANIFEST.csv) (published radius, new radius, relative gain, kind, precision).
 
 ![before and after, rectangle 1 x 0.8, N = 10](figures/ba_crc_800_10.png)
+
+## What's new in version 2.5 (2026-09-26)
+
+- **5,993 records** in **twenty** tables (version 2.4 listed 5,421): **567 records for equal spheres in a
+  sphere** (table 20) and 5 more sizes in the ball tables of dimension 4–6 (`hsp5` +1, `hsp6` +4; now
+  220 / 177 / 77);
+  690 records improved by our own larger packings (below).
+- **Table 20 — equal spheres in a sphere (`ssp`, Packomania page last updated July 2026):** **567 records**, N = 144–1000
+  (435 at N = 401–1000, 132 at N = 101–400). The cells we beat were held by: Specht's own program 537; Zhou, Ren, He, Liu & Li 27; Lai et al. 3. Gains over the bar are
+  small: median +7.9e-07 %, 68 by more than one part in 10⁶; largest N = 917 +0.009 %, N = 918 +0.0087 %, N = 412 +0.0049 %, N = 709 +0.0045 %. Compared with
+  Packomania's packing: 476 refinement; 80 unclear (alignment); 8 new arrangement; 3 small (unclear).
+- **How (spheres in a sphere):** the ball solver of version 2.4 in three dimensions (`solver/hsp/`, `solver/ssp/`): Packomania's packing
+  → sequential-LP polish → basin hopping; exact certification by the same two checkers with d = 3 (`checkers/certify_ball.py`,
+  `checkers/verify_exact_ball.py`). Packomania serves its `ssp` coordinate files with the last centre's row left blank (N − 1 centres);
+  that centre was rebuilt (`solver/ssp/missing.py`) to use Packomania's packing as a seed and to audit the table.
+- **Claim policy (spheres in a sphere):** a record must beat, by more than one part in 10¹⁰ (and the printed radius by more than
+  2 × 10⁻¹²), the largest of Packomania's printed radius, **Zhou, Ren, He, Liu & Li**, Computers & Operations Research 164 (2024)
+  106522 (their tables for N ≤ 400, arXiv 2305.10023, read at their most favourable rounding; they are the bar at 1 of our sizes),
+  Cohn's spherical codes in 3-D (alone or with a centre sphere) and the printed radius of any larger N. Huang & Yu (2012, N ≤ 72) were
+  checked at data level too; no published value we found is above Packomania's. For every claimed size, Packomania's packing (its
+  N − 1 served centres plus the rebuilt one) was checked exactly: its true minimum radius lies within 3 × 10⁻¹² of the printed radius
+  (0 mismatches). Local optimality is not attempted in 3-D.
+- **Our own envelope.** A packing of M circles minus M − N of them is a packing of N with the same radius. In version 2.4, 690 of
+  our records were beaten that way by our own record for a larger N (`crc_800` 1, `csq` 688, `scu` 1): each is now that
+  packing with the extra circles removed (265 of them then polished with the square's SLP solver, `solver/slp_big.py`, into the space the removed circles left),
+  certified again by both checkers; median gain +0.0052 %, largest +0.356 %.
+- **The other tables:** no new sizes; no further improvements. 1,340 records are
+  certified locally optimal. Every result passed both exact checkers, the prior-art gate and the table-radius gate again from scratch;
+  no version 2.4 record was withdrawn.
+- **Tables re-checked:** on 2026-09-26 every radius on Packomania's twenty live pages used here (10,412 rows) still equals the
+  values these records are compared against.
 
 ## What's new in version 2.4 (2026-09-26)
 
@@ -354,21 +387,21 @@ Version 2.0 (below) was built and verified, and is published together with this 
 
 ## Cumulative since version 1.0 (as of version 1.6)
 
-- **5,421 records** (v1.0: 1,933). **3499 sizes where we had no record before**; **1071 of the v1.0 records improved
+- **5,993 records** (v1.0: 1,933). **4071 sizes where we had no record before**; **1071 of the v1.0 records improved
   further** (gain over our own v1.0 radius; largest `crc_700` N = 286 +0.752 %, `crc_600` N = 219 +0.667 %, `crc_700` N = 190 +0.592 %, `crc_700` N = 189 +0.585 %, `crc_700` N = 188 +0.559 %). Every file is re-verified from scratch by both
-  exact checkers (5421 / 5421), and Packomania's printed radius for every claimed size was re-derived from its own coordinate file in the
+  exact checkers (5993 / 5993), and Packomania's printed radius for every claimed size was re-derived from its own coordinate file in the
   same frame and in mirrored frames (0 mismatches).
 - **How:** (1) every certificate driven to its exact local peak in 80-digit arithmetic (a mixed-precision sequential-LP step, then
   Newton on the identified contacts); (2) **neighbour transplants** — seed size N from our packing at N−1 (one circle into the
   largest hole) or N+1 (remove the circle with fewest contacts), then polish; this jumped over weak basins, e.g. `crc_700` N = 187
   from +0.003 % to +0.532 % over the published radius (picture below); (3) a flex walk along load-bearing flexes found by the certificate below.
 - **Local optimality certificates** (`local_optimality/<table>.zip`, one JSON per packing: kept constraints and contact forces).
-  For **1,339** of the 5,421 packings, two independently written checkers (`checkers/lopt.py`, float-rigorous;
+  For **1,340** of the 5,993 packings, two independently written checkers (`checkers/lopt.py`, float-rigorous;
   `checkers/verify_lopt.py`, exact rational in ℚ(√2)) prove: every feasible packing whose load-bearing circles and radius lie
   within an explicit distance ρ of ours (median ρ = 7.1e-09 r) has radius at most ours + Δ (Δ ≤ 3e-22 r in every case,
   median 4e-44 r), and a true local maximum lies within t₀ of ours. In plain words: no small nudge beats these packings.
-  Of the other 4,082: 1013 carry a first-order flex (a sliding or buckling motion the first-order theorem cannot
-  exclude) and 3069 could not be certified by this method; none of them is claimed locally optimal. Verdict, ρ
+  Of the other 4,653: 1012 carry a first-order flex (a sliding or buckling motion the first-order theorem cannot
+  exclude) and 3641 could not be certified by this method; none of them is claimed locally optimal. Verdict, ρ
   and Δ for every packing: [`LOCAL_OPTIMALITY.csv`](LOCAL_OPTIMALITY.csv). Theorem and proof: docstring of `checkers/lopt.py`.
 
 ![before and after, rectangle 1 x 0.7, N = 187](figures/ba_crc_700_187.png)
@@ -379,29 +412,30 @@ Version 2.0 (below) was built and verified, and is published together with this 
 python verify.py
 ```
 Standard library only. It unzips `certificates/`, and for every record runs both checkers against the published radius in
-`MANIFEST.csv`. A record counts only if **both** say `IMPROVES`. Expected output: `TOTAL: 5421 / 5421 verified by both checkers`.
+`MANIFEST.csv`. A record counts only if **both** say `IMPROVES`. Expected output: `TOTAL: 5993 / 5993 verified by both checkers`.
 
 - **Certificate format** (`certificates/<table>.zip`, one file per N): first line `r <radius>`, then N lines `x y` (circle centres,
   decimal). Same coordinate frame as Packomania's own files: `crt` has its right angle at the origin and legs along the axes;
   `ccq` is the unit quarter disc at the origin; `crc_k` is width 1 × height 0.k centred at the origin; `csq` is the unit square centred at the origin;
   `cpt`, `cpd` and `cxd` are the regular pentagon, 15-gon and 16-gon with circumradius 1 centred at the origin and a
   horizontal bottom side (the pentagon and 15-gon have a vertex at (0, 1); the 16-gon has a horizontal top side);
-  `scu` is the cube of side 1 centred at the origin (lines `x y z`); `hsp4`, `hsp5` and `hsp6` are the unit ball of
-  dimension 4, 5 and 6 centred at the origin (lines of 4, 5 or 6 numbers; Packomania's own naming `hsp4-<N>` for the .pck files).
+  `scu` is the cube of side 1 centred at the origin (lines `x y z`); `ssp` is the unit sphere centred at the origin (lines
+  `x y z`); `hsp4`, `hsp5` and `hsp6` are the unit ball of dimension 4, 5 and 6 centred at the origin (lines of 4, 5 or 6
+  numbers; Packomania's own naming `hsp4-<N>` for the .pck files).
 - **Checker A** (`checkers/certify_circ.py`; for the square `checkers/certify_big.py`; for the pentagon `checkers/certify_poly.py`;
-  for the 15- and 16-gon `checkers/certify_kgon.py`; for the cube `checkers/certify_cube.py`; for the balls in 4–6 dimensions
-  `checkers/certify_ball.py`): every circle inside the container, every pair at distance ≥ 2r, all in exact
+  for the 15- and 16-gon `checkers/certify_kgon.py`; for the cube `checkers/certify_cube.py`; for the spheres in a sphere and
+  the balls in 4–6 dimensions `checkers/certify_ball.py`): every circle inside the container, every pair at distance ≥ 2r, all in exact
   fractions (the only irrational terms, √2 on the triangle's hypotenuse and the quadrant's arc, are handled by a sign check and
   squaring). Claim floor: IMPROVES only if the radius exceeds the published one by more than one part in 10¹⁰ — published values can
   be low by ~10⁻²⁴ from last-digit rounding, which is a tie, not a record.
   For the pentagon, `checkers/certify_poly.py` decides every wall exactly in ℚ(√5, √(10 ± 2√5)); for the 15- and 16-gon,
   `checkers/certify_kgon.py` proves every wall with rigorous rational enclosures; the cube's walls are exact rational bounds, and
-  the balls' wall and pair tests are exact integer comparisons. These say IMPROVES for any gain; the same 10⁻¹⁰ floor (and the
-  literature gate) is applied when those records are selected.
+  the balls' and spheres' wall and pair tests are exact integer comparisons. These say IMPROVES for any gain; the same 10⁻¹⁰
+  floor (and the literature gate) is applied when those records are selected.
 - **Checker B** (`checkers/verify_exact_crt.py`, `checkers/verify_exact_rect_quad.py`, for the semicircle
   `checkers/verify_exact_semi.py` (two labelled one-line parser fixes), for the square `checkers/verify_exact_big.py`,
   for the pentagon `checkers/verify_exact_poly.py`, for the 15- and 16-gon `checkers/verify_exact_kgon.py`, for the cube
-  `checkers/verify_exact_cube.py`, for the balls `checkers/verify_exact_ball.py`): written independently, blind to checker A.
+  `checkers/verify_exact_cube.py`, for the spheres and balls `checkers/verify_exact_ball.py`): written independently, blind to checker A.
 - `packomania/<table>.zip` holds the same packings in Packomania's submission format (`.pck`: radius, name, coordinates).
 
 ## How they were found
@@ -418,8 +452,8 @@ Search over the positions of N centres maximising the smallest clearance (circle
    search re-found 14 of 14 known small records; both checkers reject planted overlaps, points outside, and inflated radii.
 
 **Kinds of improvement** (our circles matched one-to-one to the published ones; loose "rattler" circles ignored):
-4,254 new arrangements (a held circle moved ≥ 5 % of a radius and the gain is ≥ 10⁻⁶), 574 refinements of the published
-arrangement, 355 small gains we do not claim as new structures.
+4,267 new arrangements (a held circle moved ≥ 5 % of a radius and the gain is ≥ 10⁻⁶), 1045 refinements of the published
+arrangement, 358 small gains we do not claim as new structures.
 
 ## Prior art we checked — and what we therefore do NOT claim
 

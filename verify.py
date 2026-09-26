@@ -17,7 +17,8 @@ The cube (scu: equal SPHERES in the cube of side 1 centred at the origin, 3-D; c
 The balls (hsp4 / hsp5 / hsp6: equal balls in the unit ball of dimension 4 / 5 / 6 centred at the origin; certificate lines of d
 numbers): checkers/certify_ball.py (A) + checkers/verify_exact_ball.py (B), both exact integer tests of every wall and every pair;
 they too say IMPROVES for any gain (every record beats its bar -- the published radius, the best spherical-code construction from
-Cohn's table and any larger published size -- by more than 1e-10 relative).
+Cohn's table and any larger published size -- by more than 1e-10 relative). The spheres in a sphere (ssp, 3-D; lines "x y z") use the
+same two checkers with d = 3.
 A record passes only if BOTH say IMPROVES against the published Packomania radius listed in MANIFEST.csv.
 """
 import csv, os, sys, zipfile, tempfile, subprocess
@@ -33,13 +34,14 @@ def container(shelf):
     if shelf in ("cxd", "cpd"): return "poly:16" if shelf == "cxd" else "poly:15"
     if shelf == "scu": return "cube"
     if shelf in ("hsp4", "hsp5", "hsp6"): return "ball:" + shelf[3]
+    if shelf == "ssp": return "ball:3"
     return "rect:0." + f"{int(shelf.split('_')[1]):03d}".rstrip("0")          # crc_300 -> rect:0.3
 
 def check(args):
     shelf, n, rec, path = args
-    if shelf in ("hsp4", "hsp5", "hsp6"):   # equal balls in the unit ball of dimension d = 4, 5, 6: exact integer tests, wall and every pair
+    if shelf in ("hsp4", "hsp5", "hsp6", "ssp"):   # equal balls in the unit ball of dimension d = 4, 5, 6 (ssp: spheres, d = 3): exact integer tests
         import certify_ball
-        d = int(shelf[3]); a = certify_ball.check_file(d, path, n, rec)
+        d = 3 if shelf == "ssp" else int(shelf[3]); a = certify_ball.check_file(d, path, n, rec)
         argv = [sys.executable, os.path.join(HERE, "checkers", "verify_exact_ball.py"), str(d), path, str(n), rec]
         out = subprocess.run(argv, capture_output=True, text=True).stdout
         b = [l for l in out.splitlines() if l.startswith("VERDICT")]; b = b[0].split(":", 1)[1].strip() if b else "ERROR"
