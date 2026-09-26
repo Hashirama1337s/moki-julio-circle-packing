@@ -76,7 +76,7 @@ def main():
         got = load_best(n)
         if got is None: continue
         c0, r_file, src = got; t0 = time.time(); r0 = float(min(cKDTree(c0).query(c0, k=2)[0][:, 1].min() / 2, (0.5 - np.abs(c0)).min()))
-        rng = np.random.default_rng(n); best = (0.0, None)
+        rng = np.random.default_rng(n + int(ARG("seed-offset", 0))); best = (0.0, None)      # 09-26: --seed-offset=k for a fresh pass
         B = max(8, min(B0, int(4.0e5 // n)))
         for rnd in range(ROUNDS):
             P0 = np.repeat(c0[None], B, 0).copy()
