@@ -22,7 +22,7 @@ ROOT = os.path.dirname(HERE)
 REFS = os.path.join(ROOT, 'data', 'refs')
 BIG = os.path.join(ROOT, 'data', 'big')
 CODES = os.path.join(BIG, 'hsp_codes')
-COHN_PLAIN = os.path.join(REFS, 'lit', 'cohn_codes', 'spherical_codes_plain_2026-09-25.txt')
+COHN_PLAIN = os.path.join(REFS, 'lit', 'cohn_codes', open(os.path.join(REFS, 'lit', 'cohn_codes', 'CURRENT.txt')).read().strip())   # cohn_refresh.py: merged snapshots
 OUT = os.path.join(HERE, 'out')
 NMAX = {4: 300, 5: 300, 6: 250}
 
