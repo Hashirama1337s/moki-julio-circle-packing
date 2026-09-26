@@ -22,11 +22,16 @@ at 1/2 − r by the definition of r_zz; r ≤ h/2 keeps every circle inside. ∎
 and states it for a closed w × x rectangle R_{w,x}: points at mutual distance ≥ 1 have |x_i − x_j| ≥ √(1 − w²), so R_{w,x} holds
 at most 1 + x/√(1 − w²) of them. Scaled to centres in the (1 − 2r) × (h − 2r) box at distance 2r, that is exactly the upper bound
 above. (Correction in v1.5: versions 1.0–1.4 said we had found no statement of it for fixed rectangles. That was wrong.)
-What is ours is the translation to Packomania's fixed-aspect containers, the window in which the
-zig-zag attains the bound, and the table entries it settles. Packomania marks none of the zig-zag entries below as proven (only
+What is ours is only the translation to Packomania's fixed-aspect containers, the identification of the table entries the
+theorem settles, and the exact checks below: the theorem itself, with its window, is Ruda's (next paragraph). Packomania marks none of the zig-zag entries below as proven (only
 single-row entries are bold). Known special cases we do not claim: two circles in any rectangle (classical), and the 2 × 1
-rectangle (= crc_500) for N = 3–6, described in the literature as proved by zig-zag arguments. (Ruda 1970, sometimes cited for
-n ≤ 8, concerns minimum area with the aspect ratio left FREE — a different problem.)
+rectangle (= crc_500) for N = 3–6, described in the literature as proved by zig-zag arguments. 
+
+**Correction (v2.6): the zig-zag theorem is Ruda's (1970).** M. Ruda, *Körelhelyezések téglalapokon* [Packings of congruent circles in rectangles], MTA III. Osztály Közleményei 19 (1969, publ. 1970) 73–87; open scan: https://real-j.mtak.hu/502/1/MATFIZ_19.pdf. Ruda FIXES the shorter side and minimises the other
+(pp. 73–74), and his Lemma 3 (p. 74) states exactly the zig-zag theorem with its window: with radius 1 and the centres in a
+y × x box, for 0 ≤ y ≤ √3 and every n, min x = (n − 1)·√(4 − y²). Versions 1.0–2.5 said Ruda treats only the free aspect
+ratio; that was wrong (we had taken it from secondary sources without reading his paper). The table entries below are
+therefore optimal by Ruda's Lemma 3 (and Füredi's bound), not newly proven by us; Packomania does not mark them proven.
 
 **Independent check:** re-derived the root and every edge case (r ≤ h/4; pairs two or more apart; N = 2), fetched
 Packomania's crc_100 / crc_200 pages and matched five published radii to r_zz to ≥ 16 digits (for crc_100 N = 11 the root is
@@ -35,7 +40,7 @@ boundary, no rattler; the pattern breaks exactly where r_zz drops below h(2 − 
 
 ## What it proves in Packomania's tables (check it yourself: `python proofs/proof_zigzag_check.py`, standard library only;
 ## data with Packomania's published radii and the status of every entry: `proofs/PROOF_ZIGZAG.csv`)
-| table | height h | proven optimal here | already known (not claimed) |
+| table | height h | optimal by Ruda's Lemma 3, not marked on Packomania | marked or classical |
 |---|---|---|---|
 | crc_100 | 0.1 | N = 11–36 (26) | — |
 | crc_200 | 0.2 | N = 6–17 (12) | N = 5 (single row, bold on Packomania) |
@@ -46,6 +51,7 @@ boundary, no rattler; the pattern breaks exactly where r_zz drops below h(2 − 
 | crc_700 | 0.7 | N = 3–4 (2) | N = 2 (two circles) |
 | crc_800 | 0.8 | N = 3 (1) | N = 2 (two circles) |
 
-**58 table entries newly proven optimal** (67 in the zig-zag range in total). At all 67, Packomania's published radius equals
+**58 table entries optimal by Ruda's Lemma 3 (1970) that Packomania does not mark as proven** (67 in the zig-zag range in
+total; before v2.6 we called them newly proven — see the correction above). At all 67, Packomania's published radius equals
 r_zz(N) to 28 digits: the table values are right, and this theorem is why. Beyond the range (e.g. crc_100 from N = 37) the zig-zag
 no longer fits and the problem is open.

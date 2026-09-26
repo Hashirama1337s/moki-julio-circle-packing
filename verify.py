@@ -9,7 +9,7 @@ For each row of MANIFEST.csv: unzip the certificate from certificates/<shelf>.zi
 The square: checkers/certify_big.py (A) + checkers/verify_exact_big.py (B). The regular pentagon (cpt): checkers/certify_poly.py (A)
 + checkers/verify_exact_poly.py (B), both exact in Q(sqrt5, sqrt(10 +- 2 sqrt5)); they say IMPROVES for any gain over the listed
 radius (every pentagon record was selected only if it beats that radius by more than 1e-10 relative).
-The regular 16-gon (cxd) and 15-gon (cpd): checkers/certify_kgon.py (A) + checkers/verify_exact_kgon.py (B), both exact (the
+The regular 16-gon (cxd), 15-gon (cpd) and hexagon (chx): checkers/certify_kgon.py (A) + checkers/verify_exact_kgon.py (B), both exact (the
 irrational walls through rigorous rational enclosures); they too say IMPROVES for any gain (every record beats its radius by > 1e-10).
 The cube (scu: equal SPHERES in the cube of side 1 centred at the origin, 3-D; certificate lines "x y z"): checkers/certify_cube.py (A)
 + checkers/verify_exact_cube.py (B), both exact integer tests of every wall and every pair; they too say IMPROVES for any gain
@@ -31,7 +31,7 @@ def container(shelf):
     if shelf == "csc": return "semi"
     if shelf == "csq": return "square"
     if shelf == "cpt": return "poly:5"
-    if shelf in ("cxd", "cpd"): return "poly:16" if shelf == "cxd" else "poly:15"
+    if shelf in ("cxd", "cpd", "chx"): return {"cxd": "poly:16", "cpd": "poly:15", "chx": "poly:6"}[shelf]
     if shelf == "scu": return "cube"
     if shelf in ("hsp4", "hsp5", "hsp6"): return "ball:" + shelf[3]
     if shelf == "ssp": return "ball:3"
@@ -53,9 +53,9 @@ def check(args):
         out = subprocess.run(argv, capture_output=True, text=True).stdout
         b = [l for l in out.splitlines() if l.startswith("VERDICT")]; b = b[0].split(":", 1)[1].strip() if b else "ERROR"
         return shelf, n, a, b
-    if shelf in ("cxd", "cpd"):   # the regular 16-gon / 15-gon (circumradius 1, bottom side horizontal): rigorous exact wall enclosures
+    if shelf in ("cxd", "cpd", "chx"):   # the regular 16-gon / 15-gon / hexagon (circumradius 1, bottom side horizontal): rigorous exact wall enclosures
         import certify_kgon
-        k = 16 if shelf == "cxd" else 15
+        k = {"cxd": 16, "cpd": 15, "chx": 6}[shelf]
         a = certify_kgon.check_file(k, path, n, rec)
         argv = [sys.executable, os.path.join(HERE, "checkers", "verify_exact_kgon.py"), str(k), path, str(n), rec]
         out = subprocess.run(argv, capture_output=True, text=True).stdout

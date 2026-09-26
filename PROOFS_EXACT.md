@@ -1,5 +1,12 @@
 # Exact optimality: 4 circles in the 1 × 4/5 rectangle, 6 circles in the 1 × 3/5 rectangle (computer-assisted)
 
+**Correction (v2.6): both results are Ruda's (1970).** M. Ruda, *Körelhelyezések téglalapokon* [Packings of congruent circles in rectangles], MTA III. Osztály Közleményei 19 (1969, publ. 1970) 73–87; open scan: https://real-j.mtak.hu/502/1/MATFIZ_19.pdf. Ruda fixes the shorter side (pp. 73–74) and gives the
+extremal arrangements for n = 4 at every side ratio (pp. 78–79; part of the proof of his Lemma 5 is omitted "for brevity",
+p. 78) and for n = 6 on √3 ≤ y ≤ 3 (p. 81; radius 1, y = the short side of the centres' box). Our cells are y = 1.835
+(crc_800, N = 4) and y = 1.925 (crc_600, N = 6). Versions 1.7–2.5 called these first proofs and said Ruda treats only the
+free aspect ratio; that was wrong. What stands: complete, machine-checked proofs in exact arithmetic, with two independent
+replay checkers and a mutation test, of results whose published proofs are abbreviated.
+
 **Status:** independently reviewed in three adversarial rounds (2026-09-25), verdict PUBLISHABLE; published in v1.7. A second replay
 checker, `proofs/exact/verify_proof_exact.py`, written independently without seeing ours, also passes both cases and rejects all
 68 corruptions of the mutation test (added in v1.9).
@@ -18,8 +25,8 @@ counts each kept start twice. In distinct records, the N = 4 run examined 29 box
 rejected. The N = 6 run examined 729: the root, 296 nodes, and 432 rejected start assignments, each logged with its
 witness in the root record.
 
-Packomania lists both radii (from Specht's program) but does not mark them proven. We found no proof in the literature.
-Ruda (1970) treats the free-aspect-ratio problem. Lubachevsky–Graham and Specht (2013) minimise over the aspect ratio.
+Packomania lists both radii (from Specht's program) but does not mark them proven. Versions 1.7–2.5 said here that we found no proof in the
+literature and that Ruda (1970) treats only the free-aspect-ratio problem; both statements were wrong (see the correction above). Lubachevsky–Graham and Specht (2013) minimise over the aspect ratio.
 
 ## 0. Claim
 
