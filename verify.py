@@ -14,6 +14,10 @@ irrational walls through rigorous rational enclosures); they too say IMPROVES fo
 The cube (scu: equal SPHERES in the cube of side 1 centred at the origin, 3-D; certificate lines "x y z"): checkers/certify_cube.py (A)
 + checkers/verify_exact_cube.py (B), both exact integer tests of every wall and every pair; they too say IMPROVES for any gain
 (every cube record beats its bar, the largest published radius we know for that N, by more than 1e-10 relative).
+The balls (hsp4 / hsp5 / hsp6: equal balls in the unit ball of dimension 4 / 5 / 6 centred at the origin; certificate lines of d
+numbers): checkers/certify_ball.py (A) + checkers/verify_exact_ball.py (B), both exact integer tests of every wall and every pair;
+they too say IMPROVES for any gain (every record beats its bar -- the published radius, the best spherical-code construction from
+Cohn's table and any larger published size -- by more than 1e-10 relative).
 A record passes only if BOTH say IMPROVES against the published Packomania radius listed in MANIFEST.csv.
 """
 import csv, os, sys, zipfile, tempfile, subprocess
@@ -28,10 +32,18 @@ def container(shelf):
     if shelf == "cpt": return "poly:5"
     if shelf in ("cxd", "cpd"): return "poly:16" if shelf == "cxd" else "poly:15"
     if shelf == "scu": return "cube"
+    if shelf in ("hsp4", "hsp5", "hsp6"): return "ball:" + shelf[3]
     return "rect:0." + f"{int(shelf.split('_')[1]):03d}".rstrip("0")          # crc_300 -> rect:0.3
 
 def check(args):
     shelf, n, rec, path = args
+    if shelf in ("hsp4", "hsp5", "hsp6"):   # equal balls in the unit ball of dimension d = 4, 5, 6: exact integer tests, wall and every pair
+        import certify_ball
+        d = int(shelf[3]); a = certify_ball.check_file(d, path, n, rec)
+        argv = [sys.executable, os.path.join(HERE, "checkers", "verify_exact_ball.py"), str(d), path, str(n), rec]
+        out = subprocess.run(argv, capture_output=True, text=True).stdout
+        b = [l for l in out.splitlines() if l.startswith("VERDICT")]; b = b[0].split(":", 1)[1].strip() if b else "ERROR"
+        return shelf, n, a, b
     if shelf == "scu":   # equal spheres in the cube of side 1 centred at the origin (3-D): exact integer tests, walls and every pair
         import certify_cube
         a = certify_cube.check_file(path, n, rec)
