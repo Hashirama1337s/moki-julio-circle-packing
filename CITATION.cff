@@ -3,8 +3,8 @@ message: "If you use these packings or tools, please cite them as below."
 title: "Moki&Julio: 6,071 new best-known packings of equal circles, spheres and hyperspheres in twenty-one Packomania containers"
 authors:
   - name: "Moki&Julio"
-date-released: 2026-09-26
-version: "2.6"
+date-released: 2026-09-27
+version: "2.7"
 doi: 10.5281/zenodo.22981305
 repository-code: "https://github.com/Hashirama1337s/moki-julio-circle-packing"
 license: CC-BY-4.0
@@ -14,6 +14,8 @@ keywords:
   - Packomania
   - best-known packings
   - exact certificates
+  - optimality proof
+  - computer-assisted proof
 abstract: >-
   6,071 packings that improve the best-known records of Packomania's tables: equal circles in the isosceles right
   triangle (crt), the circular quadrant (ccq), eight fixed rectangles (crc_100 to crc_800), the semicircle (csc), the unit square
@@ -21,4 +23,6 @@ abstract: >-
   the unit sphere (ssp), and equal balls in the unit ball of dimension 4, 5 and 6 (hsp4, hsp5, hsp6), each with an exact certificate verified by
   two independently written exact checkers. Results already surpassed in the literature (including spherical-code constructions)
   are excluded by a prior-art gate. Also: 58 table entries shown optimal by Ruda's 1970 lemma (not marked on Packomania) and
-  complete, machine-checked exact proofs of two of Ruda's results.
+  complete, machine-checked exact proofs of two of Ruda's results. New in v2.7: a computer-assisted proof, checked by two
+  independently written checkers, that the best-known packing of 16 equal circles in an equilateral triangle is optimal
+  (proofs/triangle16).

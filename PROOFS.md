@@ -1,3 +1,7 @@
+Proofs in this repository: this file (the zig-zag range of thin rectangles, 2026-09-23); [PROOFS_EXACT.md](PROOFS_EXACT.md)
+(machine-checked exact proofs of two of Ruda's results); and **[proofs/triangle16/](proofs/triangle16/)** (v2.7: 16 equal
+circles in an equilateral triangle; the best-known packing is optimal; computer-assisted, two independent checkers).
+
 # Proof: optimal packings of equal circles in thin fixed rectangles (the zig-zag range) — Moki&Julio, 2026-09-23
 
 ## Theorem

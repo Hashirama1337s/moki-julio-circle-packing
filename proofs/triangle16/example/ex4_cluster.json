@@ -1,0 +1,37 @@
+{
+ "n": 4,
+ "m_star": "0.57735026918962576451",
+ "eps": "-1e-3",
+ "m_t": "144193229730109/250000000000000",
+ "k": 2,
+ "G": 33554432,
+ "Tc": 749099488619231,
+ "tiles": 4,
+ "rule": 0,
+ "rounds": 30,
+ "cap": 10000000,
+ "part": "0/1",
+ "priority": 16384,
+ "raw_combos": 1,
+ "orbit_reps": 1,
+ "accepted_leaves": 1,
+ "status": "PROVED_MOD_CLUSTERS",
+ "combos_done": 1,
+ "nodes": 1,
+ "seconds": 0.659,
+ "witness": null,
+ "per_combo": [
+  [
+   [
+    0,
+    1,
+    2,
+    3
+   ],
+   "PROVED_MOD_CLUSTERS",
+   1,
+   0.6579,
+   0
+  ]
+ ]
+}

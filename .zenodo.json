@@ -1,7 +1,7 @@
 {
   "title": "Moki&Julio: new best-known packings of equal circles, spheres and hyperspheres (Packomania tables), each with an exact certificate",
   "upload_type": "dataset",
-  "description": "<p>Packings that improve the best-known records of Eckard Specht's Packomania tables (www.packomania.com): equal circles in the isosceles right triangle, the circular quadrant, eight fixed rectangles, the semicircle, the unit square and regular polygons; equal spheres in the unit cube and in the unit sphere; and equal balls in the unit ball of dimension 4, 5 and 6.</p><p>Every record is an exact certificate (a radius and the centres as exact decimals) that two independently written exact checkers verify; results already surpassed in the literature are excluded by a data-level prior-art gate. Also included: Packomania submission files (.pck), local-optimality certificates, the search code, and optimality checks for some table entries (the zig-zag lemma of Ruda, 1970, for thin rectangles; complete machine-checked exact proofs of two of Ruda's results). The README lists the current count, the claim policy and how to verify every record with one command.</p>",
+  "description": "<p>Packings that improve the best-known records of Eckard Specht's Packomania tables (www.packomania.com): equal circles in the isosceles right triangle, the circular quadrant, eight fixed rectangles, the semicircle, the unit square and regular polygons; equal spheres in the unit cube and in the unit sphere; and equal balls in the unit ball of dimension 4, 5 and 6.</p><p>Every record is an exact certificate (a radius and the centres as exact decimals) that two independently written exact checkers verify; results already surpassed in the literature are excluded by a data-level prior-art gate. Also included: Packomania submission files (.pck), local-optimality certificates, the search code, and optimality checks for some table entries (the zig-zag lemma of Ruda, 1970, for thin rectangles; complete machine-checked exact proofs of two of Ruda's results). The README lists the current count, the claim policy and how to verify every record with one command.</p><p>New in version 2.7: a computer-assisted proof, checked by two independently written checkers, that the best-known packing of 16 equal circles in an equilateral triangle (Melissen and Schuur 1995; Graham and Lubachevsky 1995) is optimal; the optimal radius is enclosed to within about 1e-34 (folder proofs/triangle16).</p>",
   "creators": [
     {"name": "Moki&Julio"}
   ],
@@ -18,6 +18,8 @@
     "discrete geometry",
     "global optimization",
     "exact verification",
+    "computer-assisted proof",
+    "optimality proof",
     "computer-assisted proof"
   ],
   "related_identifiers": [

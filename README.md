@@ -12,6 +12,16 @@ July–August 2025), equal spheres in a sphere (from v2.5; table last updated in
 equal circles in a regular hexagon (table last updated in December 2020). Every packing is supplied with an exact certificate and is verified by **two independently written exact checkers**
 (pure rational arithmetic, no floating point in any decision).
 
+**New in v2.7: a proof.** [16 equal circles in an equilateral triangle](proofs/triangle16/): the best-known packing
+(Melissen & Schuur 1995; Graham & Lubachevsky 1995) is **optimal**. The proof is computer-assisted. An exact branch-and-bound
+over the whole configuration space (up to the triangle's symmetries) confines the 15 non-rattling circles of every optimal
+packing to three tiny boxes, and exact rational certificates then enclose the optimal value to within 3.6 × 10⁻³⁴: the
+largest radius of 16 equal circles in a triangle of side 1 is r16 = 0.0786557494924822861883484505248561…  Two independently
+written checkers verify every step; the folder holds the search trees, the certificates, both checkers and a standard-library
+reproduce-and-verify recipe. Optimality was known for N ≤ 15, N = 20 and every triangular number; for N = 16 our literature
+search found no earlier proof of optimality (sources in §2 of the write-up). The certificate encloses both known optimal
+arrangements in one interval and does not decide between them. The record tables are unchanged in v2.7.
+
 | Packomania table | container | new records | largest gain in radius |
 |---|---|---|---|
 | `crt` | isosceles right triangle, legs 1 | 143 | +0.055 % (N = 79) |
