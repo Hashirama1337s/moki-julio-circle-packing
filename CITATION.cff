@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use these packings or tools, please cite them as below."
-title: "Moki&Julio: 6,071 new best-known packings of equal circles, spheres and hyperspheres in twenty-one Packomania containers"
+title: "Moki&Julio: new best-known packings of equal circles, spheres and hyperspheres in twenty-one Packomania containers (6,071 released; 4,063 still best-known on 2026-10-18)"
 authors:
   - name: "Moki&Julio"
 date-released: 2026-09-27
@@ -17,7 +17,8 @@ keywords:
   - optimality proof
   - computer-assisted proof
 abstract: >-
-  6,071 packings that improve the best-known records of Packomania's tables: equal circles in the isosceles right
+  6,071 packings that improved the best-known records of Packomania's tables when released (2,008 of them have since been beaten
+  or tied by others and are no longer claimed; see SUPERSEDED.csv): equal circles in the isosceles right
   triangle (crt), the circular quadrant (ccq), eight fixed rectangles (crc_100 to crc_800), the semicircle (csc), the unit square
   (csq) and the regular pentagon (cpt), hexagon (chx), 15-gon (cpd) and 16-gon (cxd), equal spheres in the unit cube (scu) and in
   the unit sphere (ssp), and equal balls in the unit ball of dimension 4, 5 and 6 (hsp4, hsp5, hsp6), each with an exact certificate verified by

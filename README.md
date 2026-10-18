@@ -1,8 +1,45 @@
-# Moki&Julio — 6,071 new best-known packings of equal circles, spheres and hyperspheres
+# Moki&Julio — packings of equal circles, spheres and hyperspheres: 6,071 records published, 4,063 still best-known (2026-10-18)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22981305.svg)](https://doi.org/10.5281/zenodo.22981305)
 
-**6,071 packings of equal circles, spheres and hyperspheres that beat the best-known records** listed on
+## Notice (2026-10-18): 2,008 of these records have since been beaten or tied
+
+Since our last record release (v2.6, 2026-09-26), others have published better packings. **We no longer claim those cells as
+records.** Every one is listed in [`SUPERSEDED.csv`](SUPERSEDED.csv): table, N, our radius, the best-known radius, status,
+source, and how it was checked.
+
+| table | records published | beaten | tied | still best-known |
+|---|---|---|---|---|
+| `csq` (square) | 2,213 | 1,727 | 0 | 486 |
+| `scu` (spheres in a cube) | 455 | 189 | 34 | 232 |
+| `hsp6` (6-D balls) | 77 | 54 | 0 | 23 |
+| `hsp5` (5-D balls) | 169 | 3 | 0 | 166 |
+| `ssp` (spheres in a sphere) | 587 | 1 | 0 | 586 |
+| the other 16 tables | 2,570 | 0 | 0 | 2,570 |
+| **total** | **6,071** | **1,974** | **34** | **4,063** |
+
+- **Square:** V. Patankar, [github.com/vidigoat/optimization-records](https://github.com/vidigoat/optimization-records)
+  (October 2026). 1,552 of his packings beat ours at the same N; in 175 more cells, one of his packings with more circles beats
+  ours once the extra circles are removed. Every one of his files we use passed our exact checker A.
+- **Spheres in a cube:** Packomania's `scu` table as updated 4–17 October 2026, compared by printed radius, only at cells whose
+  printed value changed after our 25 September snapshot. The page's update log credits these cells to X. Lai, J.-K. Hao, R. Xiao
+  and F. Glover (candidates from July 2022, posted 4 October 2026; the table marks them [30], which the page's reference list gives
+  as Bagattini, Schoen and Tigli 2018, so we follow the update log), Yuan Gao, Lu Peng and V. Patankar. The 7 of Patankar's coordinate files that sit above the printed table were
+  also checked exactly.
+- **5-D and 6-D balls:** H. Cohn's table of spherical codes ([spherical-codes.org](https://spherical-codes.org/)), snapshot
+  2026-10-18: a code of N points, or of N − 1 points plus a ball at the centre.
+- **Spheres in a sphere:** Patankar's packing of 917 spheres (exact check).
+- **Rules:** *beaten* = a newer packing with a radius more than 10⁻¹⁰ (relative) above ours; *tied* = within 10⁻¹⁰, the same
+  floor our records were claimed under, and a margin that small is not a claim we make. "Larger N" = removing circles or balls
+  from a packing with more of them.
+- **The other 16 tables:** on 2026-10-18 every Packomania page still showed the values we compare against at every N we hold,
+  and our literature search (2024 to date) found no public data that beats them. Some sources could not be checked: papers whose
+  data sit behind paywalls, and one repository (Whoneon/circlepack) that reports re-polishing an unnamed set. Packomania also has a queue of submissions that are not public yet. Any of these may change the list.
+- The certificates of superseded cells stay in the repository unchanged; they are still valid packings. `MANIFEST.csv`,
+  `RESULTS_TABLE.md` and the sections below describe the records as released.
+
+**6,071 packings of equal circles, spheres and hyperspheres that beat the best-known records at the time of their release** (see
+the notice above for the 2,008 since beaten or tied) listed on
 [Packomania](https://www.packomania.com/) (E. Specht's record tables), in twenty-one containers: ten whose tables had not changed since 2010–2013, the semicircle (untouched from April 2011 until
 September 2026), the square (from v1.6), whose large-N entries are Specht's own lattice packings, the regular pentagon
 (from v2.1; its table was last updated in March 2023), the regular 16-gon and 15-gon (from v2.2; tables last updated in
