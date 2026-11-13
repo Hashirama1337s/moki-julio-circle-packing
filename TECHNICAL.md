@@ -571,7 +571,7 @@ Packomania is not the only record: two papers improved some of these tables with
 
 ## Credit, citation, licence
 
-Finders: **Moki&Julio**. Search, certification and both checkers were built with AI assistance. Record tables and published coordinates: E. Specht, packomania.com.
+Finders: **Moki & Julio**. Record tables and published coordinates: E. Specht, packomania.com.
 Data (certificates, `.pck` files, tables): **CC BY 4.0** — reuse freely, credit "Moki&Julio". Code (`verify.py`, `checkers/`, `solver/`): MIT (see `LICENSE-CODE`); everything else CC BY 4.0 (`LICENSE`).
 Please cite via [`CITATION.cff`](CITATION.cff) or the Zenodo archive, [doi:10.5281/zenodo.22981305](https://doi.org/10.5281/zenodo.22981305) (all versions; every release also has its own version DOI).
 

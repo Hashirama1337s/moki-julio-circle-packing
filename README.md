@@ -1,20 +1,15 @@
-# Packing equal circles, spheres and hyperspheres: 4,063 best-known records still standing (2026-10-18)
+# Packing equal circles, spheres and hyperspheres: record packings with exact certificates
 
-**How many equal coins fit in a box, and how big can they be? We released 6,071 packings that beat the best-known
-records in 21 containers, from triangles to six-dimensional balls. Others have since beaten or tied 2,008 of them, so on
-2026-10-18 4,063 were still the best known. Every one comes with a certificate that two separately written checkers
-verify in exact arithmetic, with no rounding. And for 16 circles in an equilateral triangle we proved that the best
-packing known since 1995 is optimal (computer-assisted; the best radius is pinned to within 3.6 x 10^-34, and the proof
-does not decide between the two known arrangements).**
+**6,071 record packings of equal circles, spheres and higher-dimensional balls, each verified by two separately written exact checkers; others have since beaten or tied 2,008 of them, and 4,063 were still the best known on 2026-10-18.**
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22981305.svg)](https://doi.org/10.5281/zenodo.22981305)
+[![DOI 10.5281/zenodo.22981305](brand/doi.svg)](https://doi.org/10.5281/zenodo.22981305) ![Licence: text and data CC BY 4.0, code MIT](brand/licence.svg) [![Moki & Julio lab map](brand/lab.svg)](https://github.com/Hashirama1337s)
 
-Moki & Julio
+Moki & Julio · 2026 · version 2.7
 
 **Records** [RESULTS_TABLE.md](RESULTS_TABLE.md) · **Since beaten** [SUPERSEDED.csv](SUPERSEDED.csv) · **Check**
 `python verify.py` · **Proof** [proofs/triangle16/](proofs/triangle16/) · **Full history** [TECHNICAL.md](TECHNICAL.md)
 
-## The story in a minute
+## In plain words
 
 Take N equal coins and a tray of a fixed shape. Make the coins as large as possible without overlapping each other or
 the edge. Proofs of the best answer exist only for some small or special N (for the equilateral triangle: N <= 15,
@@ -35,45 +30,9 @@ circles in an equilateral triangle, the packing found in 1995 by Melissen & Schu
 **optimal**. That proof is computer-assisted. Two such arrangements are known, and the proof does not say which of
 them is optimal, or whether both are.
 
-## Climb the ladder
+## At a glance
 
-### Step 1 - the idea (for anyone)
-
-![Before and after: 10 equal circles in a 1 x 0.8 rectangle, the published packing and ours](figures/ba_crc_800_10.png)
-
-Better packing is a search problem with a strict referee at the end.
-
-```mermaid
-flowchart LR
-  A[Published record<br/>from Packomania] --> B[Computer search<br/>nudge, shake, re-solve]
-  B --> C[Candidate packing<br/>radius a bit larger]
-  C --> D[Two separately written<br/>exact checkers]
-  D --> E[Literature gate<br/>papers beyond the website]
-  E --> F[Released record]
-  F --> G[Later beaten or tied?<br/>moved to SUPERSEDED.csv]
-```
-
-### Step 2 - how it works (for a curious student)
-
-The search moves the centres of the N circles so that the smallest gap, circle to circle or circle to wall, keeps
-growing. It alternates small steps (linear programming, a standard method for improving many linked quantities at once, on the gaps that matter) with big jumps (move the circle with the
-fewest contacts into the largest hole), and keeps only improvements.
-
-A worked example: 10 equal circles in a rectangle 1 wide and 0.8 tall (table `crc_800`, the picture above).
-
-| | radius |
-|---|---|
-| Packomania record | 0.134224258574381790065222795652 |
-| ours | 0.134722358359009814268885166349 |
-| gain | +0.371 % (a new arrangement) |
-
-The certificate `crc_800_10.txt` is just the radius and ten centres, written as decimals. Checker A reads every decimal
-as an exact fraction and tests two things: every circle lies inside the rectangle, and every pair of centres is at
-least two radii apart. No floating point takes part in any decision. Checker B, written separately, does the same in
-its own way. A record counts only if both say `IMPROVES`, and only if the gain is more than one part in 10^10; smaller
-gains count as ties, because published values can be low in their last digits.
-
-### Step 3 - the real thing (for specialists)
+*The exact claims, for specialists. Terms are explained in "How it works" and "Words you will meet".*
 
 - **Records.** 6,071 packings released (by v2.6, 2026-09-26; v2.7 added the proof) in 21 Packomania tables: rectangles, triangle, quadrant, semicircle,
   square, regular 5-, 6-, 15- and 16-gons, spheres in a cube and in a sphere, balls in the 4-, 5- and 6-ball. On
@@ -100,7 +59,60 @@ gains count as ties, because published values can be low in their last digits.
 
 Every version's details, claim policies, prior art and credits: [TECHNICAL.md](TECHNICAL.md).
 
-## Use it as a tool
+## What we do not claim
+
+- A record is not a proof of optimality. Only N = 16 in the triangle is proved optimal here; 1,340 packings are
+  certified locally optimal (no small nudge beats them, up to a margin of at most 3e-22 of the radius), which is weaker.
+- 2,008 released records have since been beaten or tied by others. The "still best-known" count is as of 2026-10-18.
+  Some sources could not be checked (paywalled data, one repository that reports re-polishing an unnamed set, and
+  Packomania's queue of submissions that are not public yet); any of these may change the count.
+- Correction (credit): the zig-zag theorem we published in v1.4 as our own is Lemma 3 of M. Ruda (1970). The 58
+  rectangle entries we called "newly proven" are his results, and our proofs for 4 circles in the 1 x 0.8 and 6 circles
+  in the 1 x 0.6 rectangles are later, independent, machine-checked proofs of his statements.
+- 331 packings that beat the website were not claimed, because two papers (Lai, Hao, Yue & Zhou 2025; López & Beasley
+  2011) had better or unpublished values there.
+- The triangle proof encloses the optimum but does not say which of the two known arrangements is optimal, or whether
+  both are, and proves nothing for other N.
+
+## How it works
+
+### The idea
+
+![Before and after: 10 equal circles in a 1 x 0.8 rectangle, the published packing and ours](figures/ba_crc_800_10.png)
+
+Better packing is a search problem with a strict referee at the end.
+
+```mermaid
+flowchart LR
+  A[Published record<br/>from Packomania] --> B[Computer search<br/>nudge, shake, re-solve]
+  B --> C[Candidate packing<br/>radius a bit larger]
+  C --> D[Two separately written<br/>exact checkers]
+  D --> E[Literature gate<br/>papers beyond the website]
+  E --> F[Released record]
+  F --> G[Later beaten or tied?<br/>moved to SUPERSEDED.csv]
+```
+
+### A worked example
+
+The search moves the centres of the N circles so that the smallest gap, circle to circle or circle to wall, keeps
+growing. It alternates small steps (linear programming, a standard method for improving many linked quantities at once, on the gaps that matter) with big jumps (move the circle with the
+fewest contacts into the largest hole), and keeps only improvements.
+
+A worked example: 10 equal circles in a rectangle 1 wide and 0.8 tall (table `crc_800`, the picture above).
+
+| | radius |
+|---|---|
+| Packomania record | 0.134224258574381790065222795652 |
+| ours | 0.134722358359009814268885166349 |
+| gain | +0.371 % (a new arrangement) |
+
+The certificate `crc_800_10.txt` is just the radius and ten centres, written as decimals. Checker A reads every decimal
+as an exact fraction and tests two things: every circle lies inside the rectangle, and every pair of centres is at
+least two radii apart. No floating point takes part in any decision. Checker B, written separately, does the same in
+its own way. A record counts only if both say `IMPROVES`, and only if the gain is more than one part in 10^10; smaller
+gains count as ties, because published values can be low in their last digits.
+
+## Reproduce and reuse
 
 Questions this lets you answer:
 
@@ -145,21 +157,6 @@ print('square, still standing:', len(sq), '- first few N:', [int(r['N']) for r i
 
 It prints `6071 released; 2008 beaten or tied; 4063 still best-known on 2026-10-18` and 486 for the square.
 
-## What we did not show
-
-- A record is not a proof of optimality. Only N = 16 in the triangle is proved optimal here; 1,340 packings are
-  certified locally optimal (no small nudge beats them, up to a margin of at most 3e-22 of the radius), which is weaker.
-- 2,008 released records have since been beaten or tied by others. The "still best-known" count is as of 2026-10-18.
-  Some sources could not be checked (paywalled data, one repository that reports re-polishing an unnamed set, and
-  Packomania's queue of submissions that are not public yet); any of these may change the count.
-- Correction (credit): the zig-zag theorem we published in v1.4 as our own is Lemma 3 of M. Ruda (1970). The 58
-  rectangle entries we called "newly proven" are his results, and our proofs for 4 circles in the 1 x 0.8 and 6 circles
-  in the 1 x 0.6 rectangles are later, independent, machine-checked proofs of his statements.
-- 331 packings that beat the website were not claimed, because two papers (Lai, Hao, Yue & Zhou 2025; López & Beasley
-  2011) had better or unpublished values there.
-- The triangle proof encloses the optimum but does not say which of the two known arrangements is optimal, or whether
-  both are, and proves nothing for other N.
-
 ## Words you will meet
 
 - **Packing** - equal circles (or spheres, or balls) placed in a container without overlapping.
@@ -174,11 +171,20 @@ It prints `6071 released; 2008 beaten or tied; 4063 still best-known on 2026-10-
 - **Hypersphere / 4-, 5-, 6-D ball** - the same idea in more than three dimensions; distances are computed the same
   way, with more coordinates.
 
-## For specialists: the original README
+## How to cite
 
-The complete previous README (the 2026-10-18 notice, every version's changes and claim policies, the certificate format,
-the checkers, how the packings were found, prior art and credits) is kept verbatim in **[TECHNICAL.md](TECHNICAL.md)**.
+```
+Moki & Julio (2026). New best-known packings of equal circles, spheres and hyperspheres in twenty-one Packomania containers (6,071 released; 4,063 still best-known on 2026-10-18). Version 2.7. Zenodo. https://doi.org/10.5281/zenodo.22981305
+```
 
-Other projects: [github.com/Hashirama1337s](https://github.com/Hashirama1337s)
+The DOI always resolves to the newest archived version. Machine-readable: [CITATION.cff](CITATION.cff).
+Code (`verify.py`, `checkers/`, `solver/`): MIT (see `LICENSE-CODE`); everything else CC BY 4.0 (`LICENSE`).
 
-*Prepared with AI assistance; all results are machine-checked.*
+## Related projects
+
+- [szilassi-12](https://github.com/Hashirama1337s/szilassi-12): two computer-assisted theorems about polyhedra in which every face touches every other
+- All projects: [the Moki & Julio lab map](https://github.com/Hashirama1337s)
+
+---
+
+*Prepared with AI assistance; what was checked, and by what, is stated above.*
