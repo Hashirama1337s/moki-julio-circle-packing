@@ -1,9 +1,11 @@
 {
   "title": "New best-known packings of equal circles, spheres and hyperspheres (Packomania tables), each with an exact certificate",
   "upload_type": "dataset",
-  "description": "<p>Packings that improve the best-known records of Eckard Specht's Packomania tables (www.packomania.com): equal circles in the isosceles right triangle, the circular quadrant, eight fixed rectangles, the semicircle, the unit square and regular polygons; equal spheres in the unit cube and in the unit sphere; and equal balls in the unit ball of dimension 4, 5 and 6.</p><p>Every record is an exact certificate (a radius and the centres as exact decimals) that two independently written exact checkers verify; results already surpassed in the literature are excluded by a data-level prior-art gate. Also included: Packomania submission files (.pck), local-optimality certificates, the search code, and optimality checks for some table entries (the zig-zag lemma of Ruda, 1970, for thin rectangles; complete machine-checked exact proofs of two of Ruda's results). The README lists the current count, the claim policy and how to verify every record with one command.</p><p>Notice (2026-10-18): 2,008 of the 6,071 released records have since been beaten or tied by others and are no longer claimed; SUPERSEDED.csv lists each one with its source. 4,063 remain best-known.</p><p>New in version 2.7: a computer-assisted proof, checked by two independently written checkers, that the best-known packing of 16 equal circles in an equilateral triangle (Melissen and Schuur 1995; Graham and Lubachevsky 1995) is optimal; the optimal radius is enclosed to within about 1e-34 (folder proofs/triangle16).</p>",
+  "description": "<p><b>In plain words.</b> \nTake N equal coins and a tray of a fixed shape, and make the coins as large as possible without overlapping each other or the edge. The best answer is proved only for some small or special cases, so mathematicians keep a public scoreboard of the best packings found so far: Eckard Specht's Packomania tables. This archive holds packings that beat 6,071 entries across 21 of those tables, each with an exact certificate that two separately written checkers verify. Records move: by 2026-10-18 others had beaten 1,974 of them and tied 34, so 4,063 were still the best known on that date; the GitHub repository lists every one that was beaten. Version 2.7 adds a computer-assisted proof that the packing of 16 equal circles in an equilateral triangle found in 1995 is optimal. Two such arrangements are known, and the proof does not say which of them is optimal, or whether both are.</p>\n<p><b>The idea in one picture.</b> a parking lot with painted bays: you want the widest possible bays for a given number of cars. <b>Where the picture breaks.</b> the 'cars' are perfect circles or balls, the lot can be a triangle, a sphere or a ball in six dimensions, and a record means 'nobody has found better', not 'nothing better exists'.</p>\n<p><b>For specialists.</b> Packings that improve the best-known records of Eckard Specht's Packomania tables (www.packomania.com): equal circles in the isosceles right triangle, the circular quadrant, eight fixed rectangles, the semicircle, the unit square and regular polygons; equal spheres in the unit cube and in the unit sphere; and equal balls in the unit ball of dimension 4, 5 and 6.</p>\n<p>Every record is an exact certificate (a radius and the centres as exact decimals) that two independently written exact checkers verify; results already surpassed in the literature are excluded by a data-level prior-art gate. Also included: Packomania submission files (.pck), local-optimality certificates, the search code, and optimality checks for some table entries (the zig-zag lemma of Ruda, 1970, for thin rectangles; complete machine-checked exact proofs of two of Ruda's results). The README lists the current count, the claim policy and how to verify every record with one command.</p>\n<p>New in version 2.7: a computer-assisted proof, checked by two independently written checkers, that the best-known packing of 16 equal circles in an equilateral triangle (Melissen and Schuur 1995; Graham and Lubachevsky 1995) is optimal; the optimal radius is enclosed to within about 1e-34 (folder proofs/triangle16).</p>\n<p><b>Links.</b> Repository, with a plain-language guide: <a href=\"https://github.com/Hashirama1337s/moki-julio-circle-packing\">github.com/Hashirama1337s/moki-julio-circle-packing</a>. All projects: <a href=\"https://github.com/Hashirama1337s\">the Moki &amp; Julio lab map</a>.</p>\n<p><i>Prepared with AI assistance; what was checked, and by what, is stated above.</i></p>",
   "creators": [
-    {"name": "Moki & Julio"}
+    {
+      "name": "Moki & Julio"
+    }
   ],
   "access_right": "open",
   "license": "cc-by-4.0",
@@ -20,9 +22,14 @@
     "exact verification",
     "computer-assisted proof",
     "optimality proof",
-    "computer-assisted proof"
+    "equilateral triangle",
+    "exact arithmetic"
   ],
   "related_identifiers": [
-    {"identifier": "https://www.packomania.com/", "relation": "references", "scheme": "url"}
+    {
+      "identifier": "https://www.packomania.com/",
+      "relation": "references",
+      "scheme": "url"
+    }
   ]
 }

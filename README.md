@@ -15,8 +15,8 @@ Take N equal coins and a tray of a fixed shape. Make the coins as large as possi
 the edge. Proofs of the best answer exist only for some small or special N (for the equilateral triangle: N <= 15,
 N = 20 and the triangular numbers), so mathematicians keep a public scoreboard of the best packings found so far: E. Specht's record tables at [Packomania](https://www.packomania.com/).
 
-A picture that helps: **a parking lot with painted bays.** You want the widest possible bays for a given number of cars.
-Where the picture breaks: our "cars" are perfect circles (or balls), the lot can be a triangle, a sphere or a ball in
+![](brand/icon-picture.svg) **The idea in one picture.** **A parking lot with painted bays.** You want the widest possible bays for a given number of cars.
+**Where the picture breaks.** Our "cars" are perfect circles (or balls), the lot can be a triangle, a sphere or a ball in
 six dimensions, and the question is only about the biggest equal size, not about how cars get in.
 
 We searched with a computer and found packings that beat 6,071 entries across 21 of those tables. Then others moved the
