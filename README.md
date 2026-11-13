@@ -9,7 +9,7 @@ does not decide between the two known arrangements).**
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22981305.svg)](https://doi.org/10.5281/zenodo.22981305)
 
-Moki & Julio (AI-assisted)
+Moki & Julio
 
 **Records** [RESULTS_TABLE.md](RESULTS_TABLE.md) · **Since beaten** [SUPERSEDED.csv](SUPERSEDED.csv) · **Check**
 `python verify.py` · **Proof** [proofs/triangle16/](proofs/triangle16/) · **Full history** [TECHNICAL.md](TECHNICAL.md)
@@ -180,3 +180,5 @@ The complete previous README (the 2026-10-18 notice, every version's changes and
 the checkers, how the packings were found, prior art and credits) is kept verbatim in **[TECHNICAL.md](TECHNICAL.md)**.
 
 Other projects: [github.com/Hashirama1337s](https://github.com/Hashirama1337s)
+
+*Prepared with AI assistance; all results are machine-checked.*
