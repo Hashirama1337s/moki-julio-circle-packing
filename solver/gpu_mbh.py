@@ -14,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 ARG = lambda k, d: next((a.split("=", 1)[1] for a in sys.argv if a.startswith(f"--{k}=")), d)
 
 def cpu_job(a):
-    # ONE job per size (probe bug 17:4x: two candidates of the same size certified in parallel shared a temp file): polish every
+    # ONE job per size (probe bug: two candidates of the same size certified in parallel shared a temp file): polish every
     # candidate, then certify only the best one.
     shelf, n, npys, r_best, tag = a
     import io, contextlib, slp_circ, finalize_circ, cert_candidate
@@ -71,7 +71,7 @@ def gpu_main():
         if cont[0] == "semi": return torch.stack([P[..., 0], P[..., 1].clamp(min=0)], -1)
         return P
 
-    torch.cuda.set_per_process_memory_fraction(0.70)          # 18:1x: the card filled up (16.0/16.3 GB) and spilled to system RAM (20x slower)
+    torch.cuda.set_per_process_memory_fraction(0.70)          # the card filled up (16.0/16.3 GB) and spilled to system RAM (20x slower)
     pool = ProcessPoolExecutor(W); futs = []; t_start = time.time(); nt = 0
     for shelf, n in T:
         if stop and datetime.datetime.now() >= stop: break

@@ -35,6 +35,10 @@ in the sup-norm on the 30 skew coordinates (u_i, v_i) of §3. Here δ_q ≤ 1.21
 each frame point is then within √3·δ_q of its certified position. The certificate says nothing about the 16th point
 beyond the facts stated in §6.
 
+![The two known best packings of 16 circles in an equilateral triangle](../../figures/triangle16_two_optima.svg)
+
+*The two known best packings of 16 equal circles in an equilateral triangle (found in 1995 by Melissen & Schuur and by Graham & Lubachevsky), drawn from this repository's proof certificate. Our computer-assisted proof shows that no packing has a larger radius: r = 0.078655749492... for a triangle of side 1. The two arrangements share 11 circles (blue) and place 4 differently (orange); arrangement A is shown mirrored so the shared circles line up. The dashed circle is loose and can move inside its hole; one valid position is shown. Lines mark the 20 circle-to-circle contacts the proof uses. The proof does not say which arrangement is optimal, or whether both are.*
+
 **Not claimed.** The certificate encloses both known frames (clusters 0 and 1) in the same interval. It does not decide
 whether their exact values are equal, so it does not say which of them is optimal (or whether both are). It gives no
 information about the 16th point beyond §6, and it proves nothing for any N other than 16.
@@ -57,15 +61,16 @@ Rounded to 16 decimals, that and the r16 interval above agree: 0.078655749492482
 - **Our contribution** is the enclosure and the localisation stated in §1: an enclosure of m16 of width < 3.6 × 10⁻³⁴,
   and the localisation of every optimal frame to within ~10⁻³¹ of the certified frames. The packings themselves come
   from the literature above.
-- **Status before this work.** Optimality is proven for N ≤ 15 (for example N = 13 by Joós, Aequationes Math. 95, 2021), for
-  N = 20 (Payan 1997, one less than a triangular number) and for every triangular number (Oler 1961). For N = 16 we found no proof of optimality and no computer-assisted
-  attempt. Sources searched:
+- **Status before this work.** Optimality is proven for N ≤ 15 (for example N = 13 by Joós, Aequationes Math. 95, 2021,
+  and N = 14, one less than a triangular number, by Payan 1997) and for every triangular number (Oler 1961). For N = 16 we
+  found no proof of optimality and no computer-assisted attempt. Sources searched:
   - Wikipedia, "Circle packing in an equilateral triangle", read 2026-09-20 and 2026-09-26;
   - E. Friedman's *Circles in Triangles* page, read 2026-09-26;
   - an arXiv / OpenAlex / GitHub / thesis-repository search for 2022–2026;
   - works citing Melissen & Schuur, Graham & Lubachevsky and Joós.
 
   This is a search result, not a proof that no such work exists.
+- Correction 2026-11-17: earlier versions also listed N = 20 (Payan 1997) as proven; Payan (1997) proved N = 14 and announced a proof for N = 20 that was not published (Payan 1997, Section 8). The Oler reference in §10 now gives the correct initial (N. Oler).
 
 ## 3. Coordinates and exact constants
 
@@ -358,6 +363,19 @@ N = 17: m17 < 13209124868233/62500000000000 ≈ 0.2113459979, a refutation run p
 in the table above. The best known value is (3 − √3)/6 = 0.211324865405187. N = 18 and 19 are not decided. For N = 18
 there is a near-tie 4 × 10⁻⁷ below the best known.
 
+## Open doors
+
+- **Do the two optimal frames tie exactly.** The certificate encloses clusters 0 and 1 (Graham & Lubachevsky's t16a33.1 and
+  t16a33.2, in some order; they call them equivalent packings that differ in four points) in one interval of width
+  < 3.6 x 10^-34 (§1) but does not decide whether their exact values are equal (§1, "Not claimed"). Each frame is rigid
+  with 20 point-point and 13 point-side contacts (§2), so exact algebra on the two contact systems is one route to deciding
+  it. *Status:* UNTESTED observation from this work (not attempted here). *Ceiling:* N = 16 settled completely, including
+  which frames are optimal.
+- **N = 17, 18, 19.** §9 records m17 < 13209124868233/62500000000000 (checker A only) against the best-known
+  (3 - sqrt 3)/6, and leaves N = 18 (near-tie 4 x 10^-7 below the best known) and N = 19 undecided. *Status:* open as far
+  as our dated search found (2026-11-17; arXiv, Zenodo and web searches for optimality proofs in the equilateral triangle,
+  and the works citing Payan 1997). *Ceiling:* a two-checker computer-assisted proof for N = 17.
+
 ## 10. References
 
 - R. L. Graham, B. D. Lubachevsky, Dense packings of equal disks in an equilateral triangle: from 22 to 34 and beyond,
@@ -366,7 +384,7 @@ there is a near-tie 4 × 10⁻⁷ below the best known.
   333–342.
 - A. Joós, Packing 13 circles in an equilateral triangle, Aequationes Math. 95 (2021) 35–65,
   doi 10.1007/s00010-020-00753-y.
-- J. Oler, A finite packing problem, Canad. Math. Bull. 4 (1961) 153–155.
+- N. Oler, A finite packing problem, Canad. Math. Bull. 4 (1961) 153–155.
 - C. Payan, Empilement de cercles égaux dans un triangle équilatéral. À propos d'une conjecture d'Erdős–Oler, Discrete Math.
   165/166 (1997) 555–565.
 - M. C. Markót, T. Csendes, A new verified optimization technique for the "packing circles in a unit square" problems,
